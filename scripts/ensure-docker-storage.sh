@@ -31,7 +31,6 @@ directories=(
   "mathesar/static"
   "mathesar/media"
   "mathesar/secrets"
-  "mathesar/caddy"
 )
 
 for relative_path in "${directories[@]}"; do
