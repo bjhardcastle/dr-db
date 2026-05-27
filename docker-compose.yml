@@ -31,8 +31,6 @@ services:
       - type: bind
         source: ${DR_DB_STORAGE_ROOT:?Set DR_DB_STORAGE_ROOT in .env}/postgres
         target: /var/lib/postgresql/data
-        bind:
-          selinux: z
     healthcheck:
       test:
         ["CMD-SHELL", 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
@@ -57,8 +55,6 @@ services:
       - type: bind
         source: ${DR_DB_STORAGE_ROOT:?Set DR_DB_STORAGE_ROOT in .env}/mathesar/pgdata
         target: /var/lib/postgresql/data
-        bind:
-          selinux: z
     healthcheck:
       test:
         ["CMD-SHELL", 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
@@ -85,18 +81,12 @@ services:
       - type: bind
         source: ${DR_DB_STORAGE_ROOT:?Set DR_DB_STORAGE_ROOT in .env}/mathesar/static
         target: /code/static
-        bind:
-          selinux: z
       - type: bind
         source: ${DR_DB_STORAGE_ROOT:?Set DR_DB_STORAGE_ROOT in .env}/mathesar/media
         target: /code/.media
-        bind:
-          selinux: z
       - type: bind
         source: ${DR_DB_STORAGE_ROOT:?Set DR_DB_STORAGE_ROOT in .env}/mathesar/secrets
         target: /code/.secrets
-        bind:
-          selinux: z
     depends_on:
       mathesar-metadata-postgres:
         condition: service_healthy
