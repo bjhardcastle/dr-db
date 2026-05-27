@@ -21,6 +21,7 @@ services:
     image: postgres:17-bookworm
     container_name: dr-db-postgres
     hostname: dr-db
+    user: "${DR_DB_CONTAINER_UID:-1000}:${DR_DB_CONTAINER_GID:-1000}"
     restart: unless-stopped
     environment:
       <<: *dr-db-postgres-env
@@ -48,6 +49,7 @@ services:
   mathesar-metadata-postgres:
     image: pgautoupgrade/pgautoupgrade:17-bookworm
     container_name: mathesar-metadata-postgres
+    user: "${DR_DB_CONTAINER_UID:-1000}:${DR_DB_CONTAINER_GID:-1000}"
     restart: unless-stopped
     environment:
       <<: *mathesar-metadata-postgres-env
@@ -73,6 +75,7 @@ services:
   mathesar:
     image: mathesar/mathesar:latest
     container_name: dr-db-mathesar
+    user: "${DR_DB_CONTAINER_UID:-1000}:${DR_DB_CONTAINER_GID:-1000}"
     restart: unless-stopped
     environment:
       <<: *mathesar-app-env
