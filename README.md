@@ -17,6 +17,18 @@ Prepare the directory structure without overwriting anything:
 ./scripts/ensure-docker-storage.sh
 ```
 
+To throw away the local Docker databases and recreate empty storage, use the
+reset helper. It reads the same `.env` file as Compose; do not use a bare
+`rm -rf "$DR_DB_STORAGE_ROOT/..."` unless you have explicitly sourced `.env`
+in that shell.
+
+```bash
+docker compose down --remove-orphans
+./scripts/reset-docker-storage.sh --yes
+docker compose up -d
+docker compose ps
+```
+
 ## Start
 
 The real `.env` file is intentionally ignored by git. Create it on the VM from
@@ -74,6 +86,7 @@ If the logs show `chown`, `chmod`, or `mkdir` permission errors under
 id -u
 id -g
 grep DR_DB_CONTAINER_ .env
+./scripts/ensure-docker-storage.sh
 ```
 
 If Docker reports `permission denied while trying to connect to the docker API
