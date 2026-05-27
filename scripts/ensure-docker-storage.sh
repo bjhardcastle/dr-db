@@ -17,10 +17,6 @@ if [[ -n "$env_storage_root" ]]; then
 fi
 
 root="${DR_DB_STORAGE_ROOT:-${HOME:?}/dr-db}"
-current_uid="$(id -u)"
-current_gid="$(id -g)"
-container_uid="${DR_DB_CONTAINER_UID-}"
-container_gid="${DR_DB_CONTAINER_GID-}"
 
 if [[ "$root" == "~"* ]]; then
   cat >&2 <<EOF
@@ -34,34 +30,6 @@ fi
 
 if [[ "$root" != /* ]]; then
   echo "DR_DB_STORAGE_ROOT must be an absolute path, got: '$root'" >&2
-  exit 1
-fi
-
-if [[ -z "$container_uid" || -z "$container_gid" ]]; then
-  cat >&2 <<EOF
-DR_DB_CONTAINER_UID and DR_DB_CONTAINER_GID must be set in .env.
-
-Set them from this VM user:
-  DR_DB_CONTAINER_UID=$current_uid
-  DR_DB_CONTAINER_GID=$current_gid
-EOF
-  exit 1
-fi
-
-if [[ "$container_uid" != "$current_uid" || "$container_gid" != "$current_gid" ]]; then
-  cat >&2 <<EOF
-DR_DB_CONTAINER_UID/GID do not match this VM user.
-
-Current VM user:        $current_uid:$current_gid
-Configured containers:  $container_uid:$container_gid
-
-Update .env with:
-  DR_DB_CONTAINER_UID=$current_uid
-  DR_DB_CONTAINER_GID=$current_gid
-
-Then rerun:
-  ./scripts/ensure-docker-storage.sh
-EOF
   exit 1
 fi
 
@@ -102,7 +70,7 @@ Exists but is not readable, writable, and traversable by this VM user:
   $(describe_path "$path")
 
 This usually means the directory was created by an earlier container run as a
-different user, or DR_DB_CONTAINER_UID/GID changed.
+different user.
 
 To reset disposable Docker storage, run:
   ./scripts/reset-docker-storage.sh --yes

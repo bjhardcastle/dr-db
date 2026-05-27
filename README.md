@@ -44,14 +44,9 @@ docker compose ps
 The real `.env` file is intentionally ignored by git. Create it on the VM from
 the template, set `DR_DB_POSTGRES_PASSWORD` to the shared password, and make
 sure `DR_DB_STORAGE_ROOT` points at a directory owned by your VM user.
-Set `DR_DB_CONTAINER_UID` and `DR_DB_CONTAINER_GID` from the VM user so
-containers can write to home-directory bind mounts without trying to `chown`
-them as root.
 
 ```bash
 cp .env.example .env
-id -u
-id -g
 $EDITOR .env
 ./scripts/ensure-docker-storage.sh
 docker compose up -d
@@ -90,13 +85,12 @@ docker compose logs --tail=100 dr-db-postgres mathesar-metadata-postgres
 ```
 
 If the logs show `chown`, `chmod`, or `mkdir` permission errors under
-`/var/lib/postgresql/data`, confirm `.env` has the VM user's numeric IDs:
+`/var/lib/postgresql/data`, completely remove and recreate disposable storage:
 
 ```bash
-id -u
-id -g
-grep DR_DB_CONTAINER_ .env
-./scripts/ensure-docker-storage.sh
+docker compose down --remove-orphans
+./scripts/reset-docker-storage.sh --yes --all
+docker compose up -d
 ```
 
 If Docker reports `permission denied while trying to connect to the docker API
