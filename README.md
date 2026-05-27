@@ -29,6 +29,16 @@ docker compose up -d
 docker compose ps
 ```
 
+If everything under `DR_DB_STORAGE_ROOT` is disposable, add `--all` to remove
+and recreate the entire storage root:
+
+```bash
+docker compose down --remove-orphans
+./scripts/reset-docker-storage.sh --yes --all
+docker compose up -d
+docker compose ps
+```
+
 ## Start
 
 The real `.env` file is intentionally ignored by git. Create it on the VM from
