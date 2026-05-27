@@ -20,7 +20,7 @@ Prepare the directory structure without overwriting anything:
 ## Start
 
 The real `.env` file is intentionally ignored by git. Create it on the VM from
-the template and set `POSTGRES_PASSWORD` to the shared password.
+the template and set `DR_DB_POSTGRES_PASSWORD` to the shared password.
 
 ```bash
 cp .env.example .env
@@ -47,6 +47,8 @@ the VM.
 
 Mathesar has a separate internal Postgres container for its own metadata. That
 internal database uses Mathesar's default database name, `mathesar_django`.
+The `.env` variables for that container are prefixed with
+`MATHESAR_METADATA_POSTGRES_`.
 
 Mathesar:
 

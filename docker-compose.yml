@@ -1,9 +1,11 @@
 name: dr-db
 
+# The Postgres images require POSTGRES_* inside the container. The .env
+# variables interpolated here are namespaced to match the Compose services.
 x-dr-db-postgres-env: &dr-db-postgres-env
-  POSTGRES_DB: ${POSTGRES_DB:-main}
-  POSTGRES_USER: ${POSTGRES_USER:-dr_db_admin}
-  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+  POSTGRES_DB: ${DR_DB_POSTGRES_DB:-main}
+  POSTGRES_USER: ${DR_DB_POSTGRES_USER:-dr_db_admin}
+  POSTGRES_PASSWORD: ${DR_DB_POSTGRES_PASSWORD:?Set DR_DB_POSTGRES_PASSWORD in .env}
 
 x-mathesar-app-env: &mathesar-app-env
   DOMAIN_NAME: ${MATHESAR_DOMAIN_NAME:-http://dr-db,http://localhost,http://127.0.0.1}
@@ -25,7 +27,7 @@ services:
       <<: *dr-db-postgres-env
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
-      - "${POSTGRES_HOST_PORT:-7500}:5432"
+      - "${DR_DB_POSTGRES_HOST_PORT:-7500}:5432"
     volumes:
       - type: bind
         source: ${DR_DB_STORAGE_ROOT:?Set DR_DB_STORAGE_ROOT in .env}/postgres
