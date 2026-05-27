@@ -1,6 +1,6 @@
 name: dr-db
 
-x-main-postgres-env: &main-postgres-env
+x-dr-db-postgres-env: &dr-db-postgres-env
   POSTGRES_DB: ${POSTGRES_DB:-main}
   POSTGRES_USER: ${POSTGRES_USER:-dr_db_admin}
   POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
@@ -16,13 +16,13 @@ x-mathesar-metadata-postgres-env: &mathesar-metadata-postgres-env
   POSTGRES_PASSWORD: ${MATHESAR_METADATA_POSTGRES_PASSWORD:-mathesar}
 
 services:
-  postgres:
+  dr-db-postgres:
     image: postgres:17-bookworm
     container_name: dr-db-postgres
     hostname: dr-db
     restart: unless-stopped
     environment:
-      <<: *main-postgres-env
+      <<: *dr-db-postgres-env
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "${POSTGRES_HOST_PORT:-7500}:5432"
@@ -39,6 +39,7 @@ services:
       default:
         aliases:
           - dr-db
+          - dr-db-postgres
 
   mathesar-metadata-postgres:
     image: pgautoupgrade/pgautoupgrade:17-bookworm
