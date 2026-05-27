@@ -18,6 +18,16 @@ fi
 
 root="${DR_DB_STORAGE_ROOT:-${HOME:?}/.local/share/dr-db}"
 
+if [[ "$root" == "~"* ]]; then
+  cat >&2 <<EOF
+DR_DB_STORAGE_ROOT must not use '~', got: '$root'
+
+Use an absolute path owned by this VM user instead, for example:
+  DR_DB_STORAGE_ROOT=$HOME/.local/share/dr-db
+EOF
+  exit 1
+fi
+
 if [[ "$root" != /* ]]; then
   echo "DR_DB_STORAGE_ROOT must be an absolute path, got: '$root'" >&2
   exit 1
