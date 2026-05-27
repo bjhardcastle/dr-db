@@ -1,14 +1,14 @@
 name: dr-db
 
 x-postgres-env: &postgres-env
-  POSTGRES_DB: ${MATHESAR_POSTGRES_DB:-mathesar_django}
+  POSTGRES_DB: ${MATHESAR_POSTGRES_DB:-mathesar_metadata}
   POSTGRES_USER: ${POSTGRES_USER:-dr_db_admin}
   POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
-  DR_DB_APP_DB: ${DR_DB_APP_DB:-dr_db}
+  DR_DB_APP_DB: ${DR_DB_APP_DB:-main}
 
 x-mathesar-env: &mathesar-env
   DOMAIN_NAME: ${MATHESAR_DOMAIN_NAME:-http://dr-db,http://localhost,http://127.0.0.1}
-  POSTGRES_DB: ${MATHESAR_POSTGRES_DB:-mathesar_django}
+  POSTGRES_DB: ${MATHESAR_POSTGRES_DB:-mathesar_metadata}
   POSTGRES_USER: ${POSTGRES_USER:-dr_db_admin}
   POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
   POSTGRES_HOST: postgres

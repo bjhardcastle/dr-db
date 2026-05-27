@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-app_db="${DR_DB_APP_DB:-dr_db}"
+app_db="${DR_DB_APP_DB:-main}"
 
 case "$app_db" in
   ""|*[!A-Za-z0-9_]*)
