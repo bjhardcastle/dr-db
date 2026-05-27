@@ -8,7 +8,7 @@ to run on the Rocky Linux VM.
 Persistent container data lives outside the repo under:
 
 ```text
-/allen/ai/homedirs/ben.hardcastle/dr-db
+/home/ben.hardcastle/.local/share/dr-db
 ```
 
 Prepare the directory structure without overwriting anything:
@@ -20,7 +20,8 @@ Prepare the directory structure without overwriting anything:
 ## Start
 
 The real `.env` file is intentionally ignored by git. Create it on the VM from
-the template and set `DR_DB_POSTGRES_PASSWORD` to the shared password.
+the template, set `DR_DB_POSTGRES_PASSWORD` to the shared password, and make
+sure `DR_DB_STORAGE_ROOT` points at a directory owned by your VM user.
 
 ```bash
 cp .env.example .env
@@ -28,6 +29,11 @@ $EDITOR .env
 ./scripts/ensure-docker-storage.sh
 docker compose up -d
 ```
+
+If Compose reports that it cannot create a bind mount under `/allen/...`, update
+`DR_DB_STORAGE_ROOT` in `.env` to a user-owned path such as
+`/home/ben.hardcastle/.local/share/dr-db`, then rerun the storage helper before
+starting Compose again.
 
 If Docker reports `permission denied while trying to connect to the docker API
 at unix:///var/run/docker.sock`, make sure your VM user is in the `docker`

@@ -1,7 +1,27 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-root="${DR_DB_STORAGE_ROOT:-/allen/ai/homedirs/ben.hardcastle/dr-db}"
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+repo_root="$(cd -- "$script_dir/.." && pwd)"
+env_storage_root="${DR_DB_STORAGE_ROOT-}"
+
+if [[ -f "$repo_root/.env" ]]; then
+  set -a
+  # shellcheck disable=SC1091
+  source "$repo_root/.env"
+  set +a
+fi
+
+if [[ -n "$env_storage_root" ]]; then
+  DR_DB_STORAGE_ROOT="$env_storage_root"
+fi
+
+root="${DR_DB_STORAGE_ROOT:-${HOME:?}/.local/share/dr-db}"
+
+if [[ "$root" != /* ]]; then
+  echo "DR_DB_STORAGE_ROOT must be an absolute path, got: '$root'" >&2
+  exit 1
+fi
 
 directories=(
   ""
@@ -31,6 +51,17 @@ for relative_path in "${directories[@]}"; do
     continue
   fi
 
-  mkdir -p "$path"
+  if ! mkdir -p "$path"; then
+    cat >&2 <<EOF
+Failed to create '$path'.
+
+Set DR_DB_STORAGE_ROOT in .env to a directory owned by this VM user, then rerun:
+  ./scripts/ensure-docker-storage.sh
+
+For example:
+  DR_DB_STORAGE_ROOT=$HOME/.local/share/dr-db
+EOF
+    exit 1
+  fi
   echo "Created: $path"
 done
