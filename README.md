@@ -36,7 +36,7 @@ PostgreSQL:
 ```text
 Host: dr-db
 Port: 7500
-Database: main
+Database: dr_db
 User: svc_neuropix
 Password: see local .env
 ```
@@ -58,5 +58,5 @@ http://dr-db:7000
 
 If opening Mathesar on the Docker host itself, `http://localhost:7000` should
 also work. When connecting Mathesar to the user database from the UI, use host
-`dr-db`, port `5432`, database `main`, user `svc_neuropix`, and the same
+`dr-db`, port `5432`, database `dr_db`, user `svc_neuropix`, and the same
 password from `.env`.
