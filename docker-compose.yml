@@ -7,11 +7,6 @@ x-main-postgres-env: &main-postgres-env
 
 x-mathesar-env: &mathesar-env
   DOMAIN_NAME: ${MATHESAR_DOMAIN_NAME:-http://dr-db,http://localhost,http://127.0.0.1}
-  POSTGRES_DB: ${MATHESAR_POSTGRES_DB:-mathesar_django}
-  POSTGRES_USER: ${MATHESAR_POSTGRES_USER:-mathesar}
-  POSTGRES_PASSWORD: ${MATHESAR_POSTGRES_PASSWORD:-mathesar}
-  POSTGRES_HOST: mathesar_db
-  POSTGRES_PORT: 5432
   FILE_STORAGE_DICT: ${FILE_STORAGE_DICT:-{}}
   OIDC_CONFIG_DICT: ${OIDC_CONFIG_DICT:-{}}
 
@@ -45,9 +40,9 @@ services:
     container_name: dr-db-mathesar-db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${MATHESAR_POSTGRES_DB:-mathesar_django}
-      POSTGRES_USER: ${MATHESAR_POSTGRES_USER:-mathesar}
-      POSTGRES_PASSWORD: ${MATHESAR_POSTGRES_PASSWORD:-mathesar}
+      POSTGRES_DB: mathesar_django
+      POSTGRES_USER: mathesar
+      POSTGRES_PASSWORD: mathesar
     expose:
       - "5432"
     volumes:
