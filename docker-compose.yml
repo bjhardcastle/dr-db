@@ -5,11 +5,6 @@ x-main-postgres-env: &main-postgres-env
   POSTGRES_USER: ${POSTGRES_USER:-dr_db_admin}
   POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
 
-x-mathesar-postgres-env: &mathesar-postgres-env
-  POSTGRES_DB: ${MATHESAR_POSTGRES_DB:-mathesar_django}
-  POSTGRES_USER: ${MATHESAR_POSTGRES_USER:-mathesar}
-  POSTGRES_PASSWORD: ${MATHESAR_POSTGRES_PASSWORD:-mathesar}
-
 x-mathesar-env: &mathesar-env
   DOMAIN_NAME: ${MATHESAR_DOMAIN_NAME:-http://dr-db,http://localhost,http://127.0.0.1}
   POSTGRES_DB: ${MATHESAR_POSTGRES_DB:-mathesar_django}
@@ -49,7 +44,10 @@ services:
     image: pgautoupgrade/pgautoupgrade:17-bookworm
     container_name: dr-db-mathesar-db
     restart: unless-stopped
-    environment: *mathesar-postgres-env
+    environment:
+      POSTGRES_DB: ${MATHESAR_POSTGRES_DB:-mathesar_django}
+      POSTGRES_USER: ${MATHESAR_POSTGRES_USER:-mathesar}
+      POSTGRES_PASSWORD: ${MATHESAR_POSTGRES_PASSWORD:-mathesar}
     expose:
       - "5432"
     volumes:
