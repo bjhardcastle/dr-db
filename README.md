@@ -1,28 +1,31 @@
 # dr-db
 
-Docker Compose setup for a shared PostgreSQL database plus Mathesar.
+Docker Compose setup for a shared PostgreSQL database plus Mathesar, intended
+to run on the Rocky Linux VM.
 
 ## Storage
 
 Persistent container data lives outside the repo under:
 
 ```text
-//allen/ai/homedirs/ben.hardcastle/dr-db
+/allen/ai/homedirs/ben.hardcastle/dr-db
 ```
 
 Prepare the directory structure without overwriting anything:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\ensure-docker-storage.ps1
+```bash
+./scripts/ensure-docker-storage.sh
 ```
 
 ## Start
 
-The real `.env` file is intentionally ignored by git. This checkout has one with
-the requested local password; use `.env.example` as the template for new
-checkouts.
+The real `.env` file is intentionally ignored by git. Create it on the VM from
+the template and set `POSTGRES_PASSWORD` to the shared password.
 
-```powershell
+```bash
+cp .env.example .env
+$EDITOR .env
+./scripts/ensure-docker-storage.sh
 docker compose up -d
 ```
 
@@ -39,7 +42,8 @@ Password: see local .env
 ```
 
 If `dr-db` is not resolvable from a client machine, use the Docker host name or
-IP address with port `7500`.
+IP address with port `7500`, or add `dr-db` to DNS or `/etc/hosts` pointing at
+the VM.
 
 Mathesar:
 
