@@ -29,6 +29,21 @@ $EDITOR .env
 docker compose up -d
 ```
 
+If Docker reports `permission denied while trying to connect to the docker API
+at unix:///var/run/docker.sock`, make sure your VM user is in the `docker`
+group:
+
+```bash
+sudo usermod -aG docker "$USER"
+newgrp docker
+docker version
+```
+
+After `newgrp docker`, `id` should include `docker` and `docker version` should
+show both client and server details. Avoid running Compose with `sudo` from this
+repo; on the VM, root may not be able to read `.env` from the protected home
+directory.
+
 ## Connections
 
 PostgreSQL:
