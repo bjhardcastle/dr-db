@@ -8,7 +8,7 @@ to run on the Rocky Linux VM.
 Persistent container data lives outside the repo under:
 
 ```text
-/home/ben.hardcastle/.local/share/dr-db
+/home/ben.hardcastle/dr-db
 ```
 
 Prepare the directory structure without overwriting anything:
@@ -32,7 +32,7 @@ docker compose up -d
 
 If Compose reports that it cannot create a bind mount under `/allen/...`, update
 `DR_DB_STORAGE_ROOT` in `.env` to a user-owned path such as
-`/home/ben.hardcastle/.local/share/dr-db`, then rerun the storage helper before
+`/home/ben.hardcastle/dr-db`, then rerun the storage helper before
 starting Compose again.
 
 If Docker reports `permission denied while trying to connect to the docker API

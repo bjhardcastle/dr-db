@@ -16,14 +16,14 @@ if [[ -n "$env_storage_root" ]]; then
   DR_DB_STORAGE_ROOT="$env_storage_root"
 fi
 
-root="${DR_DB_STORAGE_ROOT:-${HOME:?}/.local/share/dr-db}"
+root="${DR_DB_STORAGE_ROOT:-${HOME:?}/dr-db}"
 
 if [[ "$root" == "~"* ]]; then
   cat >&2 <<EOF
 DR_DB_STORAGE_ROOT must not use '~', got: '$root'
 
 Use an absolute path owned by this VM user instead, for example:
-  DR_DB_STORAGE_ROOT=$HOME/.local/share/dr-db
+  DR_DB_STORAGE_ROOT=$HOME/dr-db
 EOF
   exit 1
 fi
@@ -68,7 +68,7 @@ Set DR_DB_STORAGE_ROOT in .env to a directory owned by this VM user, then rerun:
   ./scripts/ensure-docker-storage.sh
 
 For example:
-  DR_DB_STORAGE_ROOT=$HOME/.local/share/dr-db
+  DR_DB_STORAGE_ROOT=$HOME/dr-db
 EOF
     exit 1
   fi
