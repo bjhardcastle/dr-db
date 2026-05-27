@@ -5,10 +5,15 @@ x-main-postgres-env: &main-postgres-env
   POSTGRES_USER: ${POSTGRES_USER:-dr_db_admin}
   POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
 
-x-mathesar-env: &mathesar-env
+x-mathesar-app-env: &mathesar-app-env
   DOMAIN_NAME: ${MATHESAR_DOMAIN_NAME:-http://dr-db,http://localhost,http://127.0.0.1}
   FILE_STORAGE_DICT: ${FILE_STORAGE_DICT:-{}}
   OIDC_CONFIG_DICT: ${OIDC_CONFIG_DICT:-{}}
+
+x-mathesar-metadata-postgres-env: &mathesar-metadata-postgres-env
+  POSTGRES_DB: ${MATHESAR_METADATA_POSTGRES_DB:-mathesar_django}
+  POSTGRES_USER: ${MATHESAR_METADATA_POSTGRES_USER:-mathesar}
+  POSTGRES_PASSWORD: ${MATHESAR_METADATA_POSTGRES_PASSWORD:-mathesar}
 
 services:
   postgres:
@@ -35,14 +40,12 @@ services:
         aliases:
           - dr-db
 
-  mathesar-db:
+  mathesar-metadata-postgres:
     image: pgautoupgrade/pgautoupgrade:17-bookworm
-    container_name: dr-db-mathesar-db
+    container_name: dr-db-mathesar-metadata-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: mathesar_django
-      POSTGRES_USER: mathesar
-      POSTGRES_PASSWORD: mathesar
+      <<: *mathesar-metadata-postgres-env
     expose:
       - "5432"
     volumes:
@@ -57,14 +60,14 @@ services:
     networks:
       default:
         aliases:
-          - mathesar_db
+          - mathesar-metadata-postgres
 
   mathesar:
     image: mathesar/mathesar:latest
     container_name: dr-db-mathesar
     restart: unless-stopped
     environment:
-      <<: *mathesar-env
+      <<: *mathesar-app-env
       DJANGO_SETTINGS_MODULE: config.settings.production
       ALLOWED_HOSTS: ${MATHESAR_ALLOWED_HOSTS:-dr-db,localhost,127.0.0.1,[::1]}
       DEBUG: ${MATHESAR_DEBUG:-false}
@@ -81,7 +84,7 @@ services:
         source: ${DR_DB_STORAGE_ROOT:?Set DR_DB_STORAGE_ROOT in .env}/mathesar/secrets
         target: /code/.secrets
     depends_on:
-      mathesar-db:
+      mathesar-metadata-postgres:
         condition: service_healthy
     expose:
       - "8000"
@@ -94,14 +97,14 @@ services:
     networks:
       default:
         aliases:
-          - mathesar_service
+          - mathesar-app
 
   mathesar-proxy:
     image: mathesar/mathesar-caddy:latest
     container_name: dr-db-mathesar-proxy
     restart: unless-stopped
     environment:
-      <<: *mathesar-env
+      <<: *mathesar-app-env
     ports:
       - "${MATHESAR_HOST_PORT:-7000}:80"
     volumes:
