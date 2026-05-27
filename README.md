@@ -52,6 +52,16 @@ docker compose up -d
 The `chmod o+x` commands allow traversal only; they do not make the directories
 world-readable or writable.
 
+On Rocky Linux with SELinux enforcing, home-directory bind mounts also need a
+container label. The Compose file sets `bind.selinux: z` on each persisted bind
+mount. If a reset leaves either Postgres container restarting, confirm the
+diagnosis with:
+
+```bash
+getenforce
+docker compose logs --tail=100 dr-db-postgres mathesar-metadata-postgres
+```
+
 If Docker reports `permission denied while trying to connect to the docker API
 at unix:///var/run/docker.sock`, make sure your VM user is in the `docker`
 group:
