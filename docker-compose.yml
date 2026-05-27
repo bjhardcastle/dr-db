@@ -1,17 +1,21 @@
 name: dr-db
 
-x-postgres-env: &postgres-env
-  POSTGRES_DB: ${MATHESAR_POSTGRES_DB:-mathesar_metadata}
+x-main-postgres-env: &main-postgres-env
+  POSTGRES_DB: ${POSTGRES_DB:-main}
   POSTGRES_USER: ${POSTGRES_USER:-dr_db_admin}
   POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
-  DR_DB_APP_DB: ${DR_DB_APP_DB:-main}
+
+x-mathesar-postgres-env: &mathesar-postgres-env
+  POSTGRES_DB: ${MATHESAR_POSTGRES_DB:-mathesar_django}
+  POSTGRES_USER: ${MATHESAR_POSTGRES_USER:-mathesar}
+  POSTGRES_PASSWORD: ${MATHESAR_POSTGRES_PASSWORD:-mathesar}
 
 x-mathesar-env: &mathesar-env
   DOMAIN_NAME: ${MATHESAR_DOMAIN_NAME:-http://dr-db,http://localhost,http://127.0.0.1}
-  POSTGRES_DB: ${MATHESAR_POSTGRES_DB:-mathesar_metadata}
-  POSTGRES_USER: ${POSTGRES_USER:-dr_db_admin}
-  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
-  POSTGRES_HOST: postgres
+  POSTGRES_DB: ${MATHESAR_POSTGRES_DB:-mathesar_django}
+  POSTGRES_USER: ${MATHESAR_POSTGRES_USER:-mathesar}
+  POSTGRES_PASSWORD: ${MATHESAR_POSTGRES_PASSWORD:-mathesar}
+  POSTGRES_HOST: mathesar_db
   POSTGRES_PORT: 5432
   FILE_STORAGE_DICT: ${FILE_STORAGE_DICT:-{}}
   OIDC_CONFIG_DICT: ${OIDC_CONFIG_DICT:-{}}
@@ -23,7 +27,7 @@ services:
     hostname: dr-db
     restart: unless-stopped
     environment:
-      <<: *postgres-env
+      <<: *main-postgres-env
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "${POSTGRES_HOST_PORT:-7500}:5432"
@@ -31,10 +35,6 @@ services:
       - type: bind
         source: ${DR_DB_STORAGE_ROOT:?Set DR_DB_STORAGE_ROOT in .env}/postgres
         target: /var/lib/postgresql/data
-      - type: bind
-        source: ./docker/postgres/init
-        target: /docker-entrypoint-initdb.d
-        read_only: true
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
       interval: 10s
@@ -44,6 +44,27 @@ services:
       default:
         aliases:
           - dr-db
+
+  mathesar-db:
+    image: pgautoupgrade/pgautoupgrade:17-bookworm
+    container_name: dr-db-mathesar-db
+    restart: unless-stopped
+    environment: *mathesar-postgres-env
+    expose:
+      - "5432"
+    volumes:
+      - type: bind
+        source: ${DR_DB_STORAGE_ROOT:?Set DR_DB_STORAGE_ROOT in .env}/mathesar/pgdata
+        target: /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      default:
+        aliases:
+          - mathesar_db
 
   mathesar:
     image: mathesar/mathesar:latest
@@ -67,7 +88,7 @@ services:
         source: ${DR_DB_STORAGE_ROOT:?Set DR_DB_STORAGE_ROOT in .env}/mathesar/secrets
         target: /code/.secrets
     depends_on:
-      postgres:
+      mathesar-db:
         condition: service_healthy
     expose:
       - "8000"
@@ -77,6 +98,10 @@ services:
       timeout: 5s
       retries: 30
       start_period: 5s
+    networks:
+      default:
+        aliases:
+          - mathesar_service
 
   mathesar-proxy:
     image: mathesar/mathesar-caddy:latest

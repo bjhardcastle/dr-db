@@ -7,6 +7,7 @@ directories=(
   ""
   "postgres"
   "mathesar"
+  "mathesar/pgdata"
   "mathesar/static"
   "mathesar/media"
   "mathesar/secrets"

@@ -45,8 +45,8 @@ If `dr-db` is not resolvable from a client machine, use the Docker host name or
 IP address with port `7500`, or add `dr-db` to DNS or `/etc/hosts` pointing at
 the VM.
 
-The same Postgres server also contains `mathesar_metadata`, which Mathesar uses
-for its own application state.
+Mathesar has a separate internal Postgres container for its own metadata. That
+internal database uses Mathesar's default database name, `mathesar_django`.
 
 Mathesar:
 
