@@ -35,6 +35,23 @@ If Compose reports that it cannot create a bind mount under `/allen/...`, update
 `/home/ben.hardcastle/dr-db`, then rerun the storage helper before
 starting Compose again.
 
+If Compose reports `permission denied` while creating a bind mount under
+`/home/ben.hardcastle/...`, the storage directories may exist but the Docker
+daemon may not be able to traverse the home-directory path. Keep the storage
+root under `/home/ben.hardcastle`, then make the parent directories executable
+by the daemon:
+
+```bash
+namei -l "$DR_DB_STORAGE_ROOT/mathesar/pgdata"
+chmod o+x /home/ben.hardcastle
+chmod o+x /home/ben.hardcastle/dr-db
+./scripts/ensure-docker-storage.sh
+docker compose up -d
+```
+
+The `chmod o+x` commands allow traversal only; they do not make the directories
+world-readable or writable.
+
 If Docker reports `permission denied while trying to connect to the docker API
 at unix:///var/run/docker.sock`, make sure your VM user is in the `docker`
 group:

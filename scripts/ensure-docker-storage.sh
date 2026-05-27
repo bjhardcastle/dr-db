@@ -74,3 +74,17 @@ EOF
   fi
   echo "Created: $path"
 done
+
+cat <<EOF
+
+Storage root is ready: $root
+
+If Docker Compose still reports permission denied for this path, check directory
+traversal permissions with:
+  namei -l "$root/mathesar/pgdata"
+
+For storage under /home/ben.hardcastle, Docker may need execute permission on
+the parent directories, for example:
+  chmod o+x /home/ben.hardcastle
+  chmod o+x /home/ben.hardcastle/dr-db
+EOF
