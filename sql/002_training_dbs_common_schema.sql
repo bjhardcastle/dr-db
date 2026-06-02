@@ -86,7 +86,6 @@ CREATE TABLE IF NOT EXISTS training_sessions (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nsb boolean NOT NULL,
     mouse_id integer NOT NULL,
-    legacy_session_id integer NOT NULL,
 
     start_time text,
     rig_name text,
@@ -111,10 +110,7 @@ CREATE TABLE IF NOT EXISTS training_sessions (
         FOREIGN KEY (nsb, mouse_id)
         REFERENCES training_subjects (nsb, mouse_id)
         ON UPDATE CASCADE
-        ON DELETE RESTRICT,
-
-    CONSTRAINT training_sessions_nsb_mouse_legacy_key
-        UNIQUE (nsb, mouse_id, legacy_session_id)
+        ON DELETE RESTRICT
 );
 
 CREATE INDEX IF NOT EXISTS training_sessions_mouse_id_idx
