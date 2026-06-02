@@ -52,7 +52,7 @@ $$;
 
 CREATE TABLE IF NOT EXISTS training_subjects (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    source_database text NOT NULL,
+    nsb boolean NOT NULL,
     legacy_id integer,
     mouse_id integer NOT NULL,
 
@@ -78,20 +78,13 @@ CREATE TABLE IF NOT EXISTS training_subjects (
 
     -- Present only in DynamicRoutingTrainingNSB.sqlite all_mice.
     data_path text,
-
-    CONSTRAINT training_subjects_source_database_check
-        CHECK (source_database IN (
-            'DynamicRoutingTraining',
-            'DynamicRoutingTrainingNSB'
-        )),
-
-    CONSTRAINT training_subjects_source_database_mouse_id_key
-        UNIQUE (source_database, mouse_id)
+    CONSTRAINT training_subjects_nsb_mouse_id_key
+        UNIQUE (nsb, mouse_id)
 );
 
 CREATE TABLE IF NOT EXISTS training_sessions (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    source_database text NOT NULL,
+    nsb boolean NOT NULL,
     mouse_id integer NOT NULL,
     legacy_session_id integer NOT NULL,
 
@@ -114,21 +107,14 @@ CREATE TABLE IF NOT EXISTS training_sessions (
     hab boolean,
     ephys boolean,
     muscimol boolean,
-
-    CONSTRAINT training_sessions_source_database_check
-        CHECK (source_database IN (
-            'DynamicRoutingTraining',
-            'DynamicRoutingTrainingNSB'
-        )),
-
     CONSTRAINT training_sessions_subject_fkey
-        FOREIGN KEY (source_database, mouse_id)
-        REFERENCES training_subjects (source_database, mouse_id)
+        FOREIGN KEY (nsb, mouse_id)
+        REFERENCES training_subjects (nsb, mouse_id)
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
 
-    CONSTRAINT training_sessions_source_mouse_legacy_key
-        UNIQUE (source_database, mouse_id, legacy_session_id)
+    CONSTRAINT training_sessions_nsb_mouse_legacy_key
+        UNIQUE (nsb, mouse_id, legacy_session_id)
 );
 
 CREATE INDEX IF NOT EXISTS training_sessions_mouse_id_idx
