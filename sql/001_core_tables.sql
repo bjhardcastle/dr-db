@@ -1,7 +1,3 @@
-CREATE SCHEMA IF NOT EXISTS sam;
-
-SET search_path TO sam;
-
 DO $$
 BEGIN
     CREATE TYPE project AS ENUM (
