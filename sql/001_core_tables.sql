@@ -1,6 +1,19 @@
+DO $$
+BEGIN
+    CREATE TYPE project AS ENUM (
+        'DynamicRouting',
+        'Templeton'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END
+$$;
+
 CREATE TABLE IF NOT EXISTS subjects (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    subject_id integer NOT NULL UNIQUE
+    subject_id integer NOT NULL UNIQUE,
+    project project NOT NULL,
+    implant text
 );
 
 CREATE TABLE IF NOT EXISTS sessions (
