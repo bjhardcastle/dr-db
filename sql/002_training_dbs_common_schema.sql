@@ -20,68 +20,23 @@ Legacy shape:
 - No indexes or foreign keys were observed beyond the rowid primary key.
 
 Session-table differences:
-- DynamicRoutingTraining.sqlite columns:
-  ARRAY[
-      'ID',
-      'start_time',
-      'rig_name',
-      'task_version',
-      'hits',
-      'dprime_same_modality',
-      'dprime_other_modality_go_stim',
-      'quiescent_violations',
-      'pass',
-      'ignore',
-      'hab',
-      'ephys',
-      'muscimol'
-  ]::text[]
-- DynamicRoutingTrainingNSB.sqlite columns:
-  ARRAY[
-      'ID',
-      'start_time',
-      'rig_name',
-      'computer_name',
-      'task_version',
-      'hits',
-      'dprime_same_modality',
-      'dprime_other_modality_go_stim',
-      'quiescent_violations',
-      'ignore',
-      'hab',
-      'ephys',
-      'muscimol'
-  ]::text[]
+- DynamicRoutingTraining.sqlite has pass and does not have computer_name.
+- DynamicRoutingTrainingNSB.sqlite has computer_name and does not have pass.
+
+List-valued session metrics:
+- hits, dprime_same_modality, and dprime_other_modality_go_stim are stored
+  as text in SQLite, usually as bracketed arrays like [0.3] or [19, 19, 17].
+- Legacy [nan] values should be loaded as NULL array elements.
+- Legacy scalar values like 0 should be loaded as single-element arrays.
 
 all_mice differences:
 - Common columns:
-  ARRAY[
-      'mouse_id',
-      'status',
-      'purpose',
-      'alive',
-      'genotype',
-      'sex',
-      'birthdate',
-      'whc',
-      'dhc',
-      'implant',
-      'cannula',
-      'cannula_loc',
-      'virus',
-      'virus_loc',
-      'regimen'
-  ]::text[]
+  mouse_id, status, purpose, alive, genotype, sex, birthdate, whc, dhc,
+  implant, cannula, cannula_loc, virus, virus_loc, regimen
 - DynamicRoutingTraining.sqlite only:
-  ARRAY[
-      'timeouts',
-      'trainer',
-      'next_task_version'
-  ]::text[]
+  timeouts, trainer, next_task_version
 - DynamicRoutingTrainingNSB.sqlite only:
-  ARRAY[
-      'data_path'
-  ]::text[]
+  data_path
 */
 
 CREATE TABLE IF NOT EXISTS training_subjects (
@@ -136,10 +91,10 @@ CREATE TABLE IF NOT EXISTS training_sessions (
     computer_name text,
 
     task_version text,
-    hits text,
-    dprime_same_modality text,
-    dprime_other_modality_go_stim text,
-    quiescent_violations text,
+    hits double precision[],
+    dprime_same_modality double precision[],
+    dprime_other_modality_go_stim double precision[],
+    quiescent_violations integer,
 
     -- Present only in DynamicRoutingTraining.sqlite session tables.
     pass_status text,
