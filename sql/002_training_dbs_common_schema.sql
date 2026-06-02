@@ -78,13 +78,12 @@ CREATE TABLE IF NOT EXISTS training_subjects (
 
     -- Present only in DynamicRoutingTrainingNSB.sqlite all_mice.
     data_path text,
-    CONSTRAINT training_subjects_nsb_mouse_id_key
-        UNIQUE (nsb, mouse_id)
+    CONSTRAINT training_subjects_mouse_id_key
+        UNIQUE (mouse_id)
 );
 
 CREATE TABLE IF NOT EXISTS training_sessions (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    nsb boolean NOT NULL,
     mouse_id integer NOT NULL,
 
     start_time text,
@@ -107,8 +106,8 @@ CREATE TABLE IF NOT EXISTS training_sessions (
     ephys boolean,
     muscimol boolean,
     CONSTRAINT training_sessions_subject_fkey
-        FOREIGN KEY (nsb, mouse_id)
-        REFERENCES training_subjects (nsb, mouse_id)
+        FOREIGN KEY (mouse_id)
+        REFERENCES training_subjects (mouse_id)
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 );
