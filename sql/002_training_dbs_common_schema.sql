@@ -57,7 +57,6 @@ $$;
 CREATE TABLE IF NOT EXISTS training_subjects (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nsb boolean NOT NULL,
-    legacy_id integer,
     mouse_id integer NOT NULL,
 
     status text,
@@ -66,10 +65,10 @@ CREATE TABLE IF NOT EXISTS training_subjects (
     genotype text,
     sex sex,
     birthdate date,
-    whc text,
-    dhc text,
+    whc boolean,
+    dhc boolean,
     implant text,
-    cannula text,
+    cannula boolean,
     cannula_loc text,
     virus text,
     virus_loc text,
@@ -82,6 +81,7 @@ CREATE TABLE IF NOT EXISTS training_subjects (
 
     -- Present only in DynamicRoutingTrainingNSB.sqlite all_mice.
     data_path text,
+
     CONSTRAINT training_subjects_mouse_id_key
         UNIQUE (mouse_id)
 );
@@ -103,12 +103,13 @@ CREATE TABLE IF NOT EXISTS training_sessions (
     quiescent_violations integer,
 
     -- Present only in DynamicRoutingTraining.sqlite session tables.
-    pass_status text,
+    pass boolean,
 
     ignore boolean,
     hab boolean,
     ephys boolean,
     muscimol boolean,
+
     CONSTRAINT training_sessions_subject_fkey
         FOREIGN KEY (mouse_id)
         REFERENCES training_subjects (mouse_id)

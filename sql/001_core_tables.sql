@@ -1,7 +1,3 @@
-CREATE SCHEMA IF NOT EXISTS sam;
-
-SET search_path TO sam;
-
 DO $$
 BEGIN
     CREATE TYPE project AS ENUM (
@@ -58,5 +54,5 @@ CREATE TABLE IF NOT EXISTS insertions (
         UNIQUE (session_id, probe_letter),
 
     CONSTRAINT insertions_probe_letter_check
-        CHECK (probe_letter ~ '^[A-Z]$')
+        CHECK (probe_letter ~ '^[A-F]$')
 );
