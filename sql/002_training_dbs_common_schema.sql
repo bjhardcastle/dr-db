@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS training_subjects (
 
     status text,
     purpose text,
-    alive text,
+    alive boolean,
     genotype text,
     sex text,
     birthdate text,
