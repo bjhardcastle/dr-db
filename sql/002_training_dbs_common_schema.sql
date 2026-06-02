@@ -39,6 +39,10 @@ all_mice differences:
   data_path
 */
 
+CREATE SCHEMA IF NOT EXISTS sam;
+
+SET search_path TO sam;
+
 DO $$
 BEGIN
     CREATE TYPE sex AS ENUM (
