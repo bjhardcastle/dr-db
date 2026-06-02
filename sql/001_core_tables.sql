@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS subjects (
-    id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    subject_id integer NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS sessions (
@@ -8,7 +9,7 @@ CREATE TABLE IF NOT EXISTS sessions (
 
     CONSTRAINT sessions_subject_id_fkey
         FOREIGN KEY (subject_id)
-        REFERENCES subjects (id)
+        REFERENCES subjects (subject_id)
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
 
@@ -23,7 +24,7 @@ CREATE TABLE IF NOT EXISTS insertions (
 
     CONSTRAINT insertions_subject_id_fkey
         FOREIGN KEY (subject_id)
-        REFERENCES subjects (id)
+        REFERENCES subjects (subject_id)
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
 
