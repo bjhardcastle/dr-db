@@ -39,6 +39,17 @@ all_mice differences:
   data_path
 */
 
+DO $$
+BEGIN
+    CREATE TYPE sex AS ENUM (
+        'male',
+        'female'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END
+$$;
+
 CREATE TABLE IF NOT EXISTS training_subjects (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     source_database text NOT NULL,
@@ -49,8 +60,8 @@ CREATE TABLE IF NOT EXISTS training_subjects (
     purpose text,
     alive boolean,
     genotype text,
-    sex text,
-    birthdate text,
+    sex sex,
+    birthdate date,
     whc text,
     dhc text,
     implant text,
