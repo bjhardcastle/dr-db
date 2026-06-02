@@ -1,5 +1,5 @@
 /*
-Common schema observed across training_dbs/*.sqlite.
+Common schema observed across the SQLite files in training_dbs.
 
 Inputs inspected:
 - training_dbs/DynamicRoutingTraining.sqlite
