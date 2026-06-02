@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS insertions (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     subject_id integer NOT NULL,
     session_id integer NOT NULL,
+    probe_letter text NOT NULL,
 
     CONSTRAINT insertions_subject_id_fkey
         FOREIGN KEY (subject_id)
@@ -32,5 +33,11 @@ CREATE TABLE IF NOT EXISTS insertions (
         FOREIGN KEY (session_id, subject_id)
         REFERENCES sessions (id, subject_id)
         ON UPDATE CASCADE
-        ON DELETE RESTRICT
+        ON DELETE RESTRICT,
+
+    CONSTRAINT insertions_session_id_probe_letter_key
+        UNIQUE (session_id, probe_letter),
+
+    CONSTRAINT insertions_probe_letter_check
+        CHECK (probe_letter ~ '^[A-Z]$')
 );
