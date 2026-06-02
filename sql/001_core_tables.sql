@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS subjects (
 CREATE TABLE IF NOT EXISTS sessions (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     subject_id integer NOT NULL,
+    date date NOT NULL,
 
     CONSTRAINT sessions_subject_id_fkey
         FOREIGN KEY (subject_id)
@@ -22,6 +23,7 @@ CREATE TABLE IF NOT EXISTS insertions (
     subject_id integer NOT NULL,
     session_id integer NOT NULL,
     probe_letter text NOT NULL,
+    is_deep boolean NOT NULL,
 
     CONSTRAINT insertions_subject_id_fkey
         FOREIGN KEY (subject_id)
