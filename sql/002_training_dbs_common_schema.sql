@@ -20,17 +20,68 @@ Legacy shape:
 - No indexes or foreign keys were observed beyond the rowid primary key.
 
 Session-table differences:
-- DynamicRoutingTraining.sqlite has pass and does not have computer_name.
-- DynamicRoutingTrainingNSB.sqlite has computer_name and does not have pass.
+- DynamicRoutingTraining.sqlite columns:
+  ARRAY[
+      'ID',
+      'start_time',
+      'rig_name',
+      'task_version',
+      'hits',
+      'dprime_same_modality',
+      'dprime_other_modality_go_stim',
+      'quiescent_violations',
+      'pass',
+      'ignore',
+      'hab',
+      'ephys',
+      'muscimol'
+  ]::text[]
+- DynamicRoutingTrainingNSB.sqlite columns:
+  ARRAY[
+      'ID',
+      'start_time',
+      'rig_name',
+      'computer_name',
+      'task_version',
+      'hits',
+      'dprime_same_modality',
+      'dprime_other_modality_go_stim',
+      'quiescent_violations',
+      'ignore',
+      'hab',
+      'ephys',
+      'muscimol'
+  ]::text[]
 
 all_mice differences:
 - Common columns:
-  mouse_id, status, purpose, alive, genotype, sex, birthdate, whc, dhc,
-  implant, cannula, cannula_loc, virus, virus_loc, regimen
+  ARRAY[
+      'mouse_id',
+      'status',
+      'purpose',
+      'alive',
+      'genotype',
+      'sex',
+      'birthdate',
+      'whc',
+      'dhc',
+      'implant',
+      'cannula',
+      'cannula_loc',
+      'virus',
+      'virus_loc',
+      'regimen'
+  ]::text[]
 - DynamicRoutingTraining.sqlite only:
-  timeouts, trainer, next_task_version
+  ARRAY[
+      'timeouts',
+      'trainer',
+      'next_task_version'
+  ]::text[]
 - DynamicRoutingTrainingNSB.sqlite only:
-  data_path
+  ARRAY[
+      'data_path'
+  ]::text[]
 */
 
 CREATE TABLE IF NOT EXISTS training_subjects (
