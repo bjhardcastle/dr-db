@@ -1,0 +1,35 @@
+CREATE TABLE IF NOT EXISTS subjects (
+    id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+);
+
+CREATE TABLE IF NOT EXISTS sessions (
+    id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    subject_id integer NOT NULL,
+
+    CONSTRAINT sessions_subject_id_fkey
+        FOREIGN KEY (subject_id)
+        REFERENCES subjects (id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+
+    CONSTRAINT sessions_id_subject_id_key
+        UNIQUE (id, subject_id)
+);
+
+CREATE TABLE IF NOT EXISTS insertions (
+    id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    subject_id integer NOT NULL,
+    session_id integer NOT NULL,
+
+    CONSTRAINT insertions_subject_id_fkey
+        FOREIGN KEY (subject_id)
+        REFERENCES subjects (id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+
+    CONSTRAINT insertions_session_id_subject_id_fkey
+        FOREIGN KEY (session_id, subject_id)
+        REFERENCES sessions (id, subject_id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+);
