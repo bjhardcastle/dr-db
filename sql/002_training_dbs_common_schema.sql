@@ -144,10 +144,10 @@ CREATE TABLE IF NOT EXISTS training_sessions (
     -- Present only in DynamicRoutingTraining.sqlite session tables.
     pass_status text,
 
-    ignore text,
-    hab text,
-    ephys text,
-    muscimol text,
+    ignore boolean,
+    hab boolean,
+    ephys boolean,
+    muscimol boolean,
 
     CONSTRAINT training_sessions_source_database_check
         CHECK (source_database IN (
