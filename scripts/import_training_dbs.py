@@ -22,8 +22,9 @@ DEFAULT_SOURCE_DBS = (
 )
 
 SUBJECT_COLUMNS = (
-    "nsb",
-    "mouse_id",
+    "subject_id",
+    "project",
+    "is_nsb",
     "status",
     "purpose",
     "alive",
@@ -34,18 +35,20 @@ SUBJECT_COLUMNS = (
     "dhc",
     "implant",
     "cannula",
-    "cannula_loc",
+    "cannula_location",
     "virus",
-    "virus_loc",
+    "virus_location",
     "regimen",
     "timeouts",
     "trainer",
     "next_task_version",
     "data_path",
+    "source_sheet",
+    "source_row",
 )
 
 SESSION_COLUMNS = (
-    "mouse_id",
+    "subject_id",
     "start_time",
     "rig_name",
     "computer_name",
@@ -101,21 +104,21 @@ def main() -> None:
         existing_counts = get_target_counts(conn, args.schema)
         print(
             "Target counts before import: "
-            f"training_subjects={existing_counts[0]}, "
+            f"subjects={existing_counts[0]}, "
             f"training_sessions={existing_counts[1]}."
         )
 
         if not args.append:
-            truncate_training_tables(conn, args.schema)
+            truncate_training_sessions(conn, args.schema)
 
-        insert_subjects(conn, args.schema, rows.subjects)
+        upsert_subjects(conn, args.schema, rows.subjects)
         insert_sessions(conn, args.schema, rows.sessions)
         conn.commit()
 
         final_counts = get_target_counts(conn, args.schema)
         print(
             "Target counts after import: "
-            f"training_subjects={final_counts[0]}, "
+            f"subjects={final_counts[0]}, "
             f"training_sessions={final_counts[1]}."
         )
 
@@ -144,7 +147,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--append",
         action="store_true",
-        help="Append rows instead of replacing sam.training_subjects and sam.training_sessions.",
+        help="Append training sessions instead of replacing sam.training_sessions.",
     )
     parser.add_argument(
         "--dry-run",
@@ -190,7 +193,7 @@ def collect_import_rows(source_dbs: Iterable[tuple[bool, Path]]) -> ImportRows:
     subjects: list[tuple[Any, ...]] = []
     sessions: list[tuple[Any, ...]] = []
     skipped_header_rows = 0
-    known_mouse_ids: set[int] = set()
+    known_subject_ids: set[int] = set()
 
     for nsb, path in source_dbs:
         if not path.exists():
@@ -198,25 +201,26 @@ def collect_import_rows(source_dbs: Iterable[tuple[bool, Path]]) -> ImportRows:
 
         with sqlite3.connect(path) as conn:
             conn.row_factory = sqlite3.Row
+            source_sheet = f"{path.name}:all_mice"
 
-            for row in conn.execute("SELECT * FROM all_mice"):
-                subject = subject_row(nsb, row)
-                mouse_id = subject[SUBJECT_COLUMNS.index("mouse_id")]
-                if mouse_id in known_mouse_ids:
-                    raise ValueError(f"Duplicate mouse_id across source DBs: {mouse_id}")
-                known_mouse_ids.add(mouse_id)
+            for row in conn.execute("SELECT rowid AS source_row, * FROM all_mice"):
+                subject = subject_row(nsb, row, source_sheet)
+                subject_id = subject[SUBJECT_COLUMNS.index("subject_id")]
+                if subject_id in known_subject_ids:
+                    raise ValueError(f"Duplicate subject_id across source DBs: {subject_id}")
+                known_subject_ids.add(subject_id)
                 subjects.append(subject)
 
             for table_name in session_table_names(conn):
-                mouse_id = parse_int(table_name)
-                if mouse_id not in known_mouse_ids:
+                subject_id = parse_int(table_name)
+                if subject_id not in known_subject_ids:
                     raise ValueError(f"Session table {table_name} has no all_mice row")
 
                 for row in conn.execute(f'SELECT * FROM "{table_name}"'):
                     if is_legacy_header_row(row):
                         skipped_header_rows += 1
                         continue
-                    sessions.append(session_row(mouse_id, row))
+                    sessions.append(session_row(subject_id, row))
 
     return ImportRows(
         subjects=subjects,
@@ -225,10 +229,11 @@ def collect_import_rows(source_dbs: Iterable[tuple[bool, Path]]) -> ImportRows:
     )
 
 
-def subject_row(nsb: bool, row: sqlite3.Row) -> tuple[Any, ...]:
+def subject_row(nsb: bool, row: sqlite3.Row, source_sheet: str) -> tuple[Any, ...]:
     return (
-        nsb,
         parse_int(row["mouse_id"]),
+        "DynamicRouting",
+        nsb,
         clean_text(row["status"]),
         clean_text(row["purpose"]),
         parse_bool(row["alive"]),
@@ -247,12 +252,14 @@ def subject_row(nsb: bool, row: sqlite3.Row) -> tuple[Any, ...]:
         clean_text(row["trainer"] if "trainer" in row.keys() else None),
         clean_text(row["next_task_version"] if "next_task_version" in row.keys() else None),
         clean_text(row["data_path"] if "data_path" in row.keys() else None),
+        source_sheet,
+        parse_int(row["source_row"]),
     )
 
 
-def session_row(mouse_id: int, row: sqlite3.Row) -> tuple[Any, ...]:
+def session_row(subject_id: int, row: sqlite3.Row) -> tuple[Any, ...]:
     return (
-        mouse_id,
+        subject_id,
         clean_text(row["start_time"]),
         clean_text(row["rig_name"]),
         clean_text(row["computer_name"] if "computer_name" in row.keys() else None),
@@ -378,7 +385,7 @@ def apply_schema(conn: psycopg.Connection, schema: str) -> None:
 def get_target_counts(conn: psycopg.Connection, schema: str) -> tuple[int, int]:
     query = sql.SQL(
         "SELECT "
-        "(SELECT count(*) FROM {}.training_subjects), "
+        "(SELECT count(*) FROM {}.subjects WHERE is_nsb IS NOT NULL), "
         "(SELECT count(*) FROM {}.training_sessions)"
     ).format(sql.Identifier(schema), sql.Identifier(schema))
     with conn.cursor() as cur:
@@ -389,20 +396,30 @@ def get_target_counts(conn: psycopg.Connection, schema: str) -> tuple[int, int]:
         return int(row[0]), int(row[1])
 
 
-def truncate_training_tables(conn: psycopg.Connection, schema: str) -> None:
+def truncate_training_sessions(conn: psycopg.Connection, schema: str) -> None:
     query = sql.SQL(
-        "TRUNCATE TABLE {}.training_sessions, {}.training_subjects RESTART IDENTITY"
-    ).format(sql.Identifier(schema), sql.Identifier(schema))
+        "TRUNCATE TABLE {}.training_sessions RESTART IDENTITY"
+    ).format(sql.Identifier(schema))
     conn.execute(query)
 
 
-def insert_subjects(
+def upsert_subjects(
     conn: psycopg.Connection, schema: str, rows: list[tuple[Any, ...]]
 ) -> None:
-    query = sql.SQL("INSERT INTO {}.training_subjects ({}) VALUES ({})").format(
+    updates = [
+        sql.SQL("{} = EXCLUDED.{}").format(sql.Identifier(column), sql.Identifier(column))
+        for column in SUBJECT_COLUMNS
+        if column != "subject_id"
+    ]
+
+    query = sql.SQL(
+        "INSERT INTO {}.subjects ({}) VALUES ({}) "
+        "ON CONFLICT (subject_id) DO UPDATE SET {}"
+    ).format(
         sql.Identifier(schema),
         sql.SQL(", ").join(sql.Identifier(column) for column in SUBJECT_COLUMNS),
         sql.SQL(", ").join(sql.Placeholder() for _ in SUBJECT_COLUMNS),
+        sql.SQL(", ").join(updates),
     )
     with conn.cursor() as cur:
         cur.executemany(query, rows)

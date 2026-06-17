@@ -1,8 +1,23 @@
+CREATE SCHEMA IF NOT EXISTS sam;
+
+SET search_path TO sam;
+
 DO $$
 BEGIN
     CREATE TYPE project AS ENUM (
         'DynamicRouting',
         'Templeton'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END
+$$;
+
+DO $$
+BEGIN
+    CREATE TYPE sex AS ENUM (
+        'male',
+        'female'
     );
 EXCEPTION
     WHEN duplicate_object THEN NULL;
@@ -70,7 +85,25 @@ CREATE TABLE IF NOT EXISTS subjects (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     subject_id integer NOT NULL UNIQUE,
     project project NOT NULL,
+    is_nsb boolean,
+    status text,
+    purpose text,
+    alive boolean,
+    genotype text,
+    sex sex,
+    birthdate date,
+    whc boolean,
+    dhc boolean,
     implant text,
+    cannula boolean,
+    cannula_location text,
+    virus text,
+    virus_location text,
+    regimen text,
+    timeouts text,
+    trainer text,
+    next_task_version text,
+    data_path text,
     line text,
     experiment_type text,
     rig_id integer,
@@ -87,9 +120,33 @@ CREATE TABLE IF NOT EXISTS subjects (
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
 
+    CONSTRAINT subjects_subject_id_check
+        CHECK (subject_id > 0),
+
     CONSTRAINT subjects_source_row_check
         CHECK (source_row IS NULL OR source_row > 0)
 );
+
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS is_nsb boolean;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS status text;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS purpose text;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS alive boolean;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS genotype text;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS sex sex;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS birthdate date;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS whc boolean;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS dhc boolean;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS cannula boolean;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS cannula_location text;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS virus text;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS virus_location text;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS regimen text;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS timeouts text;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS trainer text;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS next_task_version text;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS data_path text;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS source_sheet text;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS source_row integer;
 
 CREATE TABLE IF NOT EXISTS sessions (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -521,6 +578,9 @@ CREATE TABLE IF NOT EXISTS workflow_task_events (
 
 CREATE INDEX IF NOT EXISTS subjects_project_idx
     ON subjects (project);
+
+CREATE INDEX IF NOT EXISTS subjects_is_nsb_idx
+    ON subjects (is_nsb);
 
 CREATE INDEX IF NOT EXISTS subjects_rig_id_idx
     ON subjects (rig_id);

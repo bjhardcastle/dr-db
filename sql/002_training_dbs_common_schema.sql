@@ -37,6 +37,10 @@ all_mice differences:
   timeouts, trainer, next_task_version
 - DynamicRoutingTrainingNSB.sqlite only:
   data_path
+
+Subject rows from all_mice load into sam.subjects. Legacy mouse_id is stored as
+subjects.subject_id, nsb is stored as subjects.is_nsb, and *_loc columns are
+expanded to *_location.
 */
 
 CREATE SCHEMA IF NOT EXISTS sam;
@@ -45,50 +49,111 @@ SET search_path TO sam;
 
 DO $$
 BEGIN
-    CREATE TYPE sex AS ENUM (
-        'male',
-        'female'
-    );
-EXCEPTION
-    WHEN duplicate_object THEN NULL;
+    IF to_regclass('training_subjects') IS NOT NULL THEN
+        INSERT INTO subjects (
+            subject_id,
+            project,
+            is_nsb,
+            status,
+            purpose,
+            alive,
+            genotype,
+            sex,
+            birthdate,
+            whc,
+            dhc,
+            implant,
+            cannula,
+            cannula_location,
+            virus,
+            virus_location,
+            regimen,
+            timeouts,
+            trainer,
+            next_task_version,
+            data_path,
+            source_sheet,
+            source_row
+        )
+        SELECT
+            mouse_id,
+            'DynamicRouting'::project,
+            nsb,
+            status,
+            purpose,
+            alive,
+            genotype,
+            sex,
+            birthdate,
+            whc,
+            dhc,
+            implant,
+            cannula,
+            cannula_loc,
+            virus,
+            virus_loc,
+            regimen,
+            timeouts,
+            trainer,
+            next_task_version,
+            data_path,
+            CASE
+                WHEN nsb THEN 'DynamicRoutingTrainingNSB.sqlite:all_mice'
+                ELSE 'DynamicRoutingTraining.sqlite:all_mice'
+            END,
+            id
+        FROM training_subjects
+        ON CONFLICT (subject_id) DO UPDATE SET
+            project = EXCLUDED.project,
+            is_nsb = EXCLUDED.is_nsb,
+            status = EXCLUDED.status,
+            purpose = EXCLUDED.purpose,
+            alive = EXCLUDED.alive,
+            genotype = EXCLUDED.genotype,
+            sex = EXCLUDED.sex,
+            birthdate = EXCLUDED.birthdate,
+            whc = EXCLUDED.whc,
+            dhc = EXCLUDED.dhc,
+            implant = EXCLUDED.implant,
+            cannula = EXCLUDED.cannula,
+            cannula_location = EXCLUDED.cannula_location,
+            virus = EXCLUDED.virus,
+            virus_location = EXCLUDED.virus_location,
+            regimen = EXCLUDED.regimen,
+            timeouts = EXCLUDED.timeouts,
+            trainer = EXCLUDED.trainer,
+            next_task_version = EXCLUDED.next_task_version,
+            data_path = EXCLUDED.data_path,
+            source_sheet = EXCLUDED.source_sheet,
+            source_row = EXCLUDED.source_row;
+    END IF;
 END
 $$;
 
-CREATE TABLE IF NOT EXISTS training_subjects (
-    id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    nsb boolean NOT NULL,
-    mouse_id integer NOT NULL,
-
-    status text,
-    purpose text,
-    alive boolean,
-    genotype text,
-    sex sex,
-    birthdate date,
-    whc boolean,
-    dhc boolean,
-    implant text,
-    cannula boolean,
-    cannula_loc text,
-    virus text,
-    virus_loc text,
-    regimen text,
-
-    -- Present only in DynamicRoutingTraining.sqlite all_mice.
-    timeouts text,
-    trainer text,
-    next_task_version text,
-
-    -- Present only in DynamicRoutingTrainingNSB.sqlite all_mice.
-    data_path text,
-
-    CONSTRAINT training_subjects_mouse_id_key
-        UNIQUE (mouse_id)
-);
+DO $$
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_schema = current_schema()
+            AND table_name = 'training_sessions'
+            AND column_name = 'mouse_id'
+    )
+    AND NOT EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_schema = current_schema()
+            AND table_name = 'training_sessions'
+            AND column_name = 'subject_id'
+    ) THEN
+        ALTER TABLE training_sessions RENAME COLUMN mouse_id TO subject_id;
+    END IF;
+END
+$$;
 
 CREATE TABLE IF NOT EXISTS training_sessions (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    mouse_id integer NOT NULL,
+    subject_id integer NOT NULL,
 
     start_time text,
     rig_name text,
@@ -111,14 +176,28 @@ CREATE TABLE IF NOT EXISTS training_sessions (
     muscimol boolean,
 
     CONSTRAINT training_sessions_subject_fkey
-        FOREIGN KEY (mouse_id)
-        REFERENCES training_subjects (mouse_id)
+        FOREIGN KEY (subject_id)
+        REFERENCES subjects (subject_id)
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 );
 
-CREATE INDEX IF NOT EXISTS training_sessions_mouse_id_idx
-    ON training_sessions (mouse_id);
+ALTER TABLE IF EXISTS training_sessions
+    DROP CONSTRAINT IF EXISTS training_sessions_subject_fkey;
+
+ALTER TABLE training_sessions
+    ADD CONSTRAINT training_sessions_subject_fkey
+        FOREIGN KEY (subject_id)
+        REFERENCES subjects (subject_id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT;
+
+DROP INDEX IF EXISTS training_sessions_mouse_id_idx;
+
+DROP TABLE IF EXISTS training_subjects;
+
+CREATE INDEX IF NOT EXISTS training_sessions_subject_id_idx
+    ON training_sessions (subject_id);
 
 CREATE INDEX IF NOT EXISTS training_sessions_start_time_idx
     ON training_sessions (start_time);
