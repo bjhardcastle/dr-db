@@ -90,19 +90,16 @@ CREATE TABLE IF NOT EXISTS subject (
 );
 
 CREATE TABLE IF NOT EXISTS surgical_procedures (
-    id integer NOT NULL,
+    subject_id integer NOT NULL,
     procedure text NOT NULL,
     date date NOT NULL,
 
     CONSTRAINT surgical_procedures_pkey
-        PRIMARY KEY (id, procedure, date),
+        PRIMARY KEY (subject_id, procedure, date),
 
     CONSTRAINT surgical_procedures_id_fkey
-        FOREIGN KEY (id)
+        FOREIGN KEY (subject_id)
         REFERENCES subject (id)
         ON UPDATE CASCADE
-        ON DELETE CASCADE,
-
-    CONSTRAINT surgical_procedures_id_check
-        CHECK (id > 0)
+        ON DELETE CASCADE
 );
