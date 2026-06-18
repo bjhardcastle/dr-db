@@ -23,7 +23,6 @@ PROJECTION = {
     "subject.sex": 1,
     "subject.date_of_birth": 1,
     "subject.genotype": 1,
-    "data_description.project_name": 1,
     "procedures.subject_procedures": 1,
 }
 

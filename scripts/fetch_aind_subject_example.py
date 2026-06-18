@@ -28,7 +28,6 @@ def main() -> None:
             "subject.sex": 1,
             "subject.date_of_birth": 1,
             "subject.genotype": 1,
-            "data_description.project_name": 1,
             "procedures.subject_procedures": 1,
         },
         sort={"created": -1},
@@ -77,7 +76,6 @@ def parse_args() -> argparse.Namespace:
 def build_example(records: list[dict[str, Any]]) -> dict[str, Any]:
     record = records[0]
     subject = record.get("subject") or {}
-    data_description = record.get("data_description") or {}
     procedures = record.get("procedures") or {}
     subject_procedures = procedures.get("subject_procedures") or []
     surgical_procedures = [
@@ -94,7 +92,6 @@ def build_example(records: list[dict[str, Any]]) -> dict[str, Any]:
             "genotype": subject.get("genotype"),
             "implant_id": implant_id,
             "perfusion_date": find_procedure_date(surgical_procedures, "Perfusion"),
-            "project": normalize_project(data_description.get("project_name")),
             "sex": normalize_sex(subject.get("sex")),
         },
         "surgical_procedures": build_surgical_procedure_rows(
@@ -132,15 +129,6 @@ def normalize_sex(value: Any) -> str | None:
     if normalized == "female":
         return "F"
     return None
-
-
-def normalize_project(value: Any) -> str | None:
-    if not isinstance(value, str):
-        return None
-    normalized = value.strip().replace(" ", "")
-    if normalized in {"DynamicRouting", "Templeton"}:
-        return normalized
-    return value
 
 
 def find_first_nested_value(procedures: list[dict[str, Any]], key: str) -> Any:
