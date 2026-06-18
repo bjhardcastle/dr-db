@@ -6,18 +6,17 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from threading import Lock
 from typing import Any
+from urllib.parse import urljoin
 
-from aind_data_access_api.document_db import MetadataDbClient
+import requests
 
-from fetch_aind_subject_example import (
-    DEFAULT_API_HOST,
-    build_example,
-)
+from fetch_aind_subject_example import build_example
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SUBJECT_IDS = REPO_ROOT / "training_dbs" / "subject_ids.txt"
 DEFAULT_OUTPUT = REPO_ROOT / "training_dbs" / "aind_subject_metadata.json"
+DEFAULT_API_HOST = "http://aind-metadata-service/"
 
 PROJECTION = {
     "subject.subject_id": 1,
@@ -174,18 +173,7 @@ def fetch_subject_metadata(
     subject_id: str, args: argparse.Namespace
 ) -> dict[str, Any]:
     try:
-        client = MetadataDbClient(
-            host=args.host,
-            database=args.database,
-            collection=args.collection,
-            version=args.version,
-        )
-        records = client.retrieve_docdb_records(
-            filter_query={"subject.subject_id": subject_id},
-            projection=PROJECTION,
-            sort={"created": -1},
-            limit=args.limit,
-        )
+        records = fetch_docdb_records(subject_id, args)
         if not records:
             return {
                 "subject_id": subject_id,
@@ -204,6 +192,28 @@ def fetch_subject_metadata(
             "error": str(exc),
             "metadata": None,
         }
+
+
+def fetch_docdb_records(subject_id: str, args: argparse.Namespace) -> list[dict[str, Any]]:
+    url = build_find_url(args.host, args.version, args.database, args.collection)
+    params = {
+        "filter": json.dumps({"subject.subject_id": subject_id}),
+        "projection": json.dumps(PROJECTION),
+        "sort": json.dumps({"created": -1}),
+        "limit": str(args.limit),
+        "skip": "0",
+    }
+    response = requests.get(url, params=params, timeout=30)
+    response.raise_for_status()
+    records = response.json()
+    if not isinstance(records, list):
+        raise ValueError(f"Expected list response from {url}, got {type(records).__name__}")
+    return records
+
+
+def build_find_url(host: str, version: str, database: str, collection: str) -> str:
+    base_url = host.rstrip("/") + "/"
+    return urljoin(base_url, f"{version}/{database}/{collection}/find")
 
 
 if __name__ == "__main__":
