@@ -7,8 +7,11 @@ x-mathesar-config: &mathesar-config
   POSTGRES_PASSWORD: ${MATHESAR_METADATA_POSTGRES_PASSWORD:-mathesar}
   POSTGRES_HOST: ${MATHESAR_METADATA_POSTGRES_HOST:-dr_db_mathesar_metadata}
   POSTGRES_PORT: ${MATHESAR_METADATA_POSTGRES_PORT:-5432}
+  POSTGRES_SSLMODE: ${MATHESAR_METADATA_POSTGRES_SSLMODE:-prefer}
   FILE_STORAGE_DICT: ${FILE_STORAGE_DICT:-{}}
+  SSO_CONFIG_DICT: ${SSO_CONFIG_DICT:-{}}
   OIDC_CONFIG_DICT: ${OIDC_CONFIG_DICT:-{}}
+  REQUIRE_SSO_LOGIN: ${REQUIRE_SSO_LOGIN:-false}
 
 services:
   dr_db:
@@ -49,13 +52,14 @@ services:
       DEBUG: ${MATHESAR_DEBUG:-false}
       SECRET_KEY: ${MATHESAR_SECRET_KEY-}
       WEB_CONCURRENCY: ${MATHESAR_WEB_CONCURRENCY:-3}
+      PER_USER_DATABASES_ENABLED: ${MATHESAR_PER_USER_DATABASES_ENABLED:-false}
     volumes:
       - type: bind
         source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/mathesar/static
         target: /code/static
       - type: bind
         source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/mathesar/media
-        target: /code/media
+        target: /code/.media
       - type: bind
         source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/mathesar/secrets
         target: /code/.secrets
@@ -82,7 +86,7 @@ services:
     volumes:
       - type: bind
         source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/mathesar/media
-        target: /code/media
+        target: /code/.media
       - type: bind
         source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/mathesar/static
         target: /code/static
