@@ -9,7 +9,7 @@ from aind_data_access_api.document_db import MetadataDbClient
 
 
 DEFAULT_API_HOST = "api.allenneuraldynamics.org"
-DEFAULT_SUBJECT_ID = "731015"
+DEFAULT_SUBJECT_ID = "862025"
 
 
 def main() -> None:
@@ -24,11 +24,11 @@ def main() -> None:
     records = client.retrieve_docdb_records(
         filter_query={"subject.subject_id": args.subject_id},
         projection={
-            "name": 1,
-            "created": 1,
-            "location": 1,
-            "subject": 1,
-            "procedures.subject_id": 1,
+            "subject.subject_id": 1,
+            "subject.sex": 1,
+            "subject.date_of_birth": 1,
+            "subject.genotype": 1,
+            "subject.notes": 1,
             "procedures.subject_procedures": 1,
         },
         sort={"created": -1},
@@ -49,10 +49,7 @@ def main() -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description=(
-            "Fetch example AIND subject metadata and surgical procedures "
-            "from the DocDB REST API."
-        )
+        description="Fetch AIND metadata that maps to db/migrations/000_core.sql."
     )
     parser.add_argument(
         "--subject-id",
@@ -79,22 +76,50 @@ def parse_args() -> argparse.Namespace:
 
 def build_example(records: list[dict[str, Any]]) -> dict[str, Any]:
     record = records[0]
+    subject = record.get("subject") or {}
     procedures = record.get("procedures") or {}
     subject_procedures = procedures.get("subject_procedures") or []
+    surgical_procedures = [
+        procedure
+        for procedure in subject_procedures
+        if is_surgical_procedure(procedure)
+    ]
+    implant_id = find_first_nested_value(surgical_procedures, "implant_part_number")
 
     return {
-        "asset": {
-            "id": record.get("_id"),
-            "name": record.get("name"),
-            "created": record.get("created"),
-            "location": record.get("location"),
+        "subject": {
+            "id": parse_subject_id(subject.get("subject_id")),
+            "status": None,
+            "purpose": None,
+            "project": None,
+            "nsb": None,
+            "genotype": subject.get("genotype"),
+            "sex": normalize_sex(subject.get("sex")),
+            "birth_date": subject.get("date_of_birth"),
+            "surgery_prep": summarize_surgery_prep(surgical_procedures),
+            "surgery_notes": summarize_surgery_notes(surgical_procedures),
+            "implant_id": implant_id,
+            "cannula_location": find_first_nested_value(
+                surgical_procedures, "cannula_location"
+            ),
+            "virus": find_first_nested_value(surgical_procedures, "name"),
+            "virus_location": find_first_nested_value(
+                surgical_procedures, "injection_hemisphere"
+            ),
+            "regimen": None,
+            "timeouts": None,
+            "trainer": None,
+            "next_task_version": None,
+            "duragel": has_nested_value(
+                surgical_procedures, "protective_material", "duragel"
+            ),
+            "perfusion_date": find_procedure_date(surgical_procedures, "Perfusion"),
+            "notes": subject.get("notes"),
         },
-        "subject": record.get("subject"),
-        "surgical_procedures": [
-            procedure
-            for procedure in subject_procedures
-            if is_surgical_procedure(procedure)
-        ],
+        "implant": {
+            "id": implant_id,
+            "dhc": has_nested_value(surgical_procedures, "headframe_type", "DHC"),
+        },
     }
 
 
@@ -110,6 +135,76 @@ def is_surgical_procedure(procedure: dict[str, Any]) -> bool:
         and "surg" in nested["procedure_type"].lower()
         for nested in nested_procedures
     )
+
+
+def parse_subject_id(value: Any) -> int | None:
+    if value is None:
+        return None
+    return int(value)
+
+
+def normalize_sex(value: Any) -> str | None:
+    if not isinstance(value, str):
+        return None
+    normalized = value.strip().lower()
+    if normalized == "male":
+        return "M"
+    if normalized == "female":
+        return "F"
+    return None
+
+
+def summarize_surgery_prep(procedures: list[dict[str, Any]]) -> str | None:
+    prep_values: list[str] = []
+    for procedure in procedures:
+        for nested in procedure.get("procedures") or []:
+            if not isinstance(nested, dict):
+                continue
+            procedure_type = nested.get("procedure_type")
+            if isinstance(procedure_type, str):
+                prep_values.append(procedure_type)
+    return "; ".join(dict.fromkeys(prep_values)) or None
+
+
+def summarize_surgery_notes(procedures: list[dict[str, Any]]) -> str | None:
+    notes = [
+        procedure["notes"]
+        for procedure in procedures
+        if isinstance(procedure.get("notes"), str) and procedure["notes"].strip()
+    ]
+    return "; ".join(notes) or None
+
+
+def find_first_nested_value(procedures: list[dict[str, Any]], key: str) -> Any:
+    for procedure in procedures:
+        for nested in procedure.get("procedures") or []:
+            if isinstance(nested, dict) and nested.get(key) is not None:
+                return nested[key]
+    return None
+
+
+def has_nested_value(procedures: list[dict[str, Any]], key: str, needle: str) -> bool:
+    needle = needle.lower()
+    for procedure in procedures:
+        for nested in procedure.get("procedures") or []:
+            if not isinstance(nested, dict):
+                continue
+            value = nested.get(key)
+            if isinstance(value, str) and needle in value.lower():
+                return True
+    return False
+
+
+def find_procedure_date(
+    procedures: list[dict[str, Any]], procedure_type: str
+) -> str | None:
+    for procedure in procedures:
+        for nested in procedure.get("procedures") or []:
+            if not isinstance(nested, dict):
+                continue
+            if nested.get("procedure_type") == procedure_type:
+                return procedure.get("start_date")
+    return None
 
 
 if __name__ == "__main__":
