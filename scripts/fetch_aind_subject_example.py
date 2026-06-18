@@ -156,7 +156,7 @@ def normalize_sex(value: Any) -> str | None:
 
 def summarize_surgery_prep(procedures: list[dict[str, Any]]) -> str | None:
     prep_values: list[str] = []
-    for procedure in procedures:
+    for procedure in sorted(procedures, key=procedure_start_date_sort_key):
         for nested in procedure.get("procedures") or []:
             if not isinstance(nested, dict):
                 continue
@@ -164,6 +164,13 @@ def summarize_surgery_prep(procedures: list[dict[str, Any]]) -> str | None:
             if isinstance(procedure_type, str):
                 prep_values.append(procedure_type)
     return "; ".join(dict.fromkeys(prep_values)) or None
+
+
+def procedure_start_date_sort_key(procedure: dict[str, Any]) -> str:
+    start_date = procedure.get("start_date")
+    if isinstance(start_date, str) and start_date:
+        return start_date
+    return "9999-12-31"
 
 
 def summarize_surgery_notes(procedures: list[dict[str, Any]]) -> str | None:
