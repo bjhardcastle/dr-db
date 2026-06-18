@@ -1,0 +1,94 @@
+name: dr-db
+
+x-mathesar-config: &mathesar-config
+  DOMAIN_NAME: ${MATHESAR_DOMAIN_NAME:-http://dr-db,http://localhost,http://127.0.0.1}
+  POSTGRES_DB: ${MATHESAR_METADATA_POSTGRES_DB:-mathesar_django}
+  POSTGRES_USER: ${MATHESAR_METADATA_POSTGRES_USER:-mathesar}
+  POSTGRES_PASSWORD: ${MATHESAR_METADATA_POSTGRES_PASSWORD:-mathesar}
+  POSTGRES_HOST: ${MATHESAR_METADATA_POSTGRES_HOST:-dr_db_mathesar_metadata}
+  POSTGRES_PORT: ${MATHESAR_METADATA_POSTGRES_PORT:-5432}
+  FILE_STORAGE_DICT: ${FILE_STORAGE_DICT:-{}}
+  OIDC_CONFIG_DICT: ${OIDC_CONFIG_DICT:-{}}
+
+services:
+  dr_db:
+    networks:
+      default:
+        aliases:
+          - dr-db
+
+  dr_db_mathesar_metadata:
+    container_name: dr_db_mathesar_metadata
+    image: pgautoupgrade/pgautoupgrade:17-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${MATHESAR_METADATA_POSTGRES_DB:-mathesar_django}
+      POSTGRES_USER: ${MATHESAR_METADATA_POSTGRES_USER:-mathesar}
+      POSTGRES_PASSWORD: ${MATHESAR_METADATA_POSTGRES_PASSWORD:-mathesar}
+    expose:
+      - "5432"
+    volumes:
+      - type: bind
+        source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/mathesar/pgdata
+        target: /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 1s
+      retries: 30
+      start_period: 5s
+
+  dr_db_mathesar:
+    container_name: dr_db_mathesar
+    image: mathesar/mathesar:latest
+    restart: unless-stopped
+    environment:
+      <<: *mathesar-config
+      DJANGO_SETTINGS_MODULE: config.settings.production
+      ALLOWED_HOSTS: ${MATHESAR_ALLOWED_HOSTS:-dr-db,localhost,127.0.0.1,[::1]}
+      DEBUG: ${MATHESAR_DEBUG:-false}
+      SECRET_KEY: ${MATHESAR_SECRET_KEY-}
+      WEB_CONCURRENCY: ${MATHESAR_WEB_CONCURRENCY:-3}
+    volumes:
+      - type: bind
+        source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/mathesar/static
+        target: /code/static
+      - type: bind
+        source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/mathesar/media
+        target: /code/media
+      - type: bind
+        source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/mathesar/secrets
+        target: /code/.secrets
+    depends_on:
+      dr_db_mathesar_metadata:
+        condition: service_healthy
+    expose:
+      - "8000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 5s
+
+  dr_db_mathesar_proxy:
+    container_name: dr_db_mathesar_proxy
+    image: mathesar/mathesar-caddy:latest
+    restart: unless-stopped
+    environment:
+      <<: *mathesar-config
+    ports:
+      - "${MATHESAR_HOST_PORT:-7000}:80"
+    volumes:
+      - type: bind
+        source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/mathesar/media
+        target: /code/media
+      - type: bind
+        source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/mathesar/static
+        target: /code/static
+      - type: bind
+        source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/mathesar/caddy
+        target: /data
+    depends_on:
+      dr_db_mathesar:
+        condition: service_healthy
