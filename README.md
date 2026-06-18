@@ -77,7 +77,7 @@ world-readable or writable.
 If a reset leaves either Postgres container restarting, inspect the logs:
 
 ```bash
-docker compose logs --tail=100 dr-db-postgres mathesar-metadata-postgres
+docker compose logs --tail=100 postgres mathesar-metadata
 ```
 
 If the logs show `chown`, `chmod`, or `mkdir` permission errors under

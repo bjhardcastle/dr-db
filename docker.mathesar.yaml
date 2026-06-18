@@ -5,7 +5,7 @@ x-mathesar-config: &mathesar-config
   POSTGRES_DB: ${MATHESAR_METADATA_POSTGRES_DB:-mathesar_django}
   POSTGRES_USER: ${MATHESAR_METADATA_POSTGRES_USER:-mathesar}
   POSTGRES_PASSWORD: ${MATHESAR_METADATA_POSTGRES_PASSWORD:-mathesar}
-  POSTGRES_HOST: ${MATHESAR_METADATA_POSTGRES_HOST:-dr_db_mathesar_metadata}
+  POSTGRES_HOST: ${MATHESAR_METADATA_POSTGRES_HOST:-mathesar-metadata}
   POSTGRES_PORT: ${MATHESAR_METADATA_POSTGRES_PORT:-5432}
   POSTGRES_SSLMODE: ${MATHESAR_METADATA_POSTGRES_SSLMODE:-prefer}
   FILE_STORAGE_DICT: ${FILE_STORAGE_DICT:-{}}
@@ -14,14 +14,13 @@ x-mathesar-config: &mathesar-config
   REQUIRE_SSO_LOGIN: ${REQUIRE_SSO_LOGIN:-false}
 
 services:
-  dr_db:
+  postgres:
     networks:
       default:
         aliases:
           - dr-db
 
-  dr_db_mathesar_metadata:
-    container_name: dr_db_mathesar_metadata
+  mathesar-metadata:
     image: pgautoupgrade/pgautoupgrade:17-bookworm
     restart: unless-stopped
     environment:
@@ -41,8 +40,7 @@ services:
       retries: 30
       start_period: 5s
 
-  dr_db_mathesar:
-    container_name: dr_db_mathesar
+  mathesar:
     image: mathesar/mathesar:latest
     restart: unless-stopped
     environment:
@@ -64,7 +62,7 @@ services:
         source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/mathesar/secrets
         target: /code/.secrets
     depends_on:
-      dr_db_mathesar_metadata:
+      mathesar-metadata:
         condition: service_healthy
     expose:
       - "8000"
@@ -75,8 +73,7 @@ services:
       retries: 30
       start_period: 5s
 
-  dr_db_mathesar_proxy:
-    container_name: dr_db_mathesar_proxy
+  mathesar-proxy:
     image: mathesar/mathesar-caddy:latest
     restart: unless-stopped
     environment:
@@ -94,5 +91,5 @@ services:
         source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/mathesar/caddy
         target: /data
     depends_on:
-      dr_db_mathesar:
+      mathesar:
         condition: service_healthy

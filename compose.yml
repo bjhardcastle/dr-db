@@ -1,8 +1,7 @@
 name: dr-db
 
 services:
-  dr_db:
-    container_name: dr_db
+  postgres:
     image: pgautoupgrade/pgautoupgrade:17-bookworm
     restart: unless-stopped
     environment:
@@ -26,7 +25,7 @@ services:
     image: ghcr.io/amacneil/dbmate:latest
     profiles: ["tools"]
     depends_on:
-      dr_db:
+      postgres:
         condition: service_healthy
     environment:
       DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL for the target database}
