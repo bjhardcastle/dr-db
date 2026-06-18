@@ -29,19 +29,7 @@ services:
       dr_db:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgres://${DR_DB_POSTGRES_USER:-svc_neuropix}:${DR_DB_POSTGRES_PASSWORD:?Set DR_DB_POSTGRES_PASSWORD in .env}@dr_db:5432/${DR_DB_POSTGRES_DB:-dr_db}?sslmode=disable
-      DBMATE_MIGRATIONS_DIR: /db/migrations
-    volumes:
-      - ./db/migrations:/db/migrations
-
-  dbmate_dev:
-    image: ghcr.io/amacneil/dbmate:latest
-    profiles: ["tools"]
-    depends_on:
-      dr_db:
-        condition: service_healthy
-    environment:
-      DATABASE_URL: postgres://${DR_DB_POSTGRES_USER:-svc_neuropix}:${DR_DB_POSTGRES_PASSWORD:?Set DR_DB_POSTGRES_PASSWORD in .env}@dr_db:5432/${DR_DB_POSTGRES_DEV_DB:-dr_db_dev}?sslmode=disable
+      DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL for the target database}
       DBMATE_MIGRATIONS_DIR: /db/migrations
     volumes:
       - ./db/migrations:/db/migrations
