@@ -9,7 +9,7 @@ from aind_data_access_api.document_db import MetadataDbClient
 
 
 DEFAULT_API_HOST = "api.allenneuraldynamics.org"
-DEFAULT_SUBJECT_ID = "862025"
+DEFAULT_SUBJECT_ID = "805749"
 
 
 def main() -> None:
@@ -28,7 +28,7 @@ def main() -> None:
             "subject.sex": 1,
             "subject.date_of_birth": 1,
             "subject.genotype": 1,
-            "subject.notes": 1,
+            "data_description.project_name": 1,
             "procedures.subject_procedures": 1,
         },
         sort={"created": -1},
@@ -77,6 +77,7 @@ def parse_args() -> argparse.Namespace:
 def build_example(records: list[dict[str, Any]]) -> dict[str, Any]:
     record = records[0]
     subject = record.get("subject") or {}
+    data_description = record.get("data_description") or {}
     procedures = record.get("procedures") or {}
     subject_procedures = procedures.get("subject_procedures") or []
     surgical_procedures = [
@@ -85,41 +86,20 @@ def build_example(records: list[dict[str, Any]]) -> dict[str, Any]:
         if is_surgical_procedure(procedure)
     ]
     implant_id = find_first_nested_value(surgical_procedures, "implant_part_number")
+    subject_id = parse_subject_id(subject.get("subject_id"))
 
     return {
         "subject": {
-            "id": parse_subject_id(subject.get("subject_id")),
-            "status": None,
-            "purpose": None,
-            "project": None,
-            "nsb": None,
-            "genotype": subject.get("genotype"),
-            "sex": normalize_sex(subject.get("sex")),
             "birth_date": subject.get("date_of_birth"),
-            "surgery_prep": summarize_surgery_prep(surgical_procedures),
-            "surgery_notes": summarize_surgery_notes(surgical_procedures),
+            "genotype": subject.get("genotype"),
             "implant_id": implant_id,
-            "cannula_location": find_first_nested_value(
-                surgical_procedures, "cannula_location"
-            ),
-            "virus": find_first_nested_value(surgical_procedures, "name"),
-            "virus_location": find_first_nested_value(
-                surgical_procedures, "injection_hemisphere"
-            ),
-            "regimen": None,
-            "timeouts": None,
-            "trainer": None,
-            "next_task_version": None,
-            "duragel": has_nested_value(
-                surgical_procedures, "protective_material", "duragel"
-            ),
             "perfusion_date": find_procedure_date(surgical_procedures, "Perfusion"),
-            "notes": subject.get("notes"),
+            "project": normalize_project(data_description.get("project_name")),
+            "sex": normalize_sex(subject.get("sex")),
         },
-        "implant": {
-            "id": implant_id,
-            "dhc": has_nested_value(surgical_procedures, "headframe_type", "DHC"),
-        },
+        "surgical_procedures": build_surgical_procedure_rows(
+            subject_id, surgical_procedures
+        ),
     }
 
 
@@ -154,32 +134,13 @@ def normalize_sex(value: Any) -> str | None:
     return None
 
 
-def summarize_surgery_prep(procedures: list[dict[str, Any]]) -> str | None:
-    prep_values: list[str] = []
-    for procedure in sorted(procedures, key=procedure_start_date_sort_key):
-        for nested in procedure.get("procedures") or []:
-            if not isinstance(nested, dict):
-                continue
-            procedure_type = nested.get("procedure_type")
-            if isinstance(procedure_type, str):
-                prep_values.append(procedure_type)
-    return "; ".join(dict.fromkeys(prep_values)) or None
-
-
-def procedure_start_date_sort_key(procedure: dict[str, Any]) -> str:
-    start_date = procedure.get("start_date")
-    if isinstance(start_date, str) and start_date:
-        return start_date
-    return "9999-12-31"
-
-
-def summarize_surgery_notes(procedures: list[dict[str, Any]]) -> str | None:
-    notes = [
-        procedure["notes"]
-        for procedure in procedures
-        if isinstance(procedure.get("notes"), str) and procedure["notes"].strip()
-    ]
-    return "; ".join(notes) or None
+def normalize_project(value: Any) -> str | None:
+    if not isinstance(value, str):
+        return None
+    normalized = value.strip().replace(" ", "")
+    if normalized in {"DynamicRouting", "Templeton"}:
+        return normalized
+    return value
 
 
 def find_first_nested_value(procedures: list[dict[str, Any]], key: str) -> Any:
@@ -190,16 +151,22 @@ def find_first_nested_value(procedures: list[dict[str, Any]], key: str) -> Any:
     return None
 
 
-def has_nested_value(procedures: list[dict[str, Any]], key: str, needle: str) -> bool:
-    needle = needle.lower()
+def build_surgical_procedure_rows(
+    subject_id: int | None, procedures: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
     for procedure in procedures:
         for nested in procedure.get("procedures") or []:
             if not isinstance(nested, dict):
                 continue
-            value = nested.get(key)
-            if isinstance(value, str) and needle in value.lower():
-                return True
-    return False
+            rows.append(
+                {
+                    "id": subject_id,
+                    "procedure": nested.get("procedure_type"),
+                    "date": procedure.get("start_date"),
+                }
+            )
+    return rows
 
 
 def find_procedure_date(
