@@ -1,0 +1,47 @@
+name: dr-db
+
+services:
+  dr_db:
+    container_name: dr_db
+    image: pgautoupgrade/pgautoupgrade:17-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DR_DB_POSTGRES_DB:-dr_db}
+      POSTGRES_USER: ${DR_DB_POSTGRES_USER:-svc_neuropix}
+      POSTGRES_PASSWORD: ${DR_DB_POSTGRES_PASSWORD:?Set DR_DB_POSTGRES_PASSWORD in .env}
+    ports:
+      - "${DR_DB_POSTGRES_HOST_PORT:-7500}:5432"
+    volumes:
+      - type: bind
+        source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/postgres
+        target: /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 1s
+      retries: 30
+      start_period: 5s
+
+  dbmate:
+    image: ghcr.io/amacneil/dbmate:latest
+    profiles: ["tools"]
+    depends_on:
+      dr_db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://${DR_DB_POSTGRES_USER:-svc_neuropix}:${DR_DB_POSTGRES_PASSWORD:?Set DR_DB_POSTGRES_PASSWORD in .env}@dr_db:5432/${DR_DB_POSTGRES_DB:-dr_db}?sslmode=disable
+      DBMATE_MIGRATIONS_DIR: /db/migrations
+    volumes:
+      - ./sql:/db/migrations
+
+  dbmate_dev:
+    image: ghcr.io/amacneil/dbmate:latest
+    profiles: ["tools"]
+    depends_on:
+      dr_db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://${DR_DB_POSTGRES_USER:-svc_neuropix}:${DR_DB_POSTGRES_PASSWORD:?Set DR_DB_POSTGRES_PASSWORD in .env}@dr_db:5432/${DR_DB_POSTGRES_DEV_DB:-dr_db_dev}?sslmode=disable
+      DBMATE_MIGRATIONS_DIR: /db/migrations
+    volumes:
+      - ./sql:/db/migrations
