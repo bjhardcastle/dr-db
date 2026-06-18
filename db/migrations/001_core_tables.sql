@@ -27,8 +27,12 @@ $$;
 DO $$
 BEGIN
     CREATE TYPE session_kind AS ENUM (
-        'production_ephys',
+        'brainwide_survey',
         'muscimol',
+        'virus_test',
+        'hab',
+        'dye_test',
+        'training',
         'other'
     );
 EXCEPTION
@@ -76,16 +80,13 @@ CREATE TABLE IF NOT EXISTS staff_members (
 
 CREATE TABLE IF NOT EXISTS rigs (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    rig_name text NOT NULL UNIQUE,
-    active boolean NOT NULL DEFAULT true,
-    notes text
+    name text NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS subjects (
-    id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    subject_id integer NOT NULL UNIQUE,
+    id integer PRIMARY KEY,
     project project NOT NULL,
-    is_nsb boolean,
+    nsb boolean,
     status text,
     purpose text,
     alive boolean,
@@ -104,15 +105,11 @@ CREATE TABLE IF NOT EXISTS subjects (
     trainer text,
     next_task_version text,
     data_path text,
-    line text,
     experiment_type text,
     rig_id integer,
     surgery_prep text,
-    duragel boolean,
-    behavior_failed boolean,
+    duragel boolean DEFAULT false,
     notes text,
-    source_sheet text,
-    source_row integer,
 
     CONSTRAINT subjects_rig_id_fkey
         FOREIGN KEY (rig_id)
@@ -152,7 +149,7 @@ CREATE TABLE IF NOT EXISTS sessions (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     subject_id integer NOT NULL,
     date date NOT NULL,
-    session_kind session_kind NOT NULL DEFAULT 'production_ephys',
+    session_kind session_kind NOT NULL,
     experiment_label text,
     implant text,
     dye text,
@@ -160,9 +157,7 @@ CREATE TABLE IF NOT EXISTS sessions (
     probes_in_brain text,
     insertion_config text,
     stims_run text,
-    retracted_100 boolean,
     probe_locator text,
-    surface_channel_recording boolean,
     needs_upload boolean,
     external_session_ids text[],
     notes text,
@@ -193,10 +188,14 @@ CREATE TABLE IF NOT EXISTS insertions (
     subject_id integer NOT NULL,
     session_id integer NOT NULL,
     probe_letter text NOT NULL,
-    is_deep boolean NOT NULL DEFAULT false,
     was_inserted boolean NOT NULL DEFAULT true,
+    ignore boolean NOT NULL DEFAULT false,
+    retracted_100 boolean,
+    unsortable boolean,
+    has_surface_channel_recording boolean,
     target_location text,
     depth_um integer,
+    is_deep boolean,
     depth_notes text,
     injection_distance_mm numeric(8, 3),
     notes text,
@@ -223,8 +222,50 @@ CREATE TABLE IF NOT EXISTS insertions (
         CHECK (depth_um IS NULL OR depth_um >= 0),
 
     CONSTRAINT insertions_injection_distance_mm_check
-        CHECK (injection_distance_mm IS NULL OR injection_distance_mm >= 0)
+        CHECK (injection_distance_mm IS NULL OR injection_distance_mm >= 0),
+
+    CONSTRAINT insertions_unsortable_implies_ignore_check
+        CHECK (unsortable IS NOT TRUE OR ignore IS TRUE),
+
+    CONSTRAINT insertions_depth_implies_is_deep_check
+        CHECK (depth_um IS NULL OR is_deep = (depth_um > 3000))
 );
+
+CREATE OR REPLACE FUNCTION set_insertion_ignore_for_unsortable()
+RETURNS trigger AS $$
+BEGIN
+    IF NEW.unsortable IS TRUE THEN
+        NEW.ignore := true;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS insertions_set_ignore_for_unsortable ON insertions;
+
+CREATE TRIGGER insertions_set_ignore_for_unsortable
+    BEFORE INSERT OR UPDATE OF unsortable, ignore
+    ON insertions
+    FOR EACH ROW
+    EXECUTE FUNCTION set_insertion_ignore_for_unsortable();
+
+CREATE OR REPLACE FUNCTION set_insertion_is_deep_for_depth()
+RETURNS trigger AS $$
+BEGIN
+    NEW.is_deep := NEW.depth_um > 3000;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS insertions_set_is_deep_for_depth ON insertions;
+
+CREATE TRIGGER insertions_set_is_deep_for_depth
+    BEFORE INSERT OR UPDATE OF depth_um, is_deep
+    ON insertions
+    FOR EACH ROW
+    EXECUTE FUNCTION set_insertion_is_deep_for_depth();
 
 CREATE TABLE IF NOT EXISTS subject_workflows (
     subject_id integer PRIMARY KEY,
