@@ -1,0 +1,7531 @@
+{
+  "completed_count": 454,
+  "results": [
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2021-12-21",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": []
+      },
+      "status": "ok",
+      "subject_id": "614910"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2021-12-29",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2022-07-28",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-07-28",
+            "id": 615634,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "615634"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2021-12-29",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2022-07-28",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-07-28",
+            "id": 615635,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "615635"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2021-12-29",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2022-07-28",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-07-28",
+            "id": 615636,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "615636"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-01-03",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2022-07-28",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-07-28",
+            "id": 616266,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "616266"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-01-03",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2022-07-29",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-07-29",
+            "id": 616270,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "616270"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-02-13",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2022-07-29",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-07-29",
+            "id": 621898,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "621898"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-02-13",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2022-07-29",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-07-29",
+            "id": 621899,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "621899"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-02-13",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2022-08-24",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-08-24",
+            "id": 621900,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "621900"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-02-13",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2022-07-27",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-07-27",
+            "id": 621903,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "621903"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-02-13",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2022-08-24",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-08-24",
+            "id": 621904,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "621904"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-03-07",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2022-07-29",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-07-29",
+            "id": 624731,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "624731"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-03-16",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2022-08-31",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-08-31",
+            "id": 625917,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "625917"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-03-16",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2022-08-31",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-08-31",
+            "id": 625918,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "625918"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-03-16",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2022-08-31",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-08-31",
+            "id": 625919,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "625919"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-03-16",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2022-08-31",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-08-31",
+            "id": 625920,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "625920"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-03-22",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": []
+      },
+      "status": "ok",
+      "subject_id": "626791"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-03-29",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": []
+      },
+      "status": "ok",
+      "subject_id": "627688"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-03-29",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2022-08-31",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-08-31",
+            "id": 627690,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "627690"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-04-29",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": []
+      },
+      "status": "ok",
+      "subject_id": "631862"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-04-29",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": []
+      },
+      "status": "ok",
+      "subject_id": "631863"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-04-29",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": []
+      },
+      "status": "ok",
+      "subject_id": "631864"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-04-29",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": []
+      },
+      "status": "ok",
+      "subject_id": "631865"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-04-29",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": []
+      },
+      "status": "ok",
+      "subject_id": "631866"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-04-29",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": []
+      },
+      "status": "ok",
+      "subject_id": "631867"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-06-05",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": []
+      },
+      "status": "ok",
+      "subject_id": "636761"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-06-05",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": []
+      },
+      "status": "ok",
+      "subject_id": "636766"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-06-17",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-08-16",
+            "id": 638573,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "638573"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-06-17",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-08-23",
+            "id": 638574,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "638574"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-06-17",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-08-23",
+            "id": 638575,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "638575"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-06-17",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-08-25",
+            "id": 638576,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "638576"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-06-17",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-08-16",
+            "id": 638577,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "638577"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-06-17",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-08-25",
+            "id": 638578,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "638578"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-06-23",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-09-15",
+            "id": 639249,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "639249"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-07-22",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-09-28",
+            "id": 643279,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "643279"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-07-22",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-10-06",
+            "id": 643280,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "643280"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-08-02",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-09-20",
+            "id": 644860,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "644860"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-08-02",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-10-11",
+            "id": 644861,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "644861"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-08-02",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-10-31",
+            "id": 644862,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "644862"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-08-02",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-02-03",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-02-03",
+            "id": 644864,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "644864"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-08-02",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-02-10",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-02-10",
+            "id": 644866,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2022-10-17",
+            "id": 644866,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "644866"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-08-02",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-02-24",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-02-24",
+            "id": 644867,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2022-10-24",
+            "id": 644867,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "644867"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-09-01",
+          "genotype": "Pvalb-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-11-15",
+            "id": 648623,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "648623"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-09-13",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-02-17",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-02-17",
+            "id": 649943,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2022-11-08",
+            "id": 649943,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "649943"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-10-07",
+          "genotype": "Pvalb-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-12-05",
+            "id": 653481,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "653481"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-10-07",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-11-29",
+            "id": 653493,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "653493"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-10-26",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2022-12-20",
+            "id": 656054,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "656054"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-11-02",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-01-05",
+            "id": 656726,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "656726"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-11-11",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-01-17",
+            "id": 658096,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-01-17",
+            "id": 658096,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "658096"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-11-22",
+          "genotype": "Pvalb-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-01-30",
+            "id": 659250,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-01-30",
+            "id": 659250,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "659250"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-11-24",
+          "genotype": "Pvalb-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-02-06",
+            "id": 659492,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-02-06",
+            "id": 659492,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "659492"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-11-29",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-08-11",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-08-11",
+            "id": 660023,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-01-25",
+            "id": 660023,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "660023"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-12-24",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-08-25",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-08-25",
+            "id": 662892,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-02-08",
+            "id": 662892,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "662892"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2022-12-26",
+          "genotype": "Pvalb-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-02-27",
+            "id": 663031,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-02-27",
+            "id": 663031,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "663031"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-01-07",
+          "genotype": "Pvalb-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": null,
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-03-06",
+            "id": 664566,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-03-06",
+            "id": 664566,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "664566"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-01-09",
+          "genotype": "Pvalb-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-11-17",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-11-17",
+            "id": 664851,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-03-14",
+            "id": 664851,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-03-14",
+            "id": 664851,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "664851"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-01-09",
+          "genotype": "Pvalb-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-03-23",
+            "id": 666024,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-03-23",
+            "id": 666024,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "666024"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-01-26",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-08-18",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-08-18",
+            "id": 666986,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-03-06",
+            "id": 666986,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "666986"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-01-27",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-09-29",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-09-29",
+            "id": 667252,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-03-20",
+            "id": 667252,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "667252"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-02-06",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-09-01",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-09-01",
+            "id": 668755,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-04-04",
+            "id": 668755,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "668755"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-02-06",
+          "genotype": "wt/wt",
+          "implant_id": "2001",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-04-12",
+            "id": 668758,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-04-12",
+            "id": 668758,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "668758"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-02-17",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-04-04",
+            "id": 670242,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-04-04",
+            "id": 670242,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "670242"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-02-17",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-04-10",
+            "id": 670243,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-04-10",
+            "id": 670243,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "670243"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-02-24",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-05-01",
+            "id": 671438,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-05-01",
+            "id": 671438,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "671438"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-03-10",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-05-10",
+            "id": 673557,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-05-10",
+            "id": 673557,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "673557"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-03-10",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-05-16",
+            "id": 673558,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-05-16",
+            "id": 673558,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "673558"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-03-11",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-04-17",
+            "id": 673690,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-04-17",
+            "id": 673690,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "673690"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-03-17",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-10-06",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-10-06",
+            "id": 674562,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-05-18",
+            "id": 674562,
+            "procedure": "Craniotomy"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "674562"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-03-18",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-08-14",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-08-14",
+            "id": 674721,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-05-17",
+            "id": 674721,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2023-05-17",
+            "id": 674721,
+            "procedure": "Fiber implant"
+          },
+          {
+            "date": "2023-05-17",
+            "id": 674721,
+            "procedure": "Fiber implant"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "674721"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-03-18",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-05-23",
+            "id": 674723,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-05-23",
+            "id": 674723,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "674723"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-03-21",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-09-15",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-09-15",
+            "id": 675085,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-05-18",
+            "id": 675085,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2023-05-18",
+            "id": 675085,
+            "procedure": "Fiber implant"
+          },
+          {
+            "date": "2023-05-18",
+            "id": 675085,
+            "procedure": "Fiber implant"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "675085"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-03-30",
+          "genotype": "Pvalb-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-12-15",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-12-15",
+            "id": 676909,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-06-08",
+            "id": 676909,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-06-08",
+            "id": 676909,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "676909"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-03-30",
+          "genotype": "Pvalb-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-06-13",
+            "id": 676910,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-06-13",
+            "id": 676910,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "676910"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-04-02",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-05-24",
+            "id": 677350,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2023-05-24",
+            "id": 677350,
+            "procedure": "Fiber implant"
+          },
+          {
+            "date": "2023-05-24",
+            "id": 677350,
+            "procedure": "Fiber implant"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "677350"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-04-02",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-05-24",
+            "id": 677352,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2023-05-24",
+            "id": 677352,
+            "procedure": "Fiber implant"
+          },
+          {
+            "date": "2023-05-24",
+            "id": 677352,
+            "procedure": "Fiber implant"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "677352"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-04-28",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-06-12",
+            "id": 681527,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-06-12",
+            "id": 681527,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "681527"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-04-28",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-10-20",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-10-20",
+            "id": 681532,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-06-29",
+            "id": 681532,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-06-29",
+            "id": 681532,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "681532"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-05-06",
+          "genotype": "Pvalb-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-06-28",
+            "id": 682892,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-06-28",
+            "id": 682892,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "682892"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-05-06",
+          "genotype": "Pvalb-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-07-05",
+            "id": 682893,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-07-05",
+            "id": 682893,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "682893"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-05-13",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-07-12",
+            "id": 684071,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-07-12",
+            "id": 684071,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "684071"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-05-20",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-07-18",
+            "id": 685215,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-07-18",
+            "id": 685215,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "685215"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-05-26",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-12-08",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-12-08",
+            "id": 686176,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-07-10",
+            "id": 686176,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-07-10",
+            "id": 686176,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "686176"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-05-26",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-07-20",
+            "id": 686178,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "686178"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-05-30",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-07-27",
+            "id": 686740,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-07-27",
+            "id": 686740,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "686740"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-06-09",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-08-07",
+            "id": 688542,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-08-07",
+            "id": 688542,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "688542"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-06-11",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": []
+      },
+      "status": "ok",
+      "subject_id": "688770"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-06-11",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-08-03",
+            "id": 688772,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "688772"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-06-17",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-08-17",
+            "id": 689663,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "689663"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-06-24",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": null,
+          "perfusion_date": "2023-12-01",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-12-01",
+            "id": 690706,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-08-15",
+            "id": 690706,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-08-15",
+            "id": 690706,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "690706"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-07-05",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-08-24",
+            "id": 692415,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "692415"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-07-09",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-08-28",
+            "id": 692971,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-08-28",
+            "id": 692971,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "692971"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-07-12",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-08-31",
+            "id": 693271,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "693271"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-07-20",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-09-19",
+            "id": 694686,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2023-09-19",
+            "id": 694686,
+            "procedure": "Fiber implant"
+          },
+          {
+            "date": "2023-09-19",
+            "id": 694686,
+            "procedure": "Fiber implant"
+          },
+          {
+            "date": "2023-09-19",
+            "id": 694686,
+            "procedure": "Fiber implant"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "694686"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-07-22",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-09-19",
+            "id": 695434,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-09-19",
+            "id": 695434,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "695434"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-08-08",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-09-29",
+            "id": 697747,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2023-09-29",
+            "id": 697747,
+            "procedure": "Fiber implant"
+          },
+          {
+            "date": "2023-09-29",
+            "id": 697747,
+            "procedure": "Fiber implant"
+          },
+          {
+            "date": "2023-09-29",
+            "id": 697747,
+            "procedure": "Fiber implant"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "697747"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-08-08",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-10-03",
+            "id": 697749,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2023-10-03",
+            "id": 697749,
+            "procedure": "Fiber implant"
+          },
+          {
+            "date": "2023-10-03",
+            "id": 697749,
+            "procedure": "Fiber implant"
+          },
+          {
+            "date": "2023-10-03",
+            "id": 697749,
+            "procedure": "Fiber implant"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "697749"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-08-18",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-10-23",
+            "id": 699238,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "699238"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-08-23",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": "2024-04-19",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-04-19",
+            "id": 699847,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-10-18",
+            "id": 699847,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-10-18",
+            "id": 699847,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "699847"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-09-06",
+          "genotype": "wt/wt",
+          "implant_id": "2006",
+          "perfusion_date": "2024-02-28",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-02-28",
+            "id": 702131,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-10-26",
+            "id": 702131,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-10-26",
+            "id": 702131,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "702131"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-09-06",
+          "genotype": "wt/wt",
+          "implant_id": "2006",
+          "perfusion_date": "2024-03-08",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-03-08",
+            "id": 702136,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-11-08",
+            "id": 702136,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-11-08",
+            "id": 702136,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "702136"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-09-15",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": "2024-04-12",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-04-12",
+            "id": 703333,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-11-13",
+            "id": 703333,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-11-13",
+            "id": 703333,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "703333"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-09-20",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2024-04-19",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-04-19",
+            "id": 703880,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-12-04",
+            "id": 703880,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-12-04",
+            "id": 703880,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "703880"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-09-20",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": "2024-05-10",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-05-10",
+            "id": 703881,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-11-20",
+            "id": 703881,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-11-20",
+            "id": 703881,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "703881"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-09-20",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2024-04-26",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-04-26",
+            "id": 703882,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-11-30",
+            "id": 703882,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-11-30",
+            "id": 703882,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "703882"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-09-22",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-11-28",
+            "id": 704444,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "704444"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-10-06",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2024-04-26",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-04-26",
+            "id": 706401,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-12-05",
+            "id": 706401,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-12-05",
+            "id": 706401,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "706401"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-10-18",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-01-24",
+            "id": 707969,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "707969"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-10-18",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": "2024-05-03",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-05-03",
+            "id": 708016,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-12-19",
+            "id": 708016,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-12-19",
+            "id": 708016,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "708016"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-10-18",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2023-12-12",
+            "id": 708019,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-12-12",
+            "id": 708019,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "708019"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-10-18",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2024-05-17",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-05-17",
+            "id": 708020,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2023-12-19",
+            "id": 708020,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2023-12-19",
+            "id": 708020,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "708020"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-10-30",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-01-10",
+            "id": 709929,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-01-10",
+            "id": 709929,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "709929"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-11-13",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2024-07-12",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-07-12",
+            "id": 712138,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-01-03",
+            "id": 712138,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-01-03",
+            "id": 712138,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "712138"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-11-13",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-01-02",
+            "id": 712139,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-01-02",
+            "id": 712139,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "712139"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-11-13",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-01-16",
+            "id": 712141,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-01-16",
+            "id": 712141,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "712141"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-11-17",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": []
+      },
+      "status": "ok",
+      "subject_id": "712815"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-11-23",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": "2024-08-09",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-08-09",
+            "id": 713655,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-01-23",
+            "id": 713655,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-01-23",
+            "id": 713655,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "713655"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-12-01",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-02-07",
+            "id": 714748,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-02-07",
+            "id": 714748,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "714748"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-12-01",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-02-05",
+            "id": 714753,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-02-05",
+            "id": 714753,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "714753"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-12-07",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": "2024-06-27",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-06-27",
+            "id": 715706,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-02-22",
+            "id": 715706,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-02-22",
+            "id": 715706,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "715706"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-12-07",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": "2024-08-09",
+          "project": null,
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-08-09",
+            "id": 715709,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-02-13",
+            "id": 715709,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-02-13",
+            "id": 715709,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "715709"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-12-07",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-02-20",
+            "id": 715710,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-02-20",
+            "id": 715710,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "715710"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-12-07",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-02-19",
+            "id": 715713,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-02-19",
+            "id": 715713,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "715713"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-12-15",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2024-08-02",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-08-02",
+            "id": 716718,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-02-27",
+            "id": 716718,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-02-27",
+            "id": 716718,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "716718"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-12-20",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-02-21",
+            "id": 717473,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "717473"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-12-27",
+          "genotype": "wt/wt",
+          "implant_id": "2006",
+          "perfusion_date": "2024-08-23",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-08-23",
+            "id": 718283,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-03-20",
+            "id": 718283,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-03-20",
+            "id": 718283,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "718283"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-12-30",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-02-27",
+            "id": 718642,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-02-27",
+            "id": 718642,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "718642"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-01-03",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-03-14",
+            "id": 719359,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-03-14",
+            "id": 719359,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "719359"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-01-03",
+          "genotype": "wt/wt",
+          "implant_id": "2006",
+          "perfusion_date": "2024-05-23",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-05-23",
+            "id": 719360,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-03-06",
+            "id": 719360,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-03-06",
+            "id": 719360,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "719360"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-02-05",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2024-07-26",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-07-26",
+            "id": 724612,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-04-02",
+            "id": 724612,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-04-02",
+            "id": 724612,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "724612"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2023-12-26",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2024-06-21",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-06-21",
+            "id": 726088,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-03-05",
+            "id": 726088,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-03-05",
+            "id": 726088,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "726088"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-02-25",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-04-11",
+            "id": 728053,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "728053"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-02-25",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-04-22",
+            "id": 728054,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "728054"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-02-25",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-04-16",
+            "id": 728060,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "728060"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-03-02",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-04-22",
+            "id": 728916,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "728916"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-03-02",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": "2024-10-04",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-10-04",
+            "id": 728917,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-05-23",
+            "id": 728917,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "728917"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-03-05",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-05-06",
+            "id": 729295,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-05-06",
+            "id": 729295,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "729295"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-03-10",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-05-23",
+            "id": 730164,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "730164"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-03-19",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-05-13",
+            "id": 731789,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-05-13",
+            "id": 731789,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "731789"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-03-19",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-05-21",
+            "id": 731790,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-05-21",
+            "id": 731790,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "731790"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-03-28",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-06-03",
+            "id": 733780,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-06-03",
+            "id": 733780,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "733780"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-03-28",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-06-04",
+            "id": 733783,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-06-04",
+            "id": 733783,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "733783"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-03-29",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2024-08-16",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-08-16",
+            "id": 733887,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-06-17",
+            "id": 733887,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-06-17",
+            "id": 733887,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "733887"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-03-29",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-05-30",
+            "id": 733888,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-05-30",
+            "id": 733888,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "733888"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-03-29",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2024-09-20",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-09-20",
+            "id": 733891,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-06-11",
+            "id": 733891,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-06-11",
+            "id": 733891,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "733891"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-02-20",
+          "genotype": "wt/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-04-22",
+            "id": 736208,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-04-22",
+            "id": 736208,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "736208"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-04-17",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-06-13",
+            "id": 737400,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-06-13",
+            "id": 737400,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "737400"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-04-17",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-06-18",
+            "id": 737402,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-06-18",
+            "id": 737402,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "737402"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-04-17",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2024-09-27",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-09-27",
+            "id": 737403,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-06-17",
+            "id": 737403,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-06-17",
+            "id": 737403,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "737403"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-04-17",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-06-24",
+            "id": 737407,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-06-24",
+            "id": 737407,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "737407"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-04-17",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-06-18",
+            "id": 737412,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "737412"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-04-17",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-06-18",
+            "id": 737414,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "737414"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-04-17",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-06-26",
+            "id": 737417,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "737417"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-04-30",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-07-02",
+            "id": 739828,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "739828"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-04-30",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-07-02",
+            "id": 739830,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "739830"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-04-30",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-07-11",
+            "id": 739833,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "739833"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-05-02",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-07-01",
+            "id": 740246,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-07-01",
+            "id": 740246,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "740246"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-03-19",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2024-10-11",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-10-11",
+            "id": 741137,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-06-13",
+            "id": 741137,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-06-13",
+            "id": 741137,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "741137"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-03-19",
+          "genotype": "wt/wt",
+          "implant_id": "2006",
+          "perfusion_date": "2024-10-18",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-10-18",
+            "id": 741148,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-06-13",
+            "id": 741148,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-06-13",
+            "id": 741148,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "741148"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-05-16",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": "2024-10-25",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-10-25",
+            "id": 742903,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-07-11",
+            "id": 742903,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-07-11",
+            "id": 742903,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "742903"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-05-18",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-07-11",
+            "id": 743196,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "743196"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-05-18",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2024-12-06",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-12-06",
+            "id": 743199,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-07-17",
+            "id": 743199,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-07-17",
+            "id": 743199,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "743199"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-05-25",
+          "genotype": "Sst-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": "2025-01-17",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-01-17",
+            "id": 744279,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-07-24",
+            "id": 744279,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-07-24",
+            "id": 744279,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "744279"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-05-25",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2024-11-15",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-11-15",
+            "id": 744740,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-07-24",
+            "id": 744740,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-07-24",
+            "id": 744740,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "744740"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "746135"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "746136"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "746138"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-06-05",
+          "genotype": "wt/wt",
+          "implant_id": "2011",
+          "perfusion_date": "2025-01-31",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-01-31",
+            "id": 746439,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-08-21",
+            "id": 746439,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-08-21",
+            "id": 746439,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "746439"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-06-05",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-07-31",
+            "id": 746531,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-07-31",
+            "id": 746531,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "746531"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "747377"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-06-11",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-08-14",
+            "id": 747550,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-08-14",
+            "id": 747550,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "747550"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-06-11",
+          "genotype": "Vip-IRES-Cre/wt;Ai32(RCL-ChR2(H134R)_EYFP)/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-08-06",
+            "id": 747552,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-08-06",
+            "id": 747552,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "747552"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-05-07",
+          "genotype": "wt/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-07-09",
+            "id": 747817,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-07-09",
+            "id": 747817,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "747817"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-05-07",
+          "genotype": "wt/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-07-08",
+            "id": 747818,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-07-08",
+            "id": 747818,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "747818"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-05-21",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-07-23",
+            "id": 750091,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-07-23",
+            "id": 750091,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "750091"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-05-21",
+          "genotype": "wt/wt",
+          "implant_id": "2006",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-07-22",
+            "id": 750092,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-07-22",
+            "id": 750092,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "750092"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-06-24",
+          "genotype": "wt/wt",
+          "implant_id": "2011",
+          "perfusion_date": "2024-11-27",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-11-27",
+            "id": 750329,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-08-21",
+            "id": 750329,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-08-21",
+            "id": 750329,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "750329"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "750331"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "750877"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "750878"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-05-14",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-07-15",
+            "id": 751485,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-07-15",
+            "id": 751485,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "751485"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-05-28",
+          "genotype": "wt/wt",
+          "implant_id": "2006",
+          "perfusion_date": "2024-11-27",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-11-27",
+            "id": 751595,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-07-31",
+            "id": 751595,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-07-31",
+            "id": 751595,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "751595"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-07-18",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-02-14",
+          "project": null,
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-02-14",
+            "id": 754852,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-09-19",
+            "id": 754852,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "754852"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "755694"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "755834"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-06-04",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-08-08",
+            "id": 755836,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-08-08",
+            "id": 755836,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "755836"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "757479"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "758356"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "758779"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "758781"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-06-18",
+          "genotype": "wt/wt",
+          "implant_id": "2011",
+          "perfusion_date": "2025-04-04",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-04-04",
+            "id": 758782,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-09-04",
+            "id": 758782,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-09-04",
+            "id": 758782,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "758782"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-08-11",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": "2011",
+          "perfusion_date": "2025-02-07",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-02-07",
+            "id": 759434,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-10-07",
+            "id": 759434,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-10-07",
+            "id": 759434,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "759434"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-08-11",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-05-30",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-05-30",
+            "id": 759435,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-09-30",
+            "id": 759435,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "759435"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "759436"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "759438"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-07-02",
+          "genotype": "wt/wt ",
+          "implant_id": "2011",
+          "perfusion_date": "2024-12-20",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2024-12-20",
+            "id": 761583,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-09-18",
+            "id": 761583,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-09-18",
+            "id": 761583,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "761583"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "761585"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-08-24",
+          "genotype": "Slc32a1-IRES-Cre/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-05-30",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-05-30",
+            "id": 762125,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-12-11",
+            "id": 762125,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2024-12-11",
+            "id": 762125,
+            "procedure": "Nanoject injection"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "762125"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "762517"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "762518"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "762520"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-08-26",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2025-03-21",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-03-21",
+            "id": 762526,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-10-17",
+            "id": 762526,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2024-10-17",
+            "id": 762526,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "762526"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "762527"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "762528"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "762529"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "762530"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "762532"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "763971"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "763972"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "763973"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "764435"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-09-04",
+          "genotype": "Slc32a1-IRES-Cre/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-05-30",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-05-30",
+            "id": 764436,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-11-19",
+            "id": 764436,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2024-11-19",
+            "id": 764436,
+            "procedure": "Nanoject injection"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "764436"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "764724"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "766948"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "766949"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "766950"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "767173"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-09-19",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-05-30",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-05-30",
+            "id": 767405,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-11-20",
+            "id": 767405,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "767405"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "768204"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "768206"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-09-26",
+          "genotype": "Slc32a1-IRES-Cre/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-06-03",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-06-03",
+            "id": 768675,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2024-12-16",
+            "id": 768675,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2024-12-16",
+            "id": 768675,
+            "procedure": "Nanoject injection"
+          },
+          {
+            "date": "2024-12-16",
+            "id": 768675,
+            "procedure": "Nanoject injection"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "768675"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "768677"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-08-27",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-03-10",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-03-10",
+            "id": 772655,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "772655"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-08-27",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-04-28",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-04-28",
+            "id": 772656,
+            "procedure": "Perfusion"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "772656"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "772657"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-10-27",
+          "genotype": "Slc32a1-IRES-Cre/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-08-01",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-08-01",
+            "id": 774470,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-01-08",
+            "id": 774470,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2025-01-08",
+            "id": 774470,
+            "procedure": "Nanoject injection"
+          },
+          {
+            "date": "2025-01-08",
+            "id": 774470,
+            "procedure": "Nanoject injection"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "774470"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "774471"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "774916"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "776206"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "777660"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "777661"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "777662"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "778674"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "778677"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "779350"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "779352"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "779354"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-11-27",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-08-15",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-08-15",
+            "id": 780116,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-02-03",
+            "id": 780116,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "780116"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "780327"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "780328"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "780669"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "782105"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2024-12-07",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-07-16",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-07-16",
+            "id": 782106,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-02-13",
+            "id": 782106,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "782106"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "782107"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "782108"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "782750"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "782751"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "783141"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "783281"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "783283"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "787919"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-01-16",
+          "genotype": "Slc32a1-IRES-Cre/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-07-25",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-07-25",
+            "id": 787921,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-03-24",
+            "id": 787921,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2025-03-24",
+            "id": 787921,
+            "procedure": "Nanoject injection"
+          },
+          {
+            "date": "2025-03-24",
+            "id": 787921,
+            "procedure": "Nanoject injection"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "787921"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "788241"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "788966"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "788971"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-01-23",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-10-24",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-10-24",
+            "id": 789937,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-04-23",
+            "id": 789937,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "789937"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "789943"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-01-29",
+          "genotype": "Slc32a1-IRES-Cre/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-05-23",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-05-23",
+            "id": 789944,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-03-31",
+            "id": 789944,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2025-03-31",
+            "id": 789944,
+            "procedure": "Nanoject injection"
+          },
+          {
+            "date": "2025-03-31",
+            "id": 789944,
+            "procedure": "Nanoject injection"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "789944"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "791155"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "791156"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "791157"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "791158"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "793117"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "793118"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "793119"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "793279"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "793282"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "793289"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "794301"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "795384"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "795385"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "795386"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-03-06",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2025-08-27",
+          "project": null,
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-08-27",
+            "id": 795555,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-06-24",
+            "id": 795555,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-06-24",
+            "id": 795555,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "795555"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-03-09",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2025-07-16",
+          "project": null,
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-07-16",
+            "id": 796012,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-05-27",
+            "id": 796012,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-05-27",
+            "id": 796012,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "796012"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-03-14",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2025-08-04",
+          "project": null,
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-08-04",
+            "id": 796847,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-06-11",
+            "id": 796847,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-06-11",
+            "id": 796847,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "796847"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-03-14",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2025-07-18",
+          "project": null,
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-07-18",
+            "id": 796848,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-05-19",
+            "id": 796848,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-05-19",
+            "id": 796848,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "796848"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "797809"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "797810"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "797812"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-03-24",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2025-09-05",
+          "project": null,
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-09-05",
+            "id": 798632,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-07-14",
+            "id": 798632,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-07-14",
+            "id": 798632,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "798632"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "800178"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "800181"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-04-04",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-10-24",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-10-24",
+            "id": 800413,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-06-16",
+            "id": 800413,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "800413"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "800414"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "800415"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "800419"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "800420"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-04-09",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-09-25",
+          "project": null,
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-09-25",
+            "id": 801857,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-06-11",
+            "id": 801857,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "801857"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "801858"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "801859"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "801860"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "802590"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "802592"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "803904"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "803906"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "805139"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "805140"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "805142"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "805748"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-05-04",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-10-31",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-10-31",
+            "id": 805749,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-06-30",
+            "id": 805749,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "805749"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "805750"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "805751"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-05-04",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2025-10-24",
+          "project": null,
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-10-24",
+            "id": 805752,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-07-08",
+            "id": 805752,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-07-08",
+            "id": 805752,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "805752"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-05-12",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2025-10-03",
+          "project": null,
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-10-03",
+            "id": 807082,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-07-28",
+            "id": 807082,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-07-28",
+            "id": 807082,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "807082"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-04-01",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-10-07",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-10-07",
+            "id": 807742,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-06-02",
+            "id": 807742,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "807742"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-04-01",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-11-14",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-11-14",
+            "id": 807743,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-06-02",
+            "id": 807743,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "807743"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "807744"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "807745"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "810237"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "810238"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "810239"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "810240"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-06-01",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2025-10-10",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-10-10",
+            "id": 810752,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-08-05",
+            "id": 810752,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-08-05",
+            "id": 810752,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "810752"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-06-01",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2025-10-31",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-10-31",
+            "id": 810754,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-08-04",
+            "id": 810754,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-08-04",
+            "id": 810754,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "810754"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "810755"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-06-02",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-12-10",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-12-10",
+            "id": 811024,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-08-13",
+            "id": 811024,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "811024"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "812108"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "812113"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "812114"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-04-29",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-12-03",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-12-03",
+            "id": 812802,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-07-02",
+            "id": 812802,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "812802"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "812804"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "812805"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "813580"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "813581"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-06-17",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-12-19",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-12-19",
+            "id": 813582,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-08-26",
+            "id": 813582,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "813582"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "813583"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-06-17",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2025-12-05",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-12-05",
+            "id": 813586,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-08-19",
+            "id": 813586,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-08-19",
+            "id": 813586,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "813586"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "813587"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "814665"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-06-24",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2025-11-12",
+          "project": null,
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-11-12",
+            "id": 814666,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-09-08",
+            "id": 814666,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-09-08",
+            "id": 814666,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "814666"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "814668"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-06-24",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2025-11-14",
+          "project": null,
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-11-14",
+            "id": 814669,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-09-15",
+            "id": 814669,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-09-15",
+            "id": 814669,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "814669"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "814671"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "815141"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "815142"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "815143"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "815144"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "817200"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "817201"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "817202"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "817203"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-07-18",
+          "genotype": "Slc32a1-IRES-Cre/wt",
+          "implant_id": null,
+          "perfusion_date": "2026-02-24",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-02-24",
+            "id": 818719,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-09-15",
+            "id": 818719,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2025-09-15",
+            "id": 818719,
+            "procedure": "Nanoject injection"
+          },
+          {
+            "date": "2025-09-15",
+            "id": 818719,
+            "procedure": "Nanoject injection"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "818719"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-07-18",
+          "genotype": "Slc32a1-IRES-Cre/wt",
+          "implant_id": null,
+          "perfusion_date": "2025-12-23",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-12-23",
+            "id": 818720,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-09-18",
+            "id": 818720,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2025-09-18",
+            "id": 818720,
+            "procedure": "Nanoject injection"
+          },
+          {
+            "date": "2025-09-18",
+            "id": 818720,
+            "procedure": "Nanoject injection"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "818720"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "819658"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "819659"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "819660"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "819661"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-07-26",
+          "genotype": "Slc32a1-IRES-Cre/wt",
+          "implant_id": null,
+          "perfusion_date": "2026-01-23",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-01-23",
+            "id": 820261,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": null,
+            "id": 820261,
+            "procedure": "Headframe"
+          },
+          {
+            "date": null,
+            "id": 820261,
+            "procedure": "Nanoject injection"
+          },
+          {
+            "date": null,
+            "id": 820261,
+            "procedure": "Nanoject injection"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "820261"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "820262"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-06-24",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2026-01-16",
+          "project": null,
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-01-16",
+            "id": 822061,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-08-26",
+            "id": 822061,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-08-26",
+            "id": 822061,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "822061"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "822062"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-06-24",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "OpenScope",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-08-25",
+            "id": 822063,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-08-25",
+            "id": 822063,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "822063"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "822064"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "822410"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "823256"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-08-12",
+          "genotype": "Slc32a1-IRES-Cre/wt",
+          "implant_id": null,
+          "perfusion_date": "2026-01-16",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-01-16",
+            "id": 823257,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-10-08",
+            "id": 823257,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2025-10-08",
+            "id": 823257,
+            "procedure": "Nanoject injection"
+          },
+          {
+            "date": "2025-10-08",
+            "id": 823257,
+            "procedure": "Nanoject injection"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "823257"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-08-12",
+          "genotype": "Slc32a1-IRES-Cre/wt",
+          "implant_id": null,
+          "perfusion_date": "2026-02-24",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-02-24",
+            "id": 823258,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-10-16",
+            "id": 823258,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2025-10-16",
+            "id": 823258,
+            "procedure": "Nanoject injection"
+          },
+          {
+            "date": "2025-10-16",
+            "id": 823258,
+            "procedure": "Nanoject injection"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "823258"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "823259"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "823577"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-07-08",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2026-01-23",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-01-23",
+            "id": 824636,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-09-17",
+            "id": 824636,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "824636"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "824637"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "824638"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "824639"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "826189"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "826190"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "827374"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "827375"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "827377"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "828159"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "828160"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "829707"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "829708"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "830788"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-08-19",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-10-22",
+            "id": 831992,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-10-22",
+            "id": 831992,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "831992"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-08-19",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2025-12-19",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-12-19",
+            "id": 831994,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-10-21",
+            "id": 831994,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-10-21",
+            "id": 831994,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "831994"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-08-19",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2026-03-13",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-03-13",
+            "id": 832032,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-10-27",
+            "id": 832032,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "832032"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "832033"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "832034"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "832035"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "833050"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "833054"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "833385"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "833386"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "833388"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "833803"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-09-02",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2025-12-22",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-12-22",
+            "id": 834408,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-11-03",
+            "id": 834408,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-11-03",
+            "id": 834408,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "834408"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-09-02",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2025-11-03",
+            "id": 834410,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-11-03",
+            "id": 834410,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "834410"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-09-09",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2026-02-27",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-02-27",
+            "id": 835598,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-11-10",
+            "id": 835598,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-11-10",
+            "id": 835598,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "835598"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-09-16",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2026-02-13",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-02-13",
+            "id": 836726,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-11-17",
+            "id": 836726,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-11-17",
+            "id": 836726,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "836726"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "836728"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-09-16",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2026-02-20",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-02-20",
+            "id": 836729,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-11-20",
+            "id": 836729,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-11-20",
+            "id": 836729,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "836729"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "836730"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "837958"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-09-23",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2026-04-03",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-04-03",
+            "id": 837959,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-11-24",
+            "id": 837959,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-11-24",
+            "id": 837959,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "837959"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "837960"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "837961"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-09-30",
+          "genotype": "wt/wt",
+          "implant_id": null,
+          "perfusion_date": "2026-05-04",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-05-04",
+            "id": 839144,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-12-03",
+            "id": 839144,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "839144"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "839145"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-09-30",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2026-05-19",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-05-19",
+            "id": 839146,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-12-04",
+            "id": 839146,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-12-04",
+            "id": 839146,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "839146"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "839222"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "839223"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "839224"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "839225"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "839226"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "840159"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-10-07",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2026-05-05",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-05-05",
+            "id": 840160,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-12-09",
+            "id": 840160,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-12-09",
+            "id": 840160,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "840160"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-10-14",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2026-05-12",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-05-12",
+            "id": 841308,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2025-12-17",
+            "id": 841308,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2025-12-17",
+            "id": 841308,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "841308"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "841666"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "843081"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "843445"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "844564"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "844566"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "846930"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-11-25",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2026-04-17",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-04-17",
+            "id": 847958,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2026-01-20",
+            "id": 847958,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2026-01-20",
+            "id": 847958,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "847958"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "848225"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "848297"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "848820"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "848821"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "848822"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "848823"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "849136"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "849137"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2026-01-21",
+          "genotype": "VGAT-ChR2-YFP/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-04-07",
+            "id": 849899,
+            "procedure": "Headframe"
+          },
+          {
+            "date": "2026-04-07",
+            "id": 849899,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2026-04-07",
+            "id": 849899,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "849899"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-12-09",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": "2026-03-25",
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-03-25",
+            "id": 850215,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2026-02-02",
+            "id": 850215,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2026-02-02",
+            "id": 850215,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "850215"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "850216"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-12-09",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2026-04-08",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-04-08",
+            "id": 850217,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2026-02-09",
+            "id": 850217,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2026-02-09",
+            "id": 850217,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "850217"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2025-12-23",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-02-16",
+            "id": 852531,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2026-02-16",
+            "id": 852531,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "852531"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "852532"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "853837"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "853838"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "853839"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2026-01-06",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": "2026-04-28",
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-04-28",
+            "id": 854390,
+            "procedure": "Perfusion"
+          },
+          {
+            "date": "2026-03-03",
+            "id": 854390,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2026-03-03",
+            "id": 854390,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "854390"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "854391"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "856844"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2026-01-20",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "OpenScope",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-03-31",
+            "id": 856845,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2026-03-31",
+            "id": 856845,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "856845"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "856846"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2026-01-20",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "OpenScope",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-04-01",
+            "id": 856847,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2026-04-01",
+            "id": 856847,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "856847"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "859068"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "859107"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "859108"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "859109"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2026-02-03",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-04-07",
+            "id": 859582,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2026-04-07",
+            "id": 859582,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "859582"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2026-02-03",
+          "genotype": "wt/wt",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-04-13",
+            "id": 859584,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2026-04-13",
+            "id": 859584,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "859584"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "862024"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2026-02-17",
+          "genotype": "wt/wt",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "OpenScope",
+          "sex": "M"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-04-23",
+            "id": 862025,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2026-04-23",
+            "id": 862025,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "862025"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2026-02-17",
+          "genotype": "wt/wt ",
+          "implant_id": "2005",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-04-21",
+            "id": 862026,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2026-04-21",
+            "id": 862026,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "862026"
+    },
+    {
+      "metadata": {
+        "subject": {
+          "birth_date": "2026-02-17",
+          "genotype": "wt/wt ",
+          "implant_id": "2002",
+          "perfusion_date": null,
+          "project": "DynamicRouting",
+          "sex": "F"
+        },
+        "surgical_procedures": [
+          {
+            "date": "2026-05-05",
+            "id": 862027,
+            "procedure": "Craniotomy"
+          },
+          {
+            "date": "2026-05-05",
+            "id": 862027,
+            "procedure": "Headframe"
+          }
+        ]
+      },
+      "status": "ok",
+      "subject_id": "862027"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "864751"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "864752"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "864753"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "864754"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "867418"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "867419"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "867420"
+    },
+    {
+      "metadata": null,
+      "status": "not_found",
+      "subject_id": "867421"
+    }
+  ],
+  "source": "C:\\Users\\ben.hardcastle\\github\\dr-db\\training_dbs\\subject_ids.txt",
+  "total_subjects": 454
+}
