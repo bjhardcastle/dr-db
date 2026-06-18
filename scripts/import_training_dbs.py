@@ -70,6 +70,21 @@ ARRAY_COLUMNS = {
     "dprime_other_modality_go_stim",
 }
 
+GENOTYPES = {
+    "c57bl6j": "C57BL6J",
+    "pv cre": "PV Cre",
+    "pv cre ai32": "PV Cre x Ai32",
+    "pv cre x ai32": "PV Cre x Ai32",
+    "slc32a1 cre": "Slc32a1 Cre",
+    "sst cre ai32": "SST Cre x Ai32",
+    "sst cre x ai32": "SST Cre x Ai32",
+    "vgat": "VGAT",
+    "vgat(wt/wt)": "VGAT",
+    "vgat-chr2": "VGAT-ChR2",
+    "vip cre ai32": "VIP Cre x Ai32",
+    "vip cre x ai32": "VIP Cre x Ai32",
+}
+
 FLOAT_TOKEN_RE = re.compile(
     r"[+-]?(?:nan|inf|(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?)",
     re.IGNORECASE,
@@ -237,7 +252,7 @@ def subject_row(nsb: bool, row: sqlite3.Row, source_sheet: str) -> tuple[Any, ..
         clean_text(row["status"]),
         clean_text(row["purpose"]),
         parse_bool(row["alive"]),
-        clean_text(row["genotype"]),
+        parse_genotype(row["genotype"]),
         parse_sex(row["sex"]),
         parse_date(row["birthdate"]),
         parse_bool(row["whc"]),
@@ -296,6 +311,18 @@ def clean_text(value: Any) -> str | None:
     if text == "":
         return None
     return text
+
+
+def parse_genotype(value: Any) -> str | None:
+    text = clean_text(value)
+    if text is None:
+        return None
+
+    normalized = " ".join(text.split()).lower()
+    if normalized in GENOTYPES:
+        return GENOTYPES[normalized]
+
+    raise ValueError(f"Unknown genotype value: {value!r}")
 
 
 def parse_int(value: Any) -> int | None:
