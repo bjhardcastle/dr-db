@@ -142,7 +142,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--apply-schema",
         action="store_true",
-        help="Run sql/*.sql before importing.",
+        help="Run db/migrations/*.sql before importing.",
     )
     parser.add_argument(
         "--append",
@@ -376,7 +376,7 @@ def parse_float_array(value: Any) -> list[float | None] | None:
 
 def apply_schema(conn: psycopg.Connection, schema: str) -> None:
     if schema != "sam":
-        raise ValueError("sql/*.sql currently creates the hard-coded sam schema")
+        raise ValueError("db/migrations/*.sql currently creates the hard-coded sam schema")
 
     for path in sorted((REPO_ROOT / "sql").glob("*.sql")):
         conn.execute(path.read_text())

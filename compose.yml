@@ -32,7 +32,7 @@ services:
       DATABASE_URL: postgres://${DR_DB_POSTGRES_USER:-svc_neuropix}:${DR_DB_POSTGRES_PASSWORD:?Set DR_DB_POSTGRES_PASSWORD in .env}@dr_db:5432/${DR_DB_POSTGRES_DB:-dr_db}?sslmode=disable
       DBMATE_MIGRATIONS_DIR: /db/migrations
     volumes:
-      - ./sql:/db/migrations
+      - ./db/migrations:/db/migrations
 
   dbmate_dev:
     image: ghcr.io/amacneil/dbmate:latest
@@ -44,4 +44,4 @@ services:
       DATABASE_URL: postgres://${DR_DB_POSTGRES_USER:-svc_neuropix}:${DR_DB_POSTGRES_PASSWORD:?Set DR_DB_POSTGRES_PASSWORD in .env}@dr_db:5432/${DR_DB_POSTGRES_DEV_DB:-dr_db_dev}?sslmode=disable
       DBMATE_MIGRATIONS_DIR: /db/migrations
     volumes:
-      - ./sql:/db/migrations
+      - ./db/migrations:/db/migrations
