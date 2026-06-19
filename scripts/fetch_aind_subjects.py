@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import sqlite3
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from threading import Lock
@@ -12,19 +12,45 @@ from urllib.parse import urljoin
 
 import requests
 
-from fetch_aind_subject_example import normalize_sex, parse_subject_id
-
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SOURCE_DBS = (
     REPO_ROOT / "training_dbs" / "DynamicRoutingTraining.sqlite",
     REPO_ROOT / "training_dbs" / "DynamicRoutingTrainingNSB.sqlite",
 )
-DEFAULT_OUTPUT = REPO_ROOT / "training_dbs" / "aind_subject_metadata.json"
+DEFAULT_OUTPUT_DIR = REPO_ROOT / "training_dbs"
 DEFAULT_API_HOST = "http://aind-metadata-service/"
 DEFAULT_API_PREFIX = "api/v2"
-SubjectRecord = tuple[str, bool | None]
+SUBJECT_OUTPUT_FILENAME = "subject.json"
+SURGICAL_RECORDS_OUTPUT_FILENAME = "surgical_records.json"
+
+SUBJECT_COLUMNS = (
+    "id",
+    "status",
+    "purpose",
+    "project",
+    "nsb",
+    "genotype",
+    "sex",
+    "birth_date",
+    "surgery_prep",
+    "surgery_notes",
+    "implant_id",
+    "cannula_location",
+    "virus",
+    "virus_location",
+    "regimen",
+    "timeouts",
+    "trainer",
+    "next_task_version",
+    "duragel",
+    "notes",
+)
+SURGICAL_RECORD_COLUMNS = ("subject_id", "procedure", "date")
 MetadataSource = Path | Sequence[Path]
+FetchRows = tuple[list[dict[str, Any]], str]
+FetchRowsFn = Callable[[str, argparse.Namespace], FetchRows]
+SortKeyFn = Callable[[dict[str, Any]], tuple[Any, ...]]
 
 
 def main() -> None:
@@ -35,41 +61,37 @@ def main() -> None:
     source: MetadataSource
     if args.subject_ids:
         source = args.subject_ids
-        subject_records = [
-            (subject_id, None) for subject_id in read_subject_ids(args.subject_ids)
-        ]
+        subject_ids = read_subject_ids(args.subject_ids)
     else:
         source = args.source_dbs
-        subject_records = read_subject_records(args.source_dbs)
+        subject_ids = read_subject_ids_from_dbs(args.source_dbs)
 
-    if not subject_records:
+    if not subject_ids:
         raise SystemExit(f"No subject IDs found in {describe_source(source)}.")
 
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    results: list[dict[str, Any]] = []
-    output_lock = Lock()
-    write_results(args.output, source, len(subject_records), results, output_lock)
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    subject_output = args.output_dir / SUBJECT_OUTPUT_FILENAME
+    surgical_records_output = args.output_dir / SURGICAL_RECORDS_OUTPUT_FILENAME
 
-    if args.workers == 1:
-        for subject_id, is_alive in subject_records:
-            result = fetch_subject_metadata(subject_id, args, is_alive)
-            append_result(
-                result,
-                results,
-                source,
-                args,
-                len(subject_records),
-                output_lock,
-            )
-    else:
-        fetch_subjects_in_parallel(subject_records, source, args, results, output_lock)
+    subject_rows = fetch_subject_records(subject_ids, args, subject_output)
+    surgical_record_rows = fetch_surgical_records(
+        subject_ids,
+        args,
+        surgical_records_output,
+    )
 
-    print(f"Wrote AIND metadata for {len(results)} subjects to {args.output}")
+    print(f"Wrote {len(subject_rows)} subject records to {subject_output}")
+    print(
+        "Wrote "
+        f"{len(surgical_record_rows)} surgical records to {surgical_records_output}"
+    )
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Fetch AIND metadata for subject IDs and write extracted JSON."
+        description=(
+            "Fetch AIND subject and procedure metadata and write row-shaped JSON."
+        )
     )
     parser.add_argument(
         "--subject-ids",
@@ -77,7 +99,7 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help=(
             "Optional path to a newline-delimited subject ID file. "
-            "When omitted, IDs and alive flags are read from the training SQLite DBs."
+            "When omitted, IDs are read from the training SQLite DBs."
         ),
     )
     parser.add_argument(
@@ -92,10 +114,13 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument(
-        "--output",
+        "--output-dir",
         type=Path,
-        default=DEFAULT_OUTPUT,
-        help=f"Path to write JSON output. Defaults to {DEFAULT_OUTPUT}.",
+        default=DEFAULT_OUTPUT_DIR,
+        help=(
+            "Directory to write subject.json and surgical_records.json. "
+            f"Defaults to {DEFAULT_OUTPUT_DIR}."
+        ),
     )
     parser.add_argument("--host", default=DEFAULT_API_HOST)
     parser.add_argument("--api-prefix", default=DEFAULT_API_PREFIX)
@@ -123,8 +148,8 @@ def read_subject_ids(path: Path) -> list[str]:
     return subject_ids
 
 
-def read_subject_records(source_dbs: Sequence[Path]) -> list[SubjectRecord]:
-    subject_records: list[SubjectRecord] = []
+def read_subject_ids_from_dbs(source_dbs: Sequence[Path]) -> list[str]:
+    subject_ids: list[str] = []
     seen: dict[str, Path] = {}
     for path in source_dbs:
         if not path.exists():
@@ -132,9 +157,7 @@ def read_subject_records(source_dbs: Sequence[Path]) -> list[SubjectRecord]:
 
         with sqlite3.connect(path) as conn:
             conn.row_factory = sqlite3.Row
-            for row in conn.execute(
-                "SELECT mouse_id, alive FROM all_mice ORDER BY rowid"
-            ):
+            for row in conn.execute("SELECT mouse_id FROM all_mice ORDER BY rowid"):
                 parsed_subject_id = parse_subject_id(row["mouse_id"])
                 if parsed_subject_id is None:
                     continue
@@ -147,106 +170,124 @@ def read_subject_records(source_dbs: Sequence[Path]) -> list[SubjectRecord]:
                     )
 
                 seen[subject_id] = path
-                subject_records.append((subject_id, parse_alive(row["alive"])))
+                subject_ids.append(subject_id)
 
-    return subject_records
-
-
-def parse_alive(value: Any) -> bool | None:
-    if value is None:
-        return None
-    if isinstance(value, bool):
-        return value
-    if isinstance(value, (int, float)) and value in {0, 1}:
-        return bool(value)
-
-    text = str(value).strip().lower()
-    if text == "":
-        return None
-    if text in {"1", "true", "t", "yes", "y"}:
-        return True
-    if text in {"0", "false", "f", "no", "n"}:
-        return False
-    raise ValueError(f"Expected boolean alive value, got {value!r}")
+    return subject_ids
 
 
-def fetch_subjects_in_parallel(
-    subject_records: list[SubjectRecord],
-    source: MetadataSource,
+def fetch_subject_records(
+    subject_ids: list[str],
     args: argparse.Namespace,
-    results: list[dict[str, Any]],
-    output_lock: Lock,
-) -> None:
-    with ThreadPoolExecutor(max_workers=args.workers) as executor:
-        futures = {
-            executor.submit(fetch_subject_metadata, subject_id, args, is_alive): subject_id
-            for subject_id, is_alive in subject_records
-        }
-        for future in as_completed(futures):
-            append_result(
-                future.result(),
-                results,
-                source,
-                args,
-                len(subject_records),
-                output_lock,
-            )
-
-
-def append_result(
-    result: dict[str, Any],
-    results: list[dict[str, Any]],
-    source: MetadataSource,
-    args: argparse.Namespace,
-    total_subjects: int,
-    output_lock: Lock,
-) -> None:
-    with output_lock:
-        results.append(result)
-        write_results_unlocked(
-            args.output,
-            source,
-            total_subjects,
-            results,
-        )
-        print(
-            f"[{len(results)}/{total_subjects}] {result['subject_id']}: {result['status']}"
-        )
-
-
-def write_results(
     output: Path,
-    source: MetadataSource,
-    total_subjects: int,
-    results: list[dict[str, Any]],
-    output_lock: Lock,
-) -> None:
-    with output_lock:
-        write_results_unlocked(output, source, total_subjects, results)
-
-
-def write_results_unlocked(
-    output: Path,
-    source: MetadataSource,
-    total_subjects: int,
-    results: list[dict[str, Any]],
-) -> None:
-    payload = {
-        "source": format_source(source),
-        "total_subjects": total_subjects,
-        "completed_count": len(results),
-        "results": sorted(results, key=lambda result: result["subject_id"]),
-    }
-    output.write_text(
-        json.dumps(payload, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
+) -> list[dict[str, Any]]:
+    return fetch_records(
+        subject_ids=subject_ids,
+        args=args,
+        output=output,
+        label="subject",
+        fetcher=fetch_subject_record_rows,
+        sort_key=subject_sort_key,
     )
 
 
-def format_source(source: MetadataSource) -> str | list[str]:
-    if isinstance(source, Path):
-        return str(source)
-    return [str(path) for path in source]
+def fetch_surgical_records(
+    subject_ids: list[str],
+    args: argparse.Namespace,
+    output: Path,
+) -> list[dict[str, Any]]:
+    return fetch_records(
+        subject_ids=subject_ids,
+        args=args,
+        output=output,
+        label="procedures",
+        fetcher=fetch_surgical_record_rows,
+        sort_key=surgical_record_sort_key,
+    )
+
+
+def fetch_records(
+    subject_ids: list[str],
+    args: argparse.Namespace,
+    output: Path,
+    label: str,
+    fetcher: FetchRowsFn,
+    sort_key: SortKeyFn,
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    output_lock = Lock()
+    write_json_records(output, rows, sort_key)
+    completed_subjects = 0
+
+    if args.workers == 1:
+        for subject_id in subject_ids:
+            fetched_rows, message = fetcher(subject_id, args)
+            completed_subjects += 1
+            append_fetched_rows(
+                rows,
+                output,
+                output_lock,
+                sort_key,
+                label,
+                subject_id,
+                fetched_rows,
+                message,
+                completed_subjects,
+                len(subject_ids),
+            )
+        return rows
+
+    with ThreadPoolExecutor(max_workers=args.workers) as executor:
+        futures = {
+            executor.submit(fetcher, subject_id, args): subject_id
+            for subject_id in subject_ids
+        }
+        for future in as_completed(futures):
+            subject_id = futures[future]
+            fetched_rows, message = future.result()
+            completed_subjects += 1
+            append_fetched_rows(
+                rows,
+                output,
+                output_lock,
+                sort_key,
+                label,
+                subject_id,
+                fetched_rows,
+                message,
+                completed_subjects,
+                len(subject_ids),
+            )
+
+    return rows
+
+
+def append_fetched_rows(
+    rows: list[dict[str, Any]],
+    output: Path,
+    output_lock: Lock,
+    sort_key: SortKeyFn,
+    label: str,
+    subject_id: str,
+    fetched_rows: list[dict[str, Any]],
+    message: str,
+    completed_subjects: int,
+    total_subjects: int,
+) -> None:
+    with output_lock:
+        rows.extend(fetched_rows)
+        write_json_records(output, rows, sort_key)
+        print(f"[{completed_subjects}/{total_subjects}] {label} {subject_id}: {message}")
+
+
+def write_json_records(
+    output: Path,
+    rows: list[dict[str, Any]],
+    sort_key: SortKeyFn,
+) -> None:
+    output.write_text(
+        json.dumps(sorted(rows, key=sort_key), indent=2) + "\n",
+        encoding="utf-8",
+    )
 
 
 def describe_source(source: MetadataSource) -> str:
@@ -255,39 +296,28 @@ def describe_source(source: MetadataSource) -> str:
     return ", ".join(str(path) for path in source)
 
 
-def fetch_subject_metadata(
-    subject_id: str, args: argparse.Namespace, is_alive: bool | None = None,
-) -> dict[str, Any]:
+def fetch_subject_record_rows(subject_id: str, args: argparse.Namespace) -> FetchRows:
     try:
         subject = fetch_service_resource(args, "subject", subject_id)
         if not subject:
-            return {
-                "subject_id": subject_id,
-                "status": "not_found",
-                "metadata": None,
-            }
-        should_fetch_procedures = is_alive is True
-        procedures = (
-            fetch_optional_service_resource(args, "procedures", subject_id)
-            if should_fetch_procedures
-            else None
-        )
-        return {
-            "subject_id": subject_id,
-            "status": "ok",
-            "metadata": build_metadata(
-                subject,
-                procedures,
-                procedures_checked=should_fetch_procedures,
-            ),
-        }
+            return [], "not found"
+
+        return [build_subject_record(subject_id, subject)], "1 record"
     except Exception as exc:
-        return {
-            "subject_id": subject_id,
-            "status": "error",
-            "error": str(exc),
-            "metadata": None,
-        }
+        return [], f"error: {exc}"
+
+
+def fetch_surgical_record_rows(subject_id: str, args: argparse.Namespace) -> FetchRows:
+    try:
+        procedures = fetch_service_resource(args, "procedures", subject_id)
+        if not procedures:
+            return [], "not found"
+
+        rows = build_surgical_record_rows(parse_subject_id(subject_id), procedures)
+        record_label = "record" if len(rows) == 1 else "records"
+        return rows, f"{len(rows)} {record_label}"
+    except Exception as exc:
+        return [], f"error: {exc}"
 
 
 def fetch_service_resource(
@@ -308,15 +338,6 @@ def fetch_service_resource(
     return payload
 
 
-def fetch_optional_service_resource(
-    args: argparse.Namespace, resource: str, subject_id: str
-) -> dict[str, Any] | None:
-    try:
-        return fetch_service_resource(args, resource, subject_id)
-    except requests.RequestException:
-        return None
-
-
 def build_resource_url(
     host: str, api_prefix: str, resource: str, subject_id: str
 ) -> str:
@@ -325,73 +346,159 @@ def build_resource_url(
     return urljoin(base_url, path)
 
 
-def build_metadata(
+def build_subject_record(
+    requested_subject_id: str,
     subject: dict[str, Any],
-    procedures: dict[str, Any] | None,
-    procedures_checked: bool,
 ) -> dict[str, Any]:
-    details = subject.get("subject_details") or {}
-    subject_id = parse_subject_id(subject.get("subject_id"))
-    surgical_procedures = (
-        build_surgical_procedure_rows(subject_id, procedures)
-        if procedures_checked
-        else None
+    details = subject_details(subject)
+    subject_id = parse_subject_id(
+        subject.get("subject_id")
+        or details.get("subject_id")
+        or requested_subject_id
     )
-    return {
-        "subject": {
-            "birth_date": details.get("date_of_birth"),
-            "genotype": details.get("genotype"),
-            "implant_id": (
-                find_first_nested_value(surgical_procedures, "implant_part_number")
-                if surgical_procedures is not None
-                else None
-            ),
-            "perfusion_date": (
-                find_procedure_date(surgical_procedures, "Perfusion")
-                if surgical_procedures is not None
-                else None
-            ),
-            "sex": normalize_sex(details.get("sex")),
-        },
-        "surgical_procedures": surgical_procedures,
-    }
+    record = empty_subject_record(subject_id)
+    record["genotype"] = details.get("genotype")
+    record["sex"] = normalize_sex(details.get("sex"))
+    record["birth_date"] = details.get("date_of_birth")
+    record["implant_id"] = details.get("implant_id") or subject.get("implant_id")
+    return record
 
 
-def build_surgical_procedure_rows(
-    subject_id: int | None, procedures: dict[str, Any] | None
+def subject_details(subject: dict[str, Any]) -> dict[str, Any]:
+    details = subject.get("subject_details") or subject.get("subject") or subject
+    if not isinstance(details, dict):
+        return {}
+    return details
+
+
+def empty_subject_record(subject_id: int | None) -> dict[str, Any]:
+    return dict.fromkeys(SUBJECT_COLUMNS) | {"id": subject_id}
+
+
+def build_surgical_record_rows(
+    subject_id: int | None, procedures: dict[str, Any]
 ) -> list[dict[str, Any]]:
-    if not procedures:
-        return []
-
     rows: list[dict[str, Any]] = []
-    for procedure in procedures.get("subject_procedures") or []:
-        procedure_type = procedure.get("procedure_type")
-        if isinstance(procedure_type, str) and "surg" not in procedure_type.lower():
+    for procedure in iter_subject_procedures(procedures):
+        if not isinstance(procedure, dict):
             continue
-        rows.append(
-            {
-                "id": subject_id,
-                "procedure": procedure_type,
-                "date": procedure.get("start_date"),
-            }
-        )
-    return rows
+
+        nested_procedures = [
+            nested
+            for nested in procedure.get("procedures") or []
+            if isinstance(nested, dict)
+        ]
+        if nested_procedures and is_surgical_procedure_container(
+            procedure,
+            nested_procedures,
+        ):
+            for nested in nested_procedures:
+                rows.append(
+                    surgical_record(
+                        subject_id,
+                        nested.get("procedure_type"),
+                        procedure.get("start_date"),
+                    )
+                )
+            continue
+
+        if is_surgical_procedure_name(procedure.get("procedure_type")):
+            rows.append(
+                surgical_record(
+                    subject_id,
+                    procedure.get("procedure_type"),
+                    procedure.get("start_date"),
+                )
+            )
+
+    return dedupe_surgical_records(rows)
 
 
-def find_first_nested_value(rows: list[dict[str, Any]], key: str) -> Any:
+def iter_subject_procedures(procedures: dict[str, Any]) -> list[Any]:
+    if isinstance(procedures.get("subject_procedures"), list):
+        return procedures["subject_procedures"]
+
+    nested_procedures = procedures.get("procedures")
+    if isinstance(nested_procedures, dict) and isinstance(
+        nested_procedures.get("subject_procedures"),
+        list,
+    ):
+        return nested_procedures["subject_procedures"]
+
+    return []
+
+
+def is_surgical_procedure_container(
+    procedure: dict[str, Any],
+    nested_procedures: list[dict[str, Any]],
+) -> bool:
+    if is_surgical_procedure_name(procedure.get("procedure_type")):
+        return True
+    return any(
+        is_surgical_procedure_name(nested.get("procedure_type"))
+        for nested in nested_procedures
+    )
+
+
+def is_surgical_procedure_name(value: Any) -> bool:
+    return isinstance(value, str) and "surg" in value.lower()
+
+
+def surgical_record(
+    subject_id: int | None,
+    procedure: Any,
+    date: Any,
+) -> dict[str, Any]:
+    record = dict.fromkeys(SURGICAL_RECORD_COLUMNS)
+    record["subject_id"] = subject_id
+    record["procedure"] = procedure
+    record["date"] = date
+    return record
+
+
+def dedupe_surgical_records(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    deduped: list[dict[str, Any]] = []
+    seen: set[tuple[Any, Any, Any]] = set()
     for row in rows:
-        if row.get(key) is not None:
-            return row[key]
+        key = (row["subject_id"], row["procedure"], row["date"])
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(row)
+    return deduped
+
+
+def parse_subject_id(value: Any) -> int | None:
+    if value is None:
+        return None
+    text = str(value).strip()
+    if text == "":
+        return None
+    return int(text)
+
+
+def normalize_sex(value: Any) -> str | None:
+    if not isinstance(value, str):
+        return None
+    normalized = value.strip().lower()
+    if normalized == "male":
+        return "M"
+    if normalized == "female":
+        return "F"
     return None
 
 
-def find_procedure_date(
-    rows: list[dict[str, Any]], procedure_type: str
-) -> str | None:
-    for row in rows:
-        if row.get("procedure") == procedure_type:
-            return row.get("date")
-    return None
+def subject_sort_key(row: dict[str, Any]) -> tuple[Any, ...]:
+    return (row["id"] is None, row["id"])
+
+
+def surgical_record_sort_key(row: dict[str, Any]) -> tuple[Any, ...]:
+    return (
+        row["subject_id"] is None,
+        row["subject_id"],
+        row["date"] or "",
+        row["procedure"] or "",
+    )
 
 
 if __name__ == "__main__":

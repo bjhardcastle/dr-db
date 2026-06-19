@@ -76,7 +76,6 @@ CREATE TABLE IF NOT EXISTS subject (
     trainer text,
     next_task_version text,
     duragel boolean DEFAULT false,
-    perfusion_date date,
     notes text,
 
     CONSTRAINT subjects_implant_id_fkey
