@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import sqlite3
+from collections.abc import Sequence
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from threading import Lock
@@ -14,10 +16,15 @@ from fetch_aind_subject_example import normalize_sex, parse_subject_id
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SUBJECT_IDS = REPO_ROOT / "training_dbs" / "subject_ids.txt"
+DEFAULT_SOURCE_DBS = (
+    REPO_ROOT / "training_dbs" / "DynamicRoutingTraining.sqlite",
+    REPO_ROOT / "training_dbs" / "DynamicRoutingTrainingNSB.sqlite",
+)
 DEFAULT_OUTPUT = REPO_ROOT / "training_dbs" / "aind_subject_metadata.json"
 DEFAULT_API_HOST = "http://aind-metadata-service/"
 DEFAULT_API_PREFIX = "api/v2"
+SubjectRecord = tuple[str, bool | None]
+MetadataSource = Path | Sequence[Path]
 
 
 def main() -> None:
@@ -25,21 +32,37 @@ def main() -> None:
     if args.workers < 1:
         raise SystemExit("--workers must be at least 1.")
 
-    subject_ids = read_subject_ids(args.subject_ids)
-    if not subject_ids:
-        raise SystemExit(f"No subject IDs found in {args.subject_ids}.")
+    source: MetadataSource
+    if args.subject_ids:
+        source = args.subject_ids
+        subject_records = [
+            (subject_id, None) for subject_id in read_subject_ids(args.subject_ids)
+        ]
+    else:
+        source = args.source_dbs
+        subject_records = read_subject_records(args.source_dbs)
+
+    if not subject_records:
+        raise SystemExit(f"No subject IDs found in {describe_source(source)}.")
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     results: list[dict[str, Any]] = []
     output_lock = Lock()
-    write_results(args.output, args.subject_ids, len(subject_ids), results, output_lock)
+    write_results(args.output, source, len(subject_records), results, output_lock)
 
     if args.workers == 1:
-        for subject_id in subject_ids:
-            result = fetch_subject_metadata(subject_id, args)
-            append_result(result, results, args, len(subject_ids), output_lock)
+        for subject_id, is_alive in subject_records:
+            result = fetch_subject_metadata(subject_id, args, is_alive)
+            append_result(
+                result,
+                results,
+                source,
+                args,
+                len(subject_records),
+                output_lock,
+            )
     else:
-        fetch_subjects_in_parallel(subject_ids, args, results, output_lock)
+        fetch_subjects_in_parallel(subject_records, source, args, results, output_lock)
 
     print(f"Wrote AIND metadata for {len(results)} subjects to {args.output}")
 
@@ -51,8 +74,22 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--subject-ids",
         type=Path,
-        default=DEFAULT_SUBJECT_IDS,
-        help=f"Path to a newline-delimited subject ID file. Defaults to {DEFAULT_SUBJECT_IDS}.",
+        default=None,
+        help=(
+            "Optional path to a newline-delimited subject ID file. "
+            "When omitted, IDs and alive flags are read from the training SQLite DBs."
+        ),
+    )
+    parser.add_argument(
+        "--source-db",
+        dest="source_dbs",
+        type=Path,
+        action="append",
+        default=None,
+        help=(
+            "SQLite training DB to read all_mice from. May be passed more than once. "
+            f"Defaults to {', '.join(str(path) for path in DEFAULT_SOURCE_DBS)}."
+        ),
     )
     parser.add_argument(
         "--output",
@@ -64,17 +101,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--api-prefix", default=DEFAULT_API_PREFIX)
     parser.add_argument("--timeout", type=float, default=30.0)
     parser.add_argument(
-        "--include-procedures",
-        action="store_true",
-        help="Also fetch procedure metadata. This can be slow for some subjects.",
-    )
-    parser.add_argument(
         "--workers",
         type=int,
-        default=8,
+        default=16,
         help="Number of parallel fetch workers. Use 1 to fetch serially.",
     )
-    return parser.parse_args()
+    args = parser.parse_args()
+    args.source_dbs = tuple(args.source_dbs or DEFAULT_SOURCE_DBS)
+    return args
 
 
 def read_subject_ids(path: Path) -> list[str]:
@@ -89,23 +123,72 @@ def read_subject_ids(path: Path) -> list[str]:
     return subject_ids
 
 
+def read_subject_records(source_dbs: Sequence[Path]) -> list[SubjectRecord]:
+    subject_records: list[SubjectRecord] = []
+    seen: dict[str, Path] = {}
+    for path in source_dbs:
+        if not path.exists():
+            raise FileNotFoundError(path)
+
+        with sqlite3.connect(path) as conn:
+            conn.row_factory = sqlite3.Row
+            for row in conn.execute(
+                "SELECT mouse_id, alive FROM all_mice ORDER BY rowid"
+            ):
+                parsed_subject_id = parse_subject_id(row["mouse_id"])
+                if parsed_subject_id is None:
+                    continue
+
+                subject_id = str(parsed_subject_id)
+                if subject_id in seen:
+                    raise ValueError(
+                        "Duplicate subject_id across source DBs: "
+                        f"{subject_id} ({seen[subject_id]} and {path})"
+                    )
+
+                seen[subject_id] = path
+                subject_records.append((subject_id, parse_alive(row["alive"])))
+
+    return subject_records
+
+
+def parse_alive(value: Any) -> bool | None:
+    if value is None:
+        return None
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)) and value in {0, 1}:
+        return bool(value)
+
+    text = str(value).strip().lower()
+    if text == "":
+        return None
+    if text in {"1", "true", "t", "yes", "y"}:
+        return True
+    if text in {"0", "false", "f", "no", "n"}:
+        return False
+    raise ValueError(f"Expected boolean alive value, got {value!r}")
+
+
 def fetch_subjects_in_parallel(
-    subject_ids: list[str],
+    subject_records: list[SubjectRecord],
+    source: MetadataSource,
     args: argparse.Namespace,
     results: list[dict[str, Any]],
     output_lock: Lock,
 ) -> None:
     with ThreadPoolExecutor(max_workers=args.workers) as executor:
         futures = {
-            executor.submit(fetch_subject_metadata, subject_id, args): subject_id
-            for subject_id in subject_ids
+            executor.submit(fetch_subject_metadata, subject_id, args, is_alive): subject_id
+            for subject_id, is_alive in subject_records
         }
         for future in as_completed(futures):
             append_result(
                 future.result(),
                 results,
+                source,
                 args,
-                len(subject_ids),
+                len(subject_records),
                 output_lock,
             )
 
@@ -113,6 +196,7 @@ def fetch_subjects_in_parallel(
 def append_result(
     result: dict[str, Any],
     results: list[dict[str, Any]],
+    source: MetadataSource,
     args: argparse.Namespace,
     total_subjects: int,
     output_lock: Lock,
@@ -121,7 +205,7 @@ def append_result(
         results.append(result)
         write_results_unlocked(
             args.output,
-            args.subject_ids,
+            source,
             total_subjects,
             results,
         )
@@ -132,7 +216,7 @@ def append_result(
 
 def write_results(
     output: Path,
-    source: Path,
+    source: MetadataSource,
     total_subjects: int,
     results: list[dict[str, Any]],
     output_lock: Lock,
@@ -143,12 +227,12 @@ def write_results(
 
 def write_results_unlocked(
     output: Path,
-    source: Path,
+    source: MetadataSource,
     total_subjects: int,
     results: list[dict[str, Any]],
 ) -> None:
     payload = {
-        "source": str(source),
+        "source": format_source(source),
         "total_subjects": total_subjects,
         "completed_count": len(results),
         "results": sorted(results, key=lambda result: result["subject_id"]),
@@ -159,8 +243,20 @@ def write_results_unlocked(
     )
 
 
+def format_source(source: MetadataSource) -> str | list[str]:
+    if isinstance(source, Path):
+        return str(source)
+    return [str(path) for path in source]
+
+
+def describe_source(source: MetadataSource) -> str:
+    if isinstance(source, Path):
+        return str(source)
+    return ", ".join(str(path) for path in source)
+
+
 def fetch_subject_metadata(
-    subject_id: str, args: argparse.Namespace
+    subject_id: str, args: argparse.Namespace, is_alive: bool | None = None,
 ) -> dict[str, Any]:
     try:
         subject = fetch_service_resource(args, "subject", subject_id)
@@ -170,9 +266,10 @@ def fetch_subject_metadata(
                 "status": "not_found",
                 "metadata": None,
             }
+        should_fetch_procedures = is_alive is True
         procedures = (
             fetch_optional_service_resource(args, "procedures", subject_id)
-            if args.include_procedures
+            if should_fetch_procedures
             else None
         )
         return {
@@ -181,7 +278,7 @@ def fetch_subject_metadata(
             "metadata": build_metadata(
                 subject,
                 procedures,
-                procedures_checked=args.include_procedures,
+                procedures_checked=should_fetch_procedures,
             ),
         }
     except Exception as exc:
