@@ -10,21 +10,14 @@ from urllib.parse import urljoin
 
 import requests
 
-from fetch_aind_subject_example import build_example
+from fetch_aind_subject_example import normalize_sex, parse_subject_id
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SUBJECT_IDS = REPO_ROOT / "training_dbs" / "subject_ids.txt"
 DEFAULT_OUTPUT = REPO_ROOT / "training_dbs" / "aind_subject_metadata.json"
 DEFAULT_API_HOST = "http://aind-metadata-service/"
-
-PROJECTION = {
-    "subject.subject_id": 1,
-    "subject.sex": 1,
-    "subject.date_of_birth": 1,
-    "subject.genotype": 1,
-    "procedures.subject_procedures": 1,
-}
+DEFAULT_API_PREFIX = "api/v2"
 
 
 def main() -> None:
@@ -68,14 +61,12 @@ def parse_args() -> argparse.Namespace:
         help=f"Path to write JSON output. Defaults to {DEFAULT_OUTPUT}.",
     )
     parser.add_argument("--host", default=DEFAULT_API_HOST)
-    parser.add_argument("--database", default="metadata_index")
-    parser.add_argument("--collection", default="data_assets")
-    parser.add_argument("--version", default="v1")
+    parser.add_argument("--api-prefix", default=DEFAULT_API_PREFIX)
+    parser.add_argument("--timeout", type=float, default=30.0)
     parser.add_argument(
-        "--limit",
-        type=int,
-        default=1,
-        help="Number of matching data asset records to fetch before selecting an example.",
+        "--include-procedures",
+        action="store_true",
+        help="Also fetch procedure metadata. This can be slow for some subjects.",
     )
     parser.add_argument(
         "--workers",
@@ -172,17 +163,22 @@ def fetch_subject_metadata(
     subject_id: str, args: argparse.Namespace
 ) -> dict[str, Any]:
     try:
-        records = fetch_docdb_records(subject_id, args)
-        if not records:
+        subject = fetch_service_resource(args, "subject", subject_id)
+        if not subject:
             return {
                 "subject_id": subject_id,
                 "status": "not_found",
                 "metadata": None,
             }
+        procedures = (
+            fetch_optional_service_resource(args, "procedures", subject_id)
+            if args.include_procedures
+            else None
+        )
         return {
             "subject_id": subject_id,
             "status": "ok",
-            "metadata": build_example(records),
+            "metadata": build_metadata(subject, procedures),
         }
     except Exception as exc:
         return {
@@ -193,26 +189,96 @@ def fetch_subject_metadata(
         }
 
 
-def fetch_docdb_records(subject_id: str, args: argparse.Namespace) -> list[dict[str, Any]]:
-    url = build_find_url(args.host, args.version, args.database, args.collection)
-    params = {
-        "filter": json.dumps({"subject.subject_id": subject_id}),
-        "projection": json.dumps(PROJECTION),
-        "sort": json.dumps({"created": -1}),
-        "limit": str(args.limit),
-        "skip": "0",
-    }
-    response = requests.get(url, params=params, timeout=30)
+def fetch_service_resource(
+    args: argparse.Namespace, resource: str, subject_id: str
+) -> dict[str, Any] | None:
+    url = build_resource_url(args.host, args.api_prefix, resource, subject_id)
+    response = requests.get(url, timeout=args.timeout)
+    if response.status_code == 404:
+        return None
     response.raise_for_status()
-    records = response.json()
-    if not isinstance(records, list):
-        raise ValueError(f"Expected list response from {url}, got {type(records).__name__}")
-    return records
+    payload = response.json()
+    if isinstance(payload, dict) and "data" in payload and payload["data"] is None:
+        return None
+    if not isinstance(payload, dict):
+        raise ValueError(
+            f"Expected object response from {url}, got {type(payload).__name__}"
+        )
+    return payload
 
 
-def build_find_url(host: str, version: str, database: str, collection: str) -> str:
+def fetch_optional_service_resource(
+    args: argparse.Namespace, resource: str, subject_id: str
+) -> dict[str, Any] | None:
+    try:
+        return fetch_service_resource(args, resource, subject_id)
+    except requests.RequestException:
+        return None
+
+
+def build_resource_url(
+    host: str, api_prefix: str, resource: str, subject_id: str
+) -> str:
     base_url = host.rstrip("/") + "/"
-    return urljoin(base_url, f"{version}/{database}/{collection}/find")
+    path = f"{api_prefix.strip('/')}/{resource}/{subject_id}"
+    return urljoin(base_url, path)
+
+
+def build_metadata(
+    subject: dict[str, Any], procedures: dict[str, Any] | None
+) -> dict[str, Any]:
+    details = subject.get("subject_details") or {}
+    subject_id = parse_subject_id(subject.get("subject_id"))
+    surgical_procedures = build_surgical_procedure_rows(subject_id, procedures)
+    return {
+        "subject": {
+            "birth_date": details.get("date_of_birth"),
+            "genotype": details.get("genotype"),
+            "implant_id": find_first_nested_value(
+                surgical_procedures, "implant_part_number"
+            ),
+            "perfusion_date": find_procedure_date(surgical_procedures, "Perfusion"),
+            "sex": normalize_sex(details.get("sex")),
+        },
+        "surgical_procedures": surgical_procedures,
+    }
+
+
+def build_surgical_procedure_rows(
+    subject_id: int | None, procedures: dict[str, Any] | None
+) -> list[dict[str, Any]]:
+    if not procedures:
+        return []
+
+    rows: list[dict[str, Any]] = []
+    for procedure in procedures.get("subject_procedures") or []:
+        procedure_type = procedure.get("procedure_type")
+        if isinstance(procedure_type, str) and "surg" not in procedure_type.lower():
+            continue
+        rows.append(
+            {
+                "id": subject_id,
+                "procedure": procedure_type,
+                "date": procedure.get("start_date"),
+            }
+        )
+    return rows
+
+
+def find_first_nested_value(rows: list[dict[str, Any]], key: str) -> Any:
+    for row in rows:
+        if row.get(key) is not None:
+            return row[key]
+    return None
+
+
+def find_procedure_date(
+    rows: list[dict[str, Any]], procedure_type: str
+) -> str | None:
+    for row in rows:
+        if row.get("procedure") == procedure_type:
+            return row.get("date")
+    return None
 
 
 if __name__ == "__main__":
