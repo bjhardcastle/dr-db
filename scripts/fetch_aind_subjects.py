@@ -325,10 +325,17 @@ def fetch_service_resource(
 ) -> dict[str, Any] | None:
     url = build_resource_url(args.host, args.api_prefix, resource, subject_id)
     response = requests.get(url, timeout=args.timeout)
+    try:
+        payload = response.json()
+    except ValueError:
+        payload = None
+
     if response.status_code == 404:
         return None
+    if response.status_code == 400 and is_resource_payload(resource, payload):
+        return payload
     response.raise_for_status()
-    payload = response.json()
+
     if isinstance(payload, dict) and "data" in payload and payload["data"] is None:
         return None
     if not isinstance(payload, dict):
@@ -336,6 +343,28 @@ def fetch_service_resource(
             f"Expected object response from {url}, got {type(payload).__name__}"
         )
     return payload
+
+
+def is_resource_payload(resource: str, payload: Any) -> bool:
+    if not isinstance(payload, dict):
+        return False
+
+    if resource == "subject":
+        return any(
+            key in payload for key in ("subject_id", "subject", "subject_details")
+        )
+
+    if resource == "procedures":
+        if isinstance(payload.get("subject_procedures"), list):
+            return True
+
+        nested_procedures = payload.get("procedures")
+        return isinstance(nested_procedures, dict) and isinstance(
+            nested_procedures.get("subject_procedures"),
+            list,
+        )
+
+    return False
 
 
 def build_resource_url(
