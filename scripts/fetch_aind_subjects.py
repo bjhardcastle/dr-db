@@ -178,7 +178,11 @@ def fetch_subject_metadata(
         return {
             "subject_id": subject_id,
             "status": "ok",
-            "metadata": build_metadata(subject, procedures),
+            "metadata": build_metadata(
+                subject,
+                procedures,
+                procedures_checked=args.include_procedures,
+            ),
         }
     except Exception as exc:
         return {
@@ -225,19 +229,31 @@ def build_resource_url(
 
 
 def build_metadata(
-    subject: dict[str, Any], procedures: dict[str, Any] | None
+    subject: dict[str, Any],
+    procedures: dict[str, Any] | None,
+    procedures_checked: bool,
 ) -> dict[str, Any]:
     details = subject.get("subject_details") or {}
     subject_id = parse_subject_id(subject.get("subject_id"))
-    surgical_procedures = build_surgical_procedure_rows(subject_id, procedures)
+    surgical_procedures = (
+        build_surgical_procedure_rows(subject_id, procedures)
+        if procedures_checked
+        else None
+    )
     return {
         "subject": {
             "birth_date": details.get("date_of_birth"),
             "genotype": details.get("genotype"),
-            "implant_id": find_first_nested_value(
-                surgical_procedures, "implant_part_number"
+            "implant_id": (
+                find_first_nested_value(surgical_procedures, "implant_part_number")
+                if surgical_procedures is not None
+                else None
             ),
-            "perfusion_date": find_procedure_date(surgical_procedures, "Perfusion"),
+            "perfusion_date": (
+                find_procedure_date(surgical_procedures, "Perfusion")
+                if surgical_procedures is not None
+                else None
+            ),
             "sex": normalize_sex(details.get("sex")),
         },
         "surgical_procedures": surgical_procedures,
