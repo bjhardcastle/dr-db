@@ -57,6 +57,17 @@ $$;
 
 DO $$
 BEGIN
+    CREATE TYPE session_type AS ENUM (
+        'ephys',
+        'behavior_with_sync'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END
+$$;
+
+DO $$
+BEGIN
     CREATE TYPE subject_status AS ENUM (
         'dead',
         'training',
@@ -118,4 +129,39 @@ CREATE TABLE IF NOT EXISTS surgical_procedures (
         REFERENCES subject (id)
         ON UPDATE CASCADE
         ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS session (
+    id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    folder text NOT NULL,
+    project text NOT NULL DEFAULT 'DynamicRouting',
+    session_type session_type NOT NULL DEFAULT 'ephys',
+    ephys_day integer,
+    perturbation_day integer,
+    is_production boolean NOT NULL DEFAULT true,
+    is_split_recording boolean NOT NULL DEFAULT false,
+    is_context_naive boolean NOT NULL DEFAULT false,
+    is_injection_perturbation boolean NOT NULL DEFAULT false,
+    is_opto_perturbation boolean NOT NULL DEFAULT false,
+    is_deep_insertion boolean NOT NULL DEFAULT false,
+    probe_letters_to_skip text NOT NULL DEFAULT '',
+    surface_recording_probe_letters_to_skip text NOT NULL DEFAULT '',
+
+    CONSTRAINT session_project_check
+        CHECK (project IN ('DynamicRouting', 'TempletonPilotSession')),
+
+    CONSTRAINT session_ephys_day_check
+        CHECK (ephys_day IS NULL OR ephys_day > 0),
+
+    CONSTRAINT session_perturbation_day_check
+        CHECK (perturbation_day IS NULL OR perturbation_day > 0),
+
+    CONSTRAINT session_probe_letters_to_skip_check
+        CHECK (probe_letters_to_skip ~ '^[A-F]{0,6}$'),
+
+    CONSTRAINT session_surface_recording_probe_letters_to_skip_check
+        CHECK (surface_recording_probe_letters_to_skip ~ '^[A-F]{0,6}$'),
+
+    CONSTRAINT session_folder_project_type_key
+        UNIQUE (folder, project, session_type)
 );
