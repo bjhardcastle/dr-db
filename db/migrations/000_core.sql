@@ -3,6 +3,22 @@
 
 DO $$
 BEGIN
+    CREATE TYPE implant_id AS ENUM (
+        '2001',
+        '2002',
+        '2005',
+        '2006',
+        '2011',
+        '2014',
+        '2015'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END
+$$;
+
+DO $$
+BEGIN
     CREATE TYPE project AS ENUM (
         'DynamicRouting',
         'Templeton'
@@ -67,7 +83,7 @@ CREATE TABLE IF NOT EXISTS subject (
     birth_date date,
     surgery_prep text,
     surgery_notes text,
-    implant_id text,
+    implant_id implant_id,
     cannula_location text,
     virus text,
     virus_location text,
@@ -92,6 +108,7 @@ CREATE TABLE IF NOT EXISTS surgical_procedures (
     subject_id integer NOT NULL,
     procedure text NOT NULL,
     date date NOT NULL,
+    implant_id implant_id,
 
     CONSTRAINT surgical_procedures_pkey
         PRIMARY KEY (subject_id, procedure, date),
