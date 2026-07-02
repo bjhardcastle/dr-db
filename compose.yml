@@ -5,14 +5,14 @@ services:
     image: pgautoupgrade/pgautoupgrade:17-bookworm
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${DR_DB_POSTGRES_DB:-dr_db}
-      POSTGRES_USER: ${DR_DB_POSTGRES_USER:-svc_neuropix}
+      POSTGRES_DB: ${DR_DB_POSTGRES_DB:?Set DR_DB_POSTGRES_DB in .env}
+      POSTGRES_USER: ${DR_DB_POSTGRES_USER:?Set DR_DB_POSTGRES_USER in .env}
       POSTGRES_PASSWORD: ${DR_DB_POSTGRES_PASSWORD:?Set DR_DB_POSTGRES_PASSWORD in .env}
     ports:
-      - "${DR_DB_POSTGRES_HOST_PORT:-7500}:5432"
+      - "${DR_DB_POSTGRES_HOST_PORT:?Set DR_DB_POSTGRES_HOST_PORT in .env}:5432"
     volumes:
       - type: bind
-        source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/postgres
+        source: ${DR_DB_STORAGE_ROOT:?Set DR_DB_STORAGE_ROOT in .env}/postgres
         target: /var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
@@ -25,14 +25,14 @@ services:
     image: pgautoupgrade/pgautoupgrade:17-bookworm
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${DR_DB_DEV_POSTGRES_DB:-dr_db_dev}
-      POSTGRES_USER: ${DR_DB_DEV_POSTGRES_USER:-svc_neuropix}
-      POSTGRES_PASSWORD: ${DR_DB_DEV_POSTGRES_PASSWORD:-${DR_DB_POSTGRES_PASSWORD:?Set DR_DB_POSTGRES_PASSWORD or DR_DB_DEV_POSTGRES_PASSWORD in .env}}
+      POSTGRES_DB: ${DR_DB_DEV_POSTGRES_DB:?Set DR_DB_DEV_POSTGRES_DB in .env}
+      POSTGRES_USER: ${DR_DB_DEV_POSTGRES_USER:?Set DR_DB_DEV_POSTGRES_USER in .env}
+      POSTGRES_PASSWORD: ${DR_DB_DEV_POSTGRES_PASSWORD:?Set DR_DB_DEV_POSTGRES_PASSWORD in .env}
     ports:
-      - "${DR_DB_DEV_POSTGRES_HOST_PORT:-7501}:5432"
+      - "${DR_DB_DEV_POSTGRES_HOST_PORT:?Set DR_DB_DEV_POSTGRES_HOST_PORT in .env}:5432"
     volumes:
       - type: bind
-        source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/postgres-dev
+        source: ${DR_DB_STORAGE_ROOT:?Set DR_DB_STORAGE_ROOT in .env}/postgres-dev
         target: /var/lib/postgresql/data
     networks:
       default:
@@ -66,12 +66,12 @@ services:
       postgres-dev:
         condition: service_healthy
     environment:
-      DR_DB_POSTGRES_DB: ${DR_DB_POSTGRES_DB:-dr_db}
-      DR_DB_POSTGRES_USER: ${DR_DB_POSTGRES_USER:-svc_neuropix}
+      DR_DB_POSTGRES_DB: ${DR_DB_POSTGRES_DB:?Set DR_DB_POSTGRES_DB in .env}
+      DR_DB_POSTGRES_USER: ${DR_DB_POSTGRES_USER:?Set DR_DB_POSTGRES_USER in .env}
       DR_DB_POSTGRES_PASSWORD: ${DR_DB_POSTGRES_PASSWORD:?Set DR_DB_POSTGRES_PASSWORD in .env}
-      DR_DB_DEV_POSTGRES_DB: ${DR_DB_DEV_POSTGRES_DB:-dr_db_dev}
-      DR_DB_DEV_POSTGRES_USER: ${DR_DB_DEV_POSTGRES_USER:-svc_neuropix}
-      DR_DB_DEV_POSTGRES_PASSWORD: ${DR_DB_DEV_POSTGRES_PASSWORD:-${DR_DB_POSTGRES_PASSWORD:?Set DR_DB_POSTGRES_PASSWORD or DR_DB_DEV_POSTGRES_PASSWORD in .env}}
+      DR_DB_DEV_POSTGRES_DB: ${DR_DB_DEV_POSTGRES_DB:?Set DR_DB_DEV_POSTGRES_DB in .env}
+      DR_DB_DEV_POSTGRES_USER: ${DR_DB_DEV_POSTGRES_USER:?Set DR_DB_DEV_POSTGRES_USER in .env}
+      DR_DB_DEV_POSTGRES_PASSWORD: ${DR_DB_DEV_POSTGRES_PASSWORD:?Set DR_DB_DEV_POSTGRES_PASSWORD in .env}
     volumes:
       - ./scripts/clone-prod-to-dev.sh:/usr/local/bin/clone-prod-to-dev:ro
     entrypoint: ["/bin/sh", "/usr/local/bin/clone-prod-to-dev"]
