@@ -70,6 +70,27 @@ $$;
 
 DO $$
 BEGIN
+    CREATE TYPE asset_type AS ENUM (
+        'raw',
+        'sorted',
+        'lp_face',
+        'lp_body',
+        'eye_tracking',
+        'gamma_correct_vid',
+        'ibl_conversion_manifest',
+        'neuroglancer_state',
+        'smartspim',
+        'smartspim_stitched',
+        'ibl_converted',
+        'nwb'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END
+$$;
+
+DO $$
+BEGIN
     CREATE TYPE subject_status AS ENUM (
         'dead',
         'training',
@@ -170,6 +191,27 @@ CREATE TABLE IF NOT EXISTS session (
 
     CONSTRAINT session_pkey
         PRIMARY KEY (subject_id, date)
+);
+
+CREATE TABLE IF NOT EXISTS asset (
+    id uuid PRIMARY KEY,
+    subject_id integer NOT NULL,
+    session_date date,
+    name text,
+    type asset_type,
+    notes text,
+
+    CONSTRAINT asset_subject_id_fkey
+        FOREIGN KEY (subject_id)
+        REFERENCES subject (id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+
+    CONSTRAINT asset_session_fkey
+        FOREIGN KEY (subject_id, session_date)
+        REFERENCES session (subject_id, date)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS insertions (
