@@ -21,6 +21,30 @@ services:
       retries: 30
       start_period: 5s
 
+  postgres-dev:
+    image: pgautoupgrade/pgautoupgrade:17-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DR_DB_DEV_POSTGRES_DB:-dr_db_dev}
+      POSTGRES_USER: ${DR_DB_DEV_POSTGRES_USER:-svc_neuropix}
+      POSTGRES_PASSWORD: ${DR_DB_DEV_POSTGRES_PASSWORD:-${DR_DB_POSTGRES_PASSWORD:?Set DR_DB_POSTGRES_PASSWORD or DR_DB_DEV_POSTGRES_PASSWORD in .env}}
+    ports:
+      - "${DR_DB_DEV_POSTGRES_HOST_PORT:-7501}:5432"
+    volumes:
+      - type: bind
+        source: ${DR_DB_STORAGE_ROOT:-/local1/dr-db}/postgres-dev
+        target: /var/lib/postgresql/data
+    networks:
+      default:
+        aliases:
+          - dr-db-dev
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 1s
+      retries: 30
+      start_period: 5s
+
   dbmate:
     image: ghcr.io/amacneil/dbmate:latest
     profiles: ["tools"]
@@ -32,3 +56,22 @@ services:
       DBMATE_MIGRATIONS_DIR: /db/migrations
     volumes:
       - ./db/migrations:/db/migrations
+
+  clone-prod-to-dev:
+    image: postgres:17-bookworm
+    profiles: ["tools"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      postgres-dev:
+        condition: service_healthy
+    environment:
+      DR_DB_POSTGRES_DB: ${DR_DB_POSTGRES_DB:-dr_db}
+      DR_DB_POSTGRES_USER: ${DR_DB_POSTGRES_USER:-svc_neuropix}
+      DR_DB_POSTGRES_PASSWORD: ${DR_DB_POSTGRES_PASSWORD:?Set DR_DB_POSTGRES_PASSWORD in .env}
+      DR_DB_DEV_POSTGRES_DB: ${DR_DB_DEV_POSTGRES_DB:-dr_db_dev}
+      DR_DB_DEV_POSTGRES_USER: ${DR_DB_DEV_POSTGRES_USER:-svc_neuropix}
+      DR_DB_DEV_POSTGRES_PASSWORD: ${DR_DB_DEV_POSTGRES_PASSWORD:-${DR_DB_POSTGRES_PASSWORD:?Set DR_DB_POSTGRES_PASSWORD or DR_DB_DEV_POSTGRES_PASSWORD in .env}}
+    volumes:
+      - ./scripts/clone-prod-to-dev.sh:/usr/local/bin/clone-prod-to-dev:ro
+    entrypoint: ["/bin/sh", "/usr/local/bin/clone-prod-to-dev"]

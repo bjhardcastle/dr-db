@@ -104,6 +104,39 @@ show both client and server details. Avoid running Compose with `sudo` from this
 repo; on the VM, root may not be able to read `.env` from the protected home
 directory.
 
+## Dev database
+
+The Compose stack includes an isolated dev Postgres service. It uses a separate
+data directory and host port from the shared database, and can be overwritten
+from the shared database whenever you need a fresh test copy.
+
+Start the dev database:
+
+```bash
+docker compose up -d postgres-dev
+```
+
+Clone the shared database into dev. This command drops and recreates only the
+dev database named by `DR_DB_DEV_POSTGRES_DB`.
+
+```bash
+docker compose --profile tools run --rm clone-prod-to-dev
+```
+
+Dev PostgreSQL:
+
+```text
+Host: localhost
+Port: 7501
+Database: dr_db_dev
+User: svc_neuropix
+Password: see local .env
+```
+
+From another container in the Compose network, use host `dr-db-dev` and port
+`5432`. From the Docker host, use `localhost` and the host port configured by
+`DR_DB_DEV_POSTGRES_HOST_PORT`.
+
 ## Connections
 
 PostgreSQL:
