@@ -1,170 +1,21 @@
-# dr-db
+## Setting up db
 
-Docker Compose setup for a shared PostgreSQL database plus Mathesar, intended
-to run on the Rocky Linux VM.
+From a fresh checkout:
 
-## Storage
+1. Install Docker Desktop and start it.
+2. Copy `.env.example` to `.env`.
+3. In `.env`, replace every `replace-me` password and set `DR_DB_STORAGE_ROOT` to a real folder where Docker can keep database files. This folder is persistent data, not source code.
+4. Start Postgres:
 
-Persistent container data lives outside the repo under:
-
-```text
-/home/ben.hardcastle/dr-db
+```powershell
+docker compose up -d postgres postgres-dev
 ```
 
-Prepare the directory structure without overwriting anything:
+5. Run migrations against the database you want to initialize. For local dev:
 
-```bash
-./scripts/ensure-docker-storage.sh
+```powershell
+$env:DATABASE_URL = "postgres://svc_neuropix:<dev-password>@postgres-dev:5432/dr_db_dev?sslmode=disable"
+docker compose --profile tools run --rm dbmate up
 ```
 
-To throw away the local Docker databases and recreate empty storage, use the
-reset helper. It reads the same `.env` file as Compose; do not use a bare
-`rm -rf "$DR_DB_STORAGE_ROOT/..."` unless you have explicitly sourced `.env`
-in that shell.
-
-```bash
-docker compose down --remove-orphans
-./scripts/reset-docker-storage.sh --yes
-docker compose up -d
-docker compose ps
-```
-
-If everything under `DR_DB_STORAGE_ROOT` is disposable, add `--all` to remove
-and recreate the entire storage root:
-
-```bash
-docker compose down --remove-orphans
-./scripts/reset-docker-storage.sh --yes --all
-docker compose up -d
-docker compose ps
-```
-
-## Start
-
-The real `.env` file is intentionally ignored by git. Create it on the VM from
-the template, set `DR_DB_POSTGRES_PASSWORD` to the shared password, and make
-sure `DR_DB_STORAGE_ROOT` points at a directory owned by your VM user.
-
-```bash
-cp .env.example .env
-$EDITOR .env
-./scripts/ensure-docker-storage.sh
-docker compose up -d
-```
-
-If Compose reports that it cannot create a bind mount under `/allen/...`, update
-`DR_DB_STORAGE_ROOT` in `.env` to a user-owned path such as
-`/home/ben.hardcastle/dr-db`, then rerun the storage helper before
-starting Compose again.
-
-If Compose reports `permission denied` while creating a bind mount under
-`/home/ben.hardcastle/...`, the storage directories may exist but the Docker
-daemon may not be able to traverse the home-directory path. Keep the storage
-root under `/home/ben.hardcastle`, then make the parent directories executable
-by the daemon:
-
-```bash
-namei -l "$DR_DB_STORAGE_ROOT/mathesar/pgdata"
-chmod o+x /home/ben.hardcastle
-chmod o+x /home/ben.hardcastle/dr-db
-./scripts/ensure-docker-storage.sh
-docker compose up -d
-```
-
-The `chmod o+x` commands allow traversal only; they do not make the directories
-world-readable or writable.
-
-If a reset leaves either Postgres container restarting, inspect the logs:
-
-```bash
-docker compose logs --tail=100 postgres mathesar-metadata
-```
-
-If the logs show `chown`, `chmod`, or `mkdir` permission errors under
-`/var/lib/postgresql/data`, completely remove and recreate disposable storage:
-
-```bash
-docker compose down --remove-orphans
-./scripts/reset-docker-storage.sh --yes --all
-docker compose up -d
-```
-
-If Docker reports `permission denied while trying to connect to the docker API
-at unix:///var/run/docker.sock`, make sure your VM user is in the `docker`
-group:
-
-```bash
-sudo usermod -aG docker "$USER"
-newgrp docker
-docker version
-```
-
-After `newgrp docker`, `id` should include `docker` and `docker version` should
-show both client and server details. Avoid running Compose with `sudo` from this
-repo; on the VM, root may not be able to read `.env` from the protected home
-directory.
-
-## Dev database
-
-The Compose stack includes an isolated dev Postgres service. It uses a separate
-data directory and host port from the shared database, and can be overwritten
-from the shared database whenever you need a fresh test copy.
-
-Start the dev database:
-
-```bash
-docker compose up -d postgres-dev
-```
-
-Clone the shared database into dev. This command drops and recreates only the
-dev database named by `DR_DB_DEV_POSTGRES_DB`.
-
-```bash
-docker compose --profile tools run --rm clone-prod-to-dev
-```
-
-Dev PostgreSQL:
-
-```text
-Host: localhost
-Port: 7501
-Database: dr_db_dev
-User: svc_neuropix
-Password: see local .env
-```
-
-From another container in the Compose network, use host `dr-db-dev` and port
-`5432`. From the Docker host, use `localhost` and the host port configured by
-`DR_DB_DEV_POSTGRES_HOST_PORT`.
-
-## Connections
-
-PostgreSQL:
-
-```text
-Host: dr-db
-Port: 7500
-Database: dr_db
-User: svc_neuropix
-Password: see local .env
-```
-
-If `dr-db` is not resolvable from a client machine, use the Docker host name or
-IP address with port `7500`, or add `dr-db` to DNS or `/etc/hosts` pointing at
-the VM.
-
-Mathesar has a separate internal Postgres container for its own metadata. That
-internal database uses Mathesar's default database name, `mathesar_django`.
-The `.env` variables for that container are prefixed with
-`MATHESAR_METADATA_POSTGRES_`.
-
-Mathesar:
-
-```text
-http://dr-db:7000
-```
-
-If opening Mathesar on the Docker host itself, `http://localhost:7000` should
-also work. When connecting Mathesar to the user database from the UI, use host
-`dr-db`, port `5432`, database `dr_db`, user `svc_neuropix`, and the same
-password from `.env`.
+Use the non-dev username, password, host, and db name from `.env` when initializing prod. Keep `.env` local; do not commit it.
