@@ -40,7 +40,7 @@ services:
       retries: 30
       start_period: 5s
 
-  mathesar:
+  mathesar_service:
     image: mathesar/mathesar:latest
     restart: unless-stopped
     environment:
@@ -91,5 +91,5 @@ services:
         source: ${DR_DB_STORAGE_ROOT:?Set DR_DB_STORAGE_ROOT in .env}/mathesar/caddy
         target: /data
     depends_on:
-      mathesar:
+      mathesar_service:
         condition: service_healthy
