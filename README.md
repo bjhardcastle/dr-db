@@ -14,8 +14,13 @@ docker compose up -d postgres postgres-dev
 5. Run migrations against the database you want to initialize. For local dev:
 
 ```bash
-export DATABASE_URL="postgres://svc_neuropix:<dev-password>@postgres-dev:5432/dr_db_dev?sslmode=disable"
-docker compose --profile tools run --rm dbmate up
+docker compose --profile tools run --rm dbmate-dev up
 ```
 
-Use the non-dev username, password, host, and db name from `.env` when initializing prod. Keep `.env` local; do not commit it.
+For prod:
+
+```bash
+docker compose --profile tools run --rm dbmate-prod up
+```
+
+Both commands construct their database connection from `.env`. Keep `.env` local; do not commit it.
