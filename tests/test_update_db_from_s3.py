@@ -66,6 +66,7 @@ class S3DiscoveryTests(TestCase):
                     {
                         "CommonPrefixes": [
                             {"Prefix": "data/123/123_20260822/"},
+                            {"Prefix": "data/123/summary/"},
                             {"Prefix": "data/123/123_bad-date/"},
                         ]
                     }
