@@ -19,3 +19,15 @@ different file can be selected with `DR_DB_ENV_FILE`. The task wrappers use
 Keep reusable application logic in `src/dr_db/`; keep these scripts thin and
 focused on operational concerns such as selecting a database, creating an
 output directory, or invoking Docker Compose.
+
+To add missing Dynamic Routing subject and session IDs from S3 to Postgres:
+
+```bash
+uv run python scripts/update_db_from_s3.py --dry-run
+uv run python scripts/update_db_from_s3.py
+```
+
+The script reads AWS credentials from the normal boto3 credential chain and
+database settings from `.env` or `DR_DB_POSTGRES_*` environment variables. S3
+session directories must be named `<subject_id>_<YYYY-MM-DD>` below a numeric
+subject directory. Existing subject/session rows are left unchanged.

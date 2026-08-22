@@ -185,6 +185,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "aind-data-access-api" },
+    { name = "boto3" },
     { name = "dotenv" },
     { name = "polars", extra = ["excel"] },
     { name = "psycopg", extra = ["binary"] },
@@ -195,6 +196,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "aind-data-access-api", specifier = ">=1.6.0" },
+    { name = "boto3", specifier = ">=1.43.33" },
     { name = "dotenv", specifier = ">=0.9.9" },
     { name = "polars", extras = ["excel"], specifier = ">=1.40.1" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.2" },
