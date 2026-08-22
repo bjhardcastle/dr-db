@@ -29,5 +29,6 @@ uv run python scripts/update_db_from_s3.py
 
 The script reads AWS credentials from the normal boto3 credential chain and
 database settings from `.env` or `DR_DB_POSTGRES_*` environment variables. S3
-session directories must be named `<subject_id>_<YYYY-MM-DD>` below a numeric
-subject directory. Existing subject/session rows are left unchanged.
+session directories must be named `<subject_id>_<YYYYMMDD>` below a numeric
+subject directory. Hyphenated `<YYYY-MM-DD>` dates are also accepted. Existing
+subject/session rows are left unchanged.

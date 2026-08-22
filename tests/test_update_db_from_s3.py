@@ -41,12 +41,15 @@ class S3DiscoveryTests(TestCase):
             parse_s3_uri("s3://bucket/path/to/data"),
         )
         self.assertEqual(
-            S3Session(123, "123_2026-08-22", date(2026, 8, 22)),
-            parse_session(123, "123_2026-08-22"),
+            S3Session(123, "123_20260822", date(2026, 8, 22)),
+            parse_session(123, "123_20260822"),
         )
-        session = parse_session(123, "123_2026-08-22")
+        session = parse_session(123, "123_20260822")
         assert session is not None
         self.assertEqual(date(2026, 8, 22), session.date)
+        hyphenated_session = parse_session(123, "123_2026-08-22")
+        assert hyphenated_session is not None
+        self.assertEqual(date(2026, 8, 22), hyphenated_session.date)
 
     def test_discovers_subject_and_session_directories(self) -> None:
         client = FakeS3Client(
@@ -59,7 +62,7 @@ class S3DiscoveryTests(TestCase):
                 "data/123/": [
                     {
                         "CommonPrefixes": [
-                            {"Prefix": "data/123/123_2026-08-22/"},
+                            {"Prefix": "data/123/123_20260822/"},
                             {"Prefix": "data/123/123_bad-date/"},
                         ]
                     }
@@ -69,7 +72,7 @@ class S3DiscoveryTests(TestCase):
 
         self.assertEqual(
             [
-                parse_session(123, "123_2026-08-22"),
+                parse_session(123, "123_20260822"),
             ],
             discover_sessions(client, "bucket", "data/"),
         )

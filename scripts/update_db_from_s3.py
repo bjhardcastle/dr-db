@@ -128,7 +128,7 @@ def discover_inventory(client: Any, bucket: str, prefix: str) -> S3Inventory:
             if session is None:
                 print(
                     f"Skipping session directory that does not match "
-                    f"<subject>_<YYYY-MM-DD>: {session_name}"
+                    f"<subject>_<date> (YYYYMMDD or YYYY-MM-DD): {session_name}"
                 )
                 continue
             sessions[session.session_id] = session
@@ -182,10 +182,20 @@ def parse_session(subject_id: int, value: str) -> S3Session | None:
 
     session_id = value
     date_text = value[len(expected_prefix) :]
-    try:
-        session_date = date.fromisoformat(date_text)
-    except ValueError:
-        return None
+    if len(date_text) == 8 and date_text.isdecimal():
+        try:
+            session_date = date(
+                int(date_text[0:4]),
+                int(date_text[4:6]),
+                int(date_text[6:8]),
+            )
+        except ValueError:
+            return None
+    else:
+        try:
+            session_date = date.fromisoformat(date_text)
+        except ValueError:
+            return None
     return S3Session(subject_id, session_id, session_date)
 
 
