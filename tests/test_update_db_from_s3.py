@@ -57,6 +57,9 @@ class S3DiscoveryTests(TestCase):
                 "data/": [
                     {"CommonPrefixes": [{"Prefix": "data/123/"}]},
                     {"CommonPrefixes": [{"Prefix": "data/456/"}]},
+                    {"CommonPrefixes": [{"Prefix": "data/000000/"}]},
+                    {"CommonPrefixes": [{"Prefix": "data/366122/"}]},
+                    {"CommonPrefixes": [{"Prefix": "data/555555/"}]},
                     {"CommonPrefixes": [{"Prefix": "data/not-a-subject/"}]},
                 ],
                 "data/123/": [

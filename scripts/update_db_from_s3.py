@@ -15,6 +15,7 @@ from psycopg import sql
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_S3_URI = "s3://aind-scratch-data/dynamic-routing/DynamicRoutingTask/Data"
+SKIPPED_SUBJECT_DIRECTORIES = frozenset({"000000", "366122", "555555"})
 
 
 @dataclass(frozen=True)
@@ -113,6 +114,9 @@ def discover_inventory(client: Any, bucket: str, prefix: str) -> S3Inventory:
     for subject_prefix in common_prefixes(client, bucket, prefix):
         subject_name = relative_prefix(subject_prefix, prefix)
         if not subject_name or "/" in subject_name:
+            continue
+        if subject_name in SKIPPED_SUBJECT_DIRECTORIES:
+            print(f"Skipping excluded subject directory: {subject_name}")
             continue
 
         subject_id = parse_subject_id(subject_name)
