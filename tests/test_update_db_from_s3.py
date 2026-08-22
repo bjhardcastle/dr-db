@@ -102,3 +102,62 @@ class S3DiscoveryTests(TestCase):
         )
         inventory = discover_inventory(client, "bucket", "data/")
         self.assertEqual((123, 456), inventory.subject_ids)
+
+    def test_prefers_dynamic_routing_1_when_session_has_multiple_files(self) -> None:
+        client = FakeS3Client(
+            {
+                "data/": [{"CommonPrefixes": [{"Prefix": "data/123/"}]}],
+                "data/123/": [
+                    {
+                        "Contents": [
+                            {
+                                "Key": (
+                                    "data/123/"
+                                    "OptoTagging_123_20260822_114534.hdf5"
+                                )
+                            },
+                            {
+                                "Key": (
+                                    "data/123/"
+                                    "DynamicRouting1_123_20260822_114534.hdf5"
+                                )
+                            },
+                        ]
+                    }
+                ],
+            }
+        )
+
+        self.assertEqual(
+            [parse_session(123, "123_20260822")],
+            discover_sessions(client, "bucket", "data/"),
+        )
+
+        client = FakeS3Client(
+            {
+                "data/": [{"CommonPrefixes": [{"Prefix": "data/123/"}]}],
+                "data/123/": [
+                    {
+                        "Contents": [
+                            {
+                                "Key": (
+                                    "data/123/"
+                                    "DynamicRouting1_123_20260822_114534.hdf5"
+                                )
+                            },
+                            {
+                                "Key": (
+                                    "data/123/"
+                                    "OptoTagging_123_20260822_114534.hdf5"
+                                )
+                            },
+                        ]
+                    }
+                ],
+            }
+        )
+
+        self.assertEqual(
+            [parse_session(123, "123_20260822")],
+            discover_sessions(client, "bucket", "data/"),
+        )

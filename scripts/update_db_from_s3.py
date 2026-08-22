@@ -110,7 +110,7 @@ def parse_s3_uri(uri: str) -> tuple[str, str]:
 
 def discover_inventory(client: Any, bucket: str, prefix: str) -> S3Inventory:
     subject_ids: set[int] = set()
-    sessions: dict[str, S3Session] = {}
+    sessions: dict[str, tuple[bool, S3Session]] = {}
     for subject_prefix in common_prefixes(client, bucket, prefix):
         subject_name = relative_prefix(subject_prefix, prefix)
         if not subject_name or "/" in subject_name:
@@ -133,10 +133,13 @@ def discover_inventory(client: Any, bucket: str, prefix: str) -> S3Inventory:
             session = parse_hdf5_filename(subject_id, relative_key)
             if session is None:
                 continue
-            sessions[session.session_id] = session
+            is_dynamic_routing_1 = "DynamicRouting1" in relative_key
+            existing = sessions.get(session.session_id)
+            if existing is None or (is_dynamic_routing_1 and not existing[0]):
+                sessions[session.session_id] = (is_dynamic_routing_1, session)
 
     sorted_sessions = sorted(
-        sessions.values(),
+        (session for _, session in sessions.values()),
         key=lambda item: (item.subject_id, item.date, item.session_id),
     )
     return S3Inventory(tuple(sorted(subject_ids)), tuple(sorted_sessions))
