@@ -103,7 +103,7 @@ $$;
 
 CREATE TABLE IF NOT EXISTS implant (
     id text PRIMARY KEY,
-    dhc boolean DEFAULT false
+    is_dhc boolean DEFAULT false
 );
 
 CREATE TABLE IF NOT EXISTS subject (
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS subject (
     status subject_status,
     purpose text,
     project project NOT NULL,
-    nsb boolean,
+    is_nsb boolean,
     genotype text,
     sex sex,
     birth_date date,
@@ -122,10 +122,10 @@ CREATE TABLE IF NOT EXISTS subject (
     virus text,
     virus_location text,
     regimen integer,
-    timeouts boolean,
+    is_timeouts boolean,
     trainer text,
     next_task_version text,
-    duragel boolean DEFAULT false,
+    is_duragel boolean DEFAULT false,
     notes text,
 
     CONSTRAINT subjects_implant_id_fkey
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS surgical_procedures (
 CREATE TABLE IF NOT EXISTS session (
     subject_id integer NOT NULL,
     date date NOT NULL,
-    ignore boolean,
+    is_ignore boolean,
     project project NOT NULL,
     platform platform NOT NULL,
     session_type session_type NOT NULL,
@@ -169,7 +169,7 @@ CREATE TABLE IF NOT EXISTS session (
     dprime_same_modality double precision[],
     dprime_other_modality_go_stim double precision[],
     quiescent_violations integer,
-    pass boolean,
+    is_pass boolean,
     is_production boolean NOT NULL DEFAULT true,
     is_split_recording boolean NOT NULL DEFAULT false,
     is_context_naive boolean NOT NULL DEFAULT false,
@@ -218,11 +218,11 @@ CREATE TABLE IF NOT EXISTS insertions (
     subject_id integer NOT NULL,
     date date NOT NULL,
     probe_letter text NOT NULL,
-    was_inserted boolean NOT NULL DEFAULT true,
-    ignore boolean NOT NULL DEFAULT false,
-    retracted_100 boolean,
-    unsortable boolean,
-    has_surface_channel_recording boolean,
+    is_inserted boolean NOT NULL DEFAULT true,
+    is_ignore boolean NOT NULL DEFAULT false,
+    is_retracted_100 boolean,
+    is_unsortable boolean,
+    is_surface_channel_recording boolean,
     target_location text,
     dye text,
     depth_um integer,
@@ -250,7 +250,7 @@ CREATE TABLE IF NOT EXISTS insertions (
         CHECK (injection_distance_mm IS NULL OR injection_distance_mm >= 0),
 
     CONSTRAINT insertions_unsortable_implies_ignore_check
-        CHECK (unsortable IS NOT TRUE OR ignore IS TRUE),
+        CHECK (is_unsortable IS NOT TRUE OR is_ignore IS TRUE),
 
     CONSTRAINT insertions_depth_implies_is_deep_check
         CHECK (depth_um IS NULL OR is_deep = (depth_um > 3000))
@@ -259,8 +259,8 @@ CREATE TABLE IF NOT EXISTS insertions (
 CREATE OR REPLACE FUNCTION set_insertion_ignore_for_unsortable()
 RETURNS trigger AS $$
 BEGIN
-    IF NEW.unsortable IS TRUE THEN
-        NEW.ignore := true;
+    IF NEW.is_unsortable IS TRUE THEN
+        NEW.is_ignore := true;
     END IF;
 
     RETURN NEW;
@@ -270,7 +270,7 @@ $$ LANGUAGE plpgsql;
 DROP TRIGGER IF EXISTS insertions_set_ignore_for_unsortable ON insertions;
 
 CREATE TRIGGER insertions_set_ignore_for_unsortable
-    BEFORE INSERT OR UPDATE OF unsortable, ignore
+    BEFORE INSERT OR UPDATE OF is_unsortable, is_ignore
     ON insertions
     FOR EACH ROW
     EXECUTE FUNCTION set_insertion_ignore_for_unsortable();

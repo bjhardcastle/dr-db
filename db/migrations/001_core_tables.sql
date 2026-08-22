@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS staff_members (
     display_name text NOT NULL UNIQUE,
     initials text,
     email text UNIQUE,
-    active boolean NOT NULL DEFAULT true,
+    is_active boolean NOT NULL DEFAULT true,
     notes text
 );
 
@@ -86,17 +86,17 @@ CREATE TABLE IF NOT EXISTS rigs (
 CREATE TABLE IF NOT EXISTS subjects (
     id integer PRIMARY KEY,
     project project NOT NULL,
-    nsb boolean,
+    is_nsb boolean,
     status text,
     purpose text,
-    alive boolean,
+    is_alive boolean,
     genotype text,
     sex sex,
     birthdate date,
-    whc boolean,
-    dhc boolean,
+    is_whc boolean,
+    is_dhc boolean,
     implant text,
-    cannula boolean,
+    is_cannula boolean,
     cannula_location text,
     virus text,
     virus_location text,
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS subjects (
     experiment_type text,
     rig_id integer,
     surgery_prep text,
-    duragel boolean DEFAULT false,
+    is_duragel boolean DEFAULT false,
     notes text,
 
     CONSTRAINT subjects_rig_id_fkey
@@ -127,13 +127,13 @@ CREATE TABLE IF NOT EXISTS subjects (
 ALTER TABLE subjects ADD COLUMN IF NOT EXISTS is_nsb boolean;
 ALTER TABLE subjects ADD COLUMN IF NOT EXISTS status text;
 ALTER TABLE subjects ADD COLUMN IF NOT EXISTS purpose text;
-ALTER TABLE subjects ADD COLUMN IF NOT EXISTS alive boolean;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS is_alive boolean;
 ALTER TABLE subjects ADD COLUMN IF NOT EXISTS genotype text;
 ALTER TABLE subjects ADD COLUMN IF NOT EXISTS sex sex;
 ALTER TABLE subjects ADD COLUMN IF NOT EXISTS birthdate date;
-ALTER TABLE subjects ADD COLUMN IF NOT EXISTS whc boolean;
-ALTER TABLE subjects ADD COLUMN IF NOT EXISTS dhc boolean;
-ALTER TABLE subjects ADD COLUMN IF NOT EXISTS cannula boolean;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS is_whc boolean;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS is_dhc boolean;
+ALTER TABLE subjects ADD COLUMN IF NOT EXISTS is_cannula boolean;
 ALTER TABLE subjects ADD COLUMN IF NOT EXISTS cannula_location text;
 ALTER TABLE subjects ADD COLUMN IF NOT EXISTS virus text;
 ALTER TABLE subjects ADD COLUMN IF NOT EXISTS virus_location text;
@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS sessions (
     insertion_config text,
     stims_run text,
     probe_locator text,
-    needs_upload boolean,
+    is_needs_upload boolean,
     external_session_ids text[],
     notes text,
     source_sheet text,
@@ -189,11 +189,11 @@ CREATE TABLE IF NOT EXISTS insertions (
     date date NOT NULL,
     session_id integer NOT NULL,
     probe_letter text NOT NULL,
-    was_inserted boolean NOT NULL DEFAULT true,
-    ignore boolean NOT NULL DEFAULT false,
-    retracted_100 boolean,
-    unsortable boolean,
-    has_surface_channel_recording boolean,
+    is_inserted boolean NOT NULL DEFAULT true,
+    is_ignore boolean NOT NULL DEFAULT false,
+    is_retracted_100 boolean,
+    is_unsortable boolean,
+    is_surface_channel_recording boolean,
     target_location text,
     depth_um integer,
     is_deep boolean,
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS insertions (
         CHECK (injection_distance_mm IS NULL OR injection_distance_mm >= 0),
 
     CONSTRAINT insertions_unsortable_implies_ignore_check
-        CHECK (unsortable IS NOT TRUE OR ignore IS TRUE),
+        CHECK (is_unsortable IS NOT TRUE OR is_ignore IS TRUE),
 
     CONSTRAINT insertions_depth_implies_is_deep_check
         CHECK (depth_um IS NULL OR is_deep = (depth_um > 3000))
@@ -241,8 +241,8 @@ CREATE TABLE IF NOT EXISTS insertions (
 CREATE OR REPLACE FUNCTION set_insertion_ignore_for_unsortable()
 RETURNS trigger AS $$
 BEGIN
-    IF NEW.unsortable IS TRUE THEN
-        NEW.ignore := true;
+    IF NEW.is_unsortable IS TRUE THEN
+        NEW.is_ignore := true;
     END IF;
 
     RETURN NEW;
@@ -252,7 +252,7 @@ $$ LANGUAGE plpgsql;
 DROP TRIGGER IF EXISTS insertions_set_ignore_for_unsortable ON insertions;
 
 CREATE TRIGGER insertions_set_ignore_for_unsortable
-    BEFORE INSERT OR UPDATE OF unsortable, ignore
+    BEFORE INSERT OR UPDATE OF is_unsortable, is_ignore
     ON insertions
     FOR EACH ROW
     EXECUTE FUNCTION set_insertion_ignore_for_unsortable();
@@ -280,15 +280,15 @@ CREATE TABLE IF NOT EXISTS subject_workflows (
     recorded_days text,
     perfusion_date date,
     experiment_perfusion_notes text,
-    surgery_feedback_submitted boolean,
+    is_surgery_feedback_submitted boolean,
     surgery_feedback_notes text,
 
     imaging_type text,
-    imaging_completed boolean,
+    is_imaging_completed boolean,
     imaging_completed_at date,
-    stitching_completed boolean,
+    is_stitching_completed boolean,
     stitching_completed_at date,
-    neuroglancer_mirrored boolean,
+    is_neuroglancer_mirrored boolean,
 
     probes_inserted_days text,
     probes_annotated_days text,
@@ -296,12 +296,12 @@ CREATE TABLE IF NOT EXISTS subject_workflows (
     channels_aligned_notes text,
 
     days_resorted text,
-    realignment_ready boolean,
+    is_realignment_ready boolean,
     realignment_ready_notes text,
     realigner_staff_id integer,
     realignment_notes text,
-    first_pass_done boolean,
-    realignment_done boolean,
+    is_first_pass_done boolean,
+    is_realignment_done boolean,
     general_notes text,
     source_sheet text,
     source_row integer,
@@ -338,7 +338,7 @@ CREATE TABLE IF NOT EXISTS session_injections (
     finished_at time,
     finished_at_notes text,
     pipette_inner_diameter_um numeric(10, 3),
-    beveled_30_degrees boolean,
+    is_beveled_30_degrees boolean,
     labeling_site_notes text,
     notes text,
     source_sheet text,
@@ -385,8 +385,8 @@ CREATE TABLE IF NOT EXISTS smartspim_imaging_requests (
     queue_notes text,
     reprocessed_date date,
     processing_notes text,
-    needs_reprocessing boolean,
-    reprocessing_requested boolean,
+    is_needs_reprocessing boolean,
+    is_reprocessing_requested boolean,
     neuroglancer_url text,
     annotation_status workflow_state NOT NULL DEFAULT 'not_started',
     annotator_staff_id integer,
@@ -431,7 +431,7 @@ CREATE TABLE IF NOT EXISTS slide_imaging_requests (
     channels text,
     imaged_date date,
     imaging_latency_days integer,
-    slides_retrieved boolean,
+    is_slides_retrieved boolean,
     notes text,
     source_sheet text,
     source_row integer,
@@ -458,8 +458,8 @@ CREATE TABLE IF NOT EXISTS alignment_cases (
     probes_not_inserted text,
     neuroglancer_url text,
     annotated_neuroglass_url text,
-    upload_complete boolean,
-    sorting_complete boolean,
+    is_upload_complete boolean,
+    is_sorting_complete boolean,
     converted_asset_name text,
     converted_asset_id text,
     converted_asset_notes text,
@@ -488,10 +488,10 @@ CREATE TABLE IF NOT EXISTS alignment_reviews (
     completed_date date,
     save_location text,
     confidence smallint,
-    qc_noise boolean NOT NULL DEFAULT false,
-    qc_drift boolean NOT NULL DEFAULT false,
-    qc_low_yield boolean NOT NULL DEFAULT false,
-    qc_brain_damage boolean NOT NULL DEFAULT false,
+    is_qc_noise boolean NOT NULL DEFAULT false,
+    is_qc_drift boolean NOT NULL DEFAULT false,
+    is_qc_low_yield boolean NOT NULL DEFAULT false,
+    is_qc_brain_damage boolean NOT NULL DEFAULT false,
     notes text,
     source_sheet text,
     source_row integer,
