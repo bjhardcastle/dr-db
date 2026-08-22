@@ -16,7 +16,6 @@ from psycopg import sql
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_S3_URI = "s3://aind-scratch-data/dynamic-routing/DynamicRoutingTask/Data"
 SKIPPED_SUBJECT_DIRECTORIES = frozenset({"000000", "366122", "555555"})
-SKIPPED_SESSION_DIRECTORIES = frozenset({"summary"})
 
 
 @dataclass(frozen=True)
@@ -127,16 +126,12 @@ def discover_inventory(client: Any, bucket: str, prefix: str) -> S3Inventory:
         subject_ids.add(subject_id)
 
         subject_root = prefix + subject_name + "/"
-        for session_prefix in common_prefixes(client, bucket, subject_root):
-            session_name = relative_prefix(session_prefix, subject_root)
-            if session_name in SKIPPED_SESSION_DIRECTORIES:
+        for key in object_keys(client, bucket, subject_root):
+            relative_key = key[len(subject_root) :]
+            if "/" in relative_key or not relative_key.lower().endswith(".hdf5"):
                 continue
-            session = parse_session(subject_id, session_name)
+            session = parse_hdf5_filename(subject_id, relative_key)
             if session is None:
-                print(
-                    f"Skipping session directory that does not match "
-                    f"<subject>_<date> (YYYYMMDD or YYYY-MM-DD): {session_name}"
-                )
                 continue
             sessions[session.session_id] = session
 
@@ -168,6 +163,19 @@ def common_prefixes(client: Any, bucket: str, prefix: str) -> Iterator[str]:
                 yield value
 
 
+def object_keys(client: Any, bucket: str, prefix: str) -> Iterator[str]:
+    paginator = client.get_paginator("list_objects_v2")
+    pages: Iterable[Mapping[str, Any]] = paginator.paginate(
+        Bucket=bucket,
+        Prefix=prefix,
+    )
+    for page in pages:
+        for item in page.get("Contents", []):
+            value = item.get("Key")
+            if value:
+                yield value
+
+
 def relative_prefix(value: str, parent: str) -> str:
     if not value.startswith(parent):
         raise ValueError(f"S3 prefix {value!r} is not below {parent!r}")
@@ -189,21 +197,45 @@ def parse_session(subject_id: int, value: str) -> S3Session | None:
 
     session_id = value
     date_text = value[len(expected_prefix) :]
-    if len(date_text) == 8 and date_text.isdecimal():
+    session_date = parse_date_text(date_text)
+    if session_date is None:
+        return None
+    return S3Session(subject_id, session_id, session_date)
+
+
+def parse_hdf5_filename(subject_id: int, filename: str) -> S3Session | None:
+    parts = Path(filename).stem.split("_")
+    subject_text = str(subject_id)
+    try:
+        subject_index = parts.index(subject_text)
+    except ValueError:
+        return None
+
+    for date_text in parts[subject_index + 1 :]:
+        if len(date_text) != 8 or not date_text.isdecimal():
+            continue
+        session_date = parse_date_text(date_text)
+        if session_date is None:
+            continue
+        return S3Session(subject_id, f"{subject_text}_{date_text}", session_date)
+    return None
+
+
+def parse_date_text(value: str) -> date | None:
+    if len(value) == 8 and value.isdecimal():
         try:
-            session_date = date(
-                int(date_text[0:4]),
-                int(date_text[4:6]),
-                int(date_text[6:8]),
+            return date(
+                int(value[0:4]),
+                int(value[4:6]),
+                int(value[6:8]),
             )
         except ValueError:
             return None
-    else:
-        try:
-            session_date = date.fromisoformat(date_text)
-        except ValueError:
-            return None
-    return S3Session(subject_id, session_id, session_date)
+
+    try:
+        return date.fromisoformat(value)
+    except ValueError:
+        return None
 
 
 def insert_s3_ids(

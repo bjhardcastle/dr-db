@@ -7,6 +7,7 @@ from scripts.update_db_from_s3 import (
     S3Session,
     discover_inventory,
     discover_sessions,
+    parse_hdf5_filename,
     parse_s3_uri,
     parse_session,
 )
@@ -50,6 +51,20 @@ class S3DiscoveryTests(TestCase):
         hyphenated_session = parse_session(123, "123_2026-08-22")
         assert hyphenated_session is not None
         self.assertEqual(date(2026, 8, 22), hyphenated_session.date)
+        self.assertEqual(
+            S3Session(123, "123_20260822", date(2026, 8, 22)),
+            parse_hdf5_filename(
+                123,
+                "DynamicRouting1_123_20260822_114534.hdf5",
+            ),
+        )
+        self.assertEqual(
+            S3Session(123, "123_20260822", date(2026, 8, 22)),
+            parse_hdf5_filename(
+                123,
+                "OptoTagging_123_-5_20260822_114534.hdf5",
+            ),
+        )
 
     def test_discovers_subject_and_session_directories(self) -> None:
         client = FakeS3Client(
@@ -64,10 +79,15 @@ class S3DiscoveryTests(TestCase):
                 ],
                 "data/123/": [
                     {
-                        "CommonPrefixes": [
-                            {"Prefix": "data/123/123_20260822/"},
-                            {"Prefix": "data/123/summary/"},
-                            {"Prefix": "data/123/123_bad-date/"},
+                        "Contents": [
+                            {
+                                "Key": (
+                                    "data/123/"
+                                    "DynamicRouting1_123_20260822_114534.hdf5"
+                                )
+                            },
+                            {"Key": "data/123/summary"},
+                            {"Key": "data/123/not-an-hdf5.txt"},
                         ]
                     }
                 ],
