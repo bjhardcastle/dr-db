@@ -32,3 +32,21 @@ For prod:
 ```bash
 docker compose --profile tools run --rm dbmate-prod up
 ```
+
+Both commands construct their database connection from `.env`. Keep `.env` local; do not commit it.
+
+## Scheduled tasks
+
+Operational task wrappers live in [`scripts/tasks/`](scripts/tasks/README.md),
+and the production schedule is in
+[`ops/cron/dr-db.crontab`](ops/cron/dr-db.crontab). Run tasks manually through
+the locking wrapper:
+
+```bash
+./scripts/run-task.sh migrate-dev
+./scripts/run-task.sh clone-prod-to-dev
+```
+
+See [`ops/README.md`](ops/README.md) before installing the cron schedule. The
+schedule contains no credentials; production secrets belong in a host-only env
+file.

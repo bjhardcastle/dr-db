@@ -1,0 +1,18 @@
+# Install for the dedicated dr-db service account after replacing this path.
+# The account must be able to run Docker and read /etc/dr-db/production.env.
+
+SHELL=/bin/sh
+PATH=/usr/local/bin:/usr/bin:/bin
+DR_DB_ENV_FILE=/etc/dr-db/production.env
+
+# Example scheduled operation; uncomment only after testing it manually.
+# 0 1 * * * cd /opt/dr-db && /opt/dr-db/scripts/run-task.sh migrate-dev >>/var/log/dr-db/migrate-dev.log 2>&1
+
+# Production migrations should normally be a deliberate, reviewed operation.
+# Run manually after dev validation:
+# cd /opt/dr-db && /opt/dr-db/scripts/run-task.sh migrate-prod
+
+# Cloning overwrites the dev database; schedule only if that is intended.
+# 0 3 * * 0 cd /opt/dr-db && /opt/dr-db/scripts/run-task.sh clone-prod-to-dev >>/var/log/dr-db/clone-prod-to-dev.log 2>&1
+
+# Add backup/export/ingestion entries after their task wrappers exist.
