@@ -16,8 +16,8 @@ $$;
 DO $$
 BEGIN
     CREATE TYPE sex AS ENUM (
-        'male',
-        'female'
+        'M',
+        'F'
     );
 EXCEPTION
     WHEN duplicate_object THEN NULL;
@@ -184,8 +184,9 @@ CREATE TABLE IF NOT EXISTS sessions (
 );
 
 CREATE TABLE IF NOT EXISTS insertions (
-    id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id integer GENERATED ALWAYS AS IDENTITY,
     subject_id integer NOT NULL,
+    date date NOT NULL,
     session_id integer NOT NULL,
     probe_letter text NOT NULL,
     was_inserted boolean NOT NULL DEFAULT true,
@@ -199,6 +200,12 @@ CREATE TABLE IF NOT EXISTS insertions (
     depth_notes text,
     injection_distance_mm numeric(8, 3),
     notes text,
+
+    CONSTRAINT insertions_pkey
+        PRIMARY KEY (subject_id, date, probe_letter),
+
+    CONSTRAINT insertions_id_key
+        UNIQUE (id),
 
     CONSTRAINT insertions_subject_id_fkey
         FOREIGN KEY (subject_id)
