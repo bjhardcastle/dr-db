@@ -32,3 +32,16 @@ database settings from `.env` or `DR_DB_POSTGRES_*` environment variables. S3
 session directories must be named `<subject_id>_<YYYYMMDD>` below a numeric
 subject directory. Hyphenated `<YYYY-MM-DD>` dates are also accepted. Existing
 subject/session rows are left unchanged.
+
+To inventory each session's task-stim S3 path and rig ID in a temporary SQLite
+database:
+
+```bash
+uv run --script scripts/export_session_rigs.py
+```
+
+The command uses the `aind` AWS profile by default and prints the generated
+temporary database path. Its `session_rigs` table contains one row per session;
+rig-read failures are retained as rows with a null `rig_id` and a `read_error`.
+Use `--limit` for a small credential check or `--output` to choose a new database
+path explicitly.
