@@ -17,7 +17,12 @@ Try both forms:
 from pydantic_settings import BaseSettings
 
 
-class Settings(BaseSettings, cli_parse_args=True, cli_kebab_case="all"):
+class Settings(
+    BaseSettings,
+    cli_parse_args=True,
+    cli_kebab_case="all",
+    cli_shortcuts={"example-value": "example_value"},
+):
     example_value: str
 
 
