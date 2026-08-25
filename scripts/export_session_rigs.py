@@ -2,17 +2,18 @@
 # /// script
 # requires-python = ">=3.10"
 # dependencies = [
-#     "boto3>=1.43.33",
 #     "lazynwb==1.0.0.dev3",
+#     "obstore>=0.11.1",
+#     "pydantic-settings>=2.14.1",
 #     "sqlite-utils>=3.39",
 # ]
 # ///
 
 from __future__ import annotations
 
-import argparse
 import asyncio
 import os
+import sqlite3
 import sys
 import tempfile
 from collections.abc import Awaitable, Callable, Iterable, Mapping
@@ -22,112 +23,126 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 from urllib.parse import urlparse
 
-import boto3
 import lazynwb
+from obstore.store import S3Store
+from pydantic import Field
+from pydantic_settings import BaseSettings
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from dr_db.hdf5 import read_rig
 
+# Task-data objects are public; let lazynwb read them without signing requests.
+lazynwb.config.anon = True
+
+
 DEFAULT_S3_URI = "s3://aind-scratch-data/dynamic-routing/DynamicRoutingTask/Data"
-DEFAULT_AWS_PROFILE = "aind"
+DEFAULT_AWS_REGION = "us-west-2"
 SKIPPED_SUBJECT_DIRECTORIES = frozenset({"000000", "366122", "555555"})
-TABLE_NAME = "session_rigs"
+TABLE_NAME = "session"
+
+
+class Settings(BaseSettings, cli_parse_args=True, cli_kebab_case="all"):
+    """Command-line settings for the session-rig export."""
+
+    s3_uri: str = Field(default=DEFAULT_S3_URI)
+    endpoint_url: str | None = Field(
+        default=None,
+        description="Optional S3-compatible endpoint URL.",
+    )
+    output: Path = Field(
+        default=Path("sessions.db"),
+        description=(
+            "Output database path. By default a new file is made in the OS temp directory."
+        ),
+    )
+    readers: int = Field(
+        default=16,
+        ge=1,
+        description="Number of concurrent HDF5 readers.",
+    )
+    queue_size: int = Field(
+        default=64,
+        ge=1,
+        description="Maximum task-data files waiting for a reader.",
+    )
+    limit: int | None = Field(
+        default=None,
+        ge=1,
+        description="Process only the first N sessions; useful for checking credentials.",
+    )
 
 
 @dataclass(frozen=True)
-class TaskStim:
-    session_id: str
-    task_stim_s3_path: str
+class TaskData:
+    subject_id: str
+    date: str
+    task_data_s3_path: str
 
 
 @dataclass(frozen=True)
 class SessionRig:
-    session_id: str
-    task_stim_s3_path: str
+    subject_id: str
+    date: str
+    task_data_s3_path: str
     rig_id: str | None
-    read_error: str | None
+    task_data_read_error: str | None
+
+
+def extract_subject_id(session_id: str) -> str:
+    return session_id.split("_", 1)[0]
+
+
+def extract_date(session_id: str) -> str:
+    return date.fromisoformat(session_id.split("_", 1)[1]).isoformat()
 
 
 async def main() -> None:
-    args = parse_args()
-    if args.readers < 1:
-        raise ValueError("--readers must be at least 1")
-    if args.queue_size < 1:
-        raise ValueError("--queue-size must be at least 1")
-    if args.limit is not None and args.limit < 1:
-        raise ValueError("--limit must be at least 1")
+    settings = parse_args()
 
-    bucket, prefix = parse_s3_uri(args.s3_uri)
-    aws_session = boto3.Session(profile_name=args.profile)
-    expose_aws_credentials(aws_session)
+    bucket, prefix = parse_s3_uri(settings.s3_uri)
     # FileAccessor otherwise retains one closed accessor for every HDF5 path.
     lazynwb.config.disable_cache = True
-    if args.endpoint_url:
-        os.environ["AWS_ENDPOINT_URL"] = args.endpoint_url
-    s3 = aws_session.client("s3", endpoint_url=args.endpoint_url)
+    s3_options: dict[str, Any] = {
+        "region": DEFAULT_AWS_REGION,
+        "skip_signature": True,
+    }
+    if settings.endpoint_url:
+        s3_options["endpoint"] = settings.endpoint_url
+    s3 = S3Store(bucket, prefix=prefix, **s3_options)
 
-    task_stims = discover_task_stims(s3, bucket, prefix)
-    if args.limit is not None:
-        task_stims = task_stims[: args.limit]
-    print(f"Discovered {len(task_stims)} task-stim files under {args.s3_uri}.")
+    task_datas = discover_task_datas(s3, bucket)
+    if settings.limit is not None:
+        task_datas = task_datas[: settings.limit]
 
-    database_path = args.output or temporary_database_path()
-    if args.output is not None and database_path.exists():
-        raise FileExistsError(f"Refusing to overwrite existing file: {database_path}")
+    database_path = settings.output or temporary_database_path()
+    existing_sessions = read_existing_session_keys(database_path)
+    skipped = sum(
+        (task.subject_id, task.date) in existing_sessions for task in task_datas
+    )
+    task_datas = [
+        task
+        for task in task_datas
+        if (task.subject_id, task.date) not in existing_sessions
+    ]
+    print(
+        f"Discovered {len(task_datas) + skipped} task-data files under {settings.s3_uri}; "
+        f"skipping {skipped} already in {database_path}."
+    )
     print(f"Writing {TABLE_NAME} to {database_path}")
 
     written, errors = await export_session_rigs(
-        task_stims,
+        task_datas,
         database_path,
-        reader_count=args.readers,
-        queue_size=args.queue_size,
+        reader_count=settings.readers,
+        queue_size=settings.queue_size,
     )
     print(f"Wrote {written} sessions ({errors} rig-read errors) to {database_path}")
 
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description=(
-            "Discover Dynamic Routing task-stim files, read their rig IDs, and "
-            "write one row per session to a temporary SQLite database."
-        )
-    )
-    parser.add_argument("--s3-uri", default=DEFAULT_S3_URI)
-    parser.add_argument(
-        "--profile",
-        default=os.getenv("AWS_PROFILE", DEFAULT_AWS_PROFILE),
-        help="AWS profile to use (default: %(default)s).",
-    )
-    parser.add_argument(
-        "--endpoint-url",
-        default=None,
-        help="Optional S3-compatible endpoint URL.",
-    )
-    parser.add_argument(
-        "--output",
-        type=Path,
-        help="Output database path. By default a new file is made in the OS temp directory.",
-    )
-    parser.add_argument(
-        "--readers",
-        type=int,
-        default=16,
-        help="Number of concurrent HDF5 readers (default: %(default)s).",
-    )
-    parser.add_argument(
-        "--queue-size",
-        type=int,
-        default=64,
-        help="Maximum task-stim files waiting for a reader (default: %(default)s).",
-    )
-    parser.add_argument(
-        "--limit",
-        type=int,
-        help="Process only the first N sessions; useful for checking credentials.",
-    )
-    return parser.parse_args()
+def parse_args() -> Settings:
+    return Settings()
 
 
 def parse_s3_uri(uri: str) -> tuple[str, str]:
@@ -140,54 +155,47 @@ def parse_s3_uri(uri: str) -> tuple[str, str]:
     return parsed.netloc, prefix
 
 
-def expose_aws_credentials(session: boto3.Session) -> None:
-    """Make boto3's resolved SSO credentials available to lazynwb's S3 clients."""
-    credentials = session.get_credentials()
-    if credentials is None:
-        raise RuntimeError("AWS credentials were not found")
-    frozen = credentials.get_frozen_credentials()
-    os.environ["AWS_ACCESS_KEY_ID"] = frozen.access_key
-    os.environ["AWS_SECRET_ACCESS_KEY"] = frozen.secret_key
-    if frozen.token:
-        os.environ["AWS_SESSION_TOKEN"] = frozen.token
-    else:
-        os.environ.pop("AWS_SESSION_TOKEN", None)
-    os.environ["AWS_EC2_METADATA_DISABLED"] = "true"
-    if session.region_name:
-        os.environ["AWS_REGION"] = session.region_name
+def discover_task_datas(client: Any, bucket: str) -> list[TaskData]:
+    """Return the last DynamicRouting1 HDF5 file for each subject/date."""
+    task_datas: dict[tuple[str, str], tuple[tuple[int, str], TaskData]] = {}
+    prefix = client.prefix or ""
+    objects: Iterable[Mapping[str, Any]] = client.list().collect()
+    for item in objects:
+        key = item.get("path")
+        if not key:
+            continue
+        relative_path = PurePosixPath(str(key))
+        path_parts = relative_path.parts
+        if len(path_parts) != 2:
+            continue
+        subject_name, filename = path_parts
+        if subject_name in SKIPPED_SUBJECT_DIRECTORIES:
+            continue
+        subject_id = parse_subject_id(subject_name)
+        if subject_id is None:
+            continue
+        session_id = parse_task_data_filename(subject_id, filename)
+        if session_id is None:
+            continue
 
-
-def discover_task_stims(client: Any, bucket: str, prefix: str) -> list[TaskStim]:
-    """Return the first DynamicRouting1 HDF5 file found for each session."""
-    task_stims: dict[str, TaskStim] = {}
-    paginator = client.get_paginator("list_objects_v2")
-    pages: Iterable[Mapping[str, Any]] = paginator.paginate(
-        Bucket=bucket,
-        Prefix=prefix,
-    )
-    for page in pages:
-        for item in page.get("Contents", []):
-            key = item.get("Key")
-            if not key or not key.startswith(prefix):
-                continue
-            relative_path = key[len(prefix) :]
-            path_parts = PurePosixPath(relative_path).parts
-            if len(path_parts) != 2:
-                continue
-            subject_name, filename = path_parts
-            if subject_name in SKIPPED_SUBJECT_DIRECTORIES:
-                continue
-            subject_id = parse_subject_id(subject_name)
-            if subject_id is None:
-                continue
-            session_id = parse_task_stim_filename(subject_id, filename)
-            if session_id is None:
-                continue
-            task_stims.setdefault(
-                session_id,
-                TaskStim(session_id, f"s3://{bucket}/{key}"),
-            )
-    return sorted(task_stims.values(), key=lambda item: item.session_id)
+        session_key = (extract_subject_id(session_id), extract_date(session_id))
+        candidate = TaskData(
+            subject_id=session_key[0],
+            date=session_key[1],
+            task_data_s3_path=(
+                f"s3://{bucket}/{prefix.rstrip('/') + '/' if prefix else ''}{key}"
+            ),
+        )
+        candidate_key = (extract_task_timestamp(filename), str(key))
+        current = task_datas.get(session_key)
+        if current is None or candidate_key > current[0]:
+            task_datas[session_key] = (candidate_key, candidate)
+    return [
+        task_data
+        for _, task_data in sorted(
+            task_datas.values(), key=lambda item: (item[1].subject_id, item[1].date)
+        )
+    ]
 
 
 def parse_subject_id(value: str) -> int | None:
@@ -198,7 +206,7 @@ def parse_subject_id(value: str) -> int | None:
     return subject_id if subject_id > 0 and str(subject_id) == value else None
 
 
-def parse_task_stim_filename(subject_id: int, filename: str) -> str | None:
+def parse_task_data_filename(subject_id: int, filename: str) -> str | None:
     if not filename.lower().endswith(".hdf5"):
         return None
     parts = Path(filename).stem.split("_")
@@ -210,9 +218,22 @@ def parse_task_stim_filename(subject_id: int, filename: str) -> str | None:
     except ValueError:
         return None
     for date_text in parts[subject_index + 1 :]:
-        if parse_date_text(date_text) is not None:
-            return f"{subject_text}_{date_text}"
+        parsed_date = parse_date_text(date_text)
+        if parsed_date is not None:
+            return f"{subject_text}_{parsed_date.isoformat()}"
     return None
+
+
+def extract_task_timestamp(filename: str) -> int:
+    """Return the HHMMSS timestamp used to select the last file of a day."""
+    parts = PurePosixPath(filename).stem.split("_")
+    for index, value in enumerate(parts[:-1]):
+        if parse_date_text(value) is not None:
+            timestamp = parts[index + 1]
+            if len(timestamp) == 6 and timestamp.isdecimal():
+                return int(timestamp)
+            break
+    return -1
 
 
 def parse_date_text(value: str) -> date | None:
@@ -230,15 +251,34 @@ def temporary_database_path() -> Path:
     return Path(name)
 
 
+def read_existing_session_keys(database_path: Path) -> set[tuple[str, str]]:
+    """Return ``(subject_id, date)`` keys already exported to an existing database."""
+    if not database_path.exists():
+        return set()
+    with sqlite3.connect(database_path) as database:
+        table_exists = database.execute(
+            "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?",
+            (TABLE_NAME,),
+        ).fetchone()
+        if table_exists is None:
+            return set()
+        return {
+            (str(subject_id), str(session_date))
+            for subject_id, session_date in database.execute(
+                f"SELECT subject_id, date FROM {TABLE_NAME}"
+            )
+        }
+
+
 async def export_session_rigs(
-    task_stims: Iterable[TaskStim],
+    task_datas: Iterable[TaskData],
     database_path: Path,
     *,
     reader_count: int,
     queue_size: int,
     rig_reader: Callable[[str], Awaitable[str | None]] = read_rig,
 ) -> tuple[int, int]:
-    read_queue: asyncio.Queue[TaskStim | None] = asyncio.Queue(queue_size)
+    read_queue: asyncio.Queue[TaskData | None] = asyncio.Queue(queue_size)
     # Keep completed reads in their own queue so only one coroutine ever writes
     # SQLite. This queue is unbounded so a writer failure cannot deadlock readers.
     write_queue: asyncio.Queue[SessionRig | None] = asyncio.Queue()
@@ -249,8 +289,8 @@ async def export_session_rigs(
     ]
 
     try:
-        for task_stim in task_stims:
-            await read_queue.put(task_stim)
+        for task_data in task_datas:
+            await read_queue.put(task_data)
         for _ in readers:
             await read_queue.put(None)
         await asyncio.gather(*readers)
@@ -265,27 +305,28 @@ async def export_session_rigs(
 
 
 async def read_worker(
-    read_queue: asyncio.Queue[TaskStim | None],
+    read_queue: asyncio.Queue[TaskData | None],
     write_queue: asyncio.Queue[SessionRig | None],
     rig_reader: Callable[[str], Awaitable[str | None]],
 ) -> None:
     while True:
-        task_stim = await read_queue.get()
-        if task_stim is None:
+        task_data = await read_queue.get()
+        if task_data is None:
             return
         try:
             try:
-                rig_id = await rig_reader(task_stim.task_stim_s3_path)
+                rig_id = await rig_reader(task_data.task_data_s3_path)
                 error = None
             except Exception as exc:  # noqa: BLE001 - retain rows for unreadable files
                 rig_id = None
                 error = f"{type(exc).__name__}: {exc}"
             await write_queue.put(
                 SessionRig(
-                    session_id=task_stim.session_id,
-                    task_stim_s3_path=task_stim.task_stim_s3_path,
+                    subject_id=task_data.subject_id,
+                    date=task_data.date,
+                    task_data_s3_path=task_data.task_data_s3_path,
                     rig_id=rig_id,
-                    read_error=error,
+                    task_data_read_error=error,
                 )
             )
         finally:
@@ -301,13 +342,15 @@ async def write_results(
     database = sqlite_utils.Database(database_path)
     table = database[TABLE_NAME].create(
         {
-            "session_id": str,
-            "task_stim_s3_path": str,
+            "subject_id": str,
+            "date": str,
+            "task_data_s3_path": str,
             "rig_id": str,
-            "read_error": str,
+            "task_data_read_error": str,
         },
-        pk="session_id",
-        not_null=("session_id", "task_stim_s3_path"),
+        pk=("subject_id", "date"),
+        not_null=("subject_id", "date", "task_data_s3_path"),
+        if_not_exists=True,
     )
     batch: list[dict[str, Any]] = []
     written = 0
@@ -319,7 +362,7 @@ async def write_results(
                 break
             row = asdict(result)
             batch.append(row)
-            errors += result.read_error is not None
+            errors += result.task_data_read_error is not None
             if len(batch) >= 100:
                 table.insert_all(batch, replace=True)
                 written += len(batch)

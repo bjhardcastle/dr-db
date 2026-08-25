@@ -1,87 +1,99 @@
 from __future__ import annotations
 
 import asyncio
+import sqlite3
+import tempfile
 from pathlib import Path
 from unittest import TestCase
 from unittest.mock import patch
 
 from scripts.export_session_rigs import (
     SessionRig,
-    TaskStim,
-    discover_task_stims,
+    TaskData,
+    discover_task_datas,
     export_session_rigs,
-    parse_task_stim_filename,
+    parse_task_data_filename,
+    read_existing_session_keys,
 )
 
 
-class FakePaginator:
-    def __init__(self, pages: list[dict[str, object]]) -> None:
-        self.pages = pages
+class FakeListStream:
+    def __init__(self, objects: list[dict[str, object]]) -> None:
+        self.objects = objects
 
-    def paginate(self, **_: object) -> list[dict[str, object]]:
-        return self.pages
-
-
-class FakeS3Client:
-    def __init__(self, pages: list[dict[str, object]]) -> None:
-        self.paginator = FakePaginator(pages)
-
-    def get_paginator(self, name: str) -> FakePaginator:
-        if name != "list_objects_v2":
-            raise AssertionError(name)
-        return self.paginator
+    def collect(self) -> list[dict[str, object]]:
+        return self.objects
 
 
-class TaskStimDiscoveryTests(TestCase):
-    def test_discovers_one_task_stim_path_per_session(self) -> None:
-        prefix = "data/"
-        first_path = "data/123/DynamicRouting1_123_20260822_114534.hdf5"
-        client = FakeS3Client(
+class FakeS3Store:
+    prefix = "data"
+
+    def __init__(self, objects: list[dict[str, object]]) -> None:
+        self.objects = objects
+
+    def list(self) -> FakeListStream:
+        return FakeListStream(self.objects)
+
+
+class TaskDataDiscoveryTests(TestCase):
+    def test_reads_existing_session_keys(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            database_path = Path(directory) / "sessions.sqlite"
+            with sqlite3.connect(database_path) as database:
+                database.execute(
+                    "CREATE TABLE session (subject_id TEXT, date TEXT, PRIMARY KEY (subject_id, date))"
+                )
+                database.executemany(
+                    "INSERT INTO session (subject_id, date) VALUES (?, ?)",
+                    [("123", "2026-08-22"), ("456", "2026-08-22")],
+                )
+
+            self.assertEqual(
+                {("123", "2026-08-22"), ("456", "2026-08-22")},
+                read_existing_session_keys(database_path),
+            )
+
+    def test_discovers_last_task_data_path_per_day(self) -> None:
+        last_path = "data/123/DynamicRouting1_123_20260822_120000.hdf5"
+        client = FakeS3Store(
             [
-                {
-                    "Contents": [
-                        {"Key": first_path},
-                        {"Key": ("data/123/DynamicRouting1_123_20260822_120000.hdf5")},
-                        {"Key": "data/123/OptoTagging_123_20260822_130000.hdf5"},
-                        {
-                            "Key": (
-                                "data/000000/"
-                                "DynamicRouting1_000000_20260822_130000.hdf5"
-                            )
-                        },
-                        {
-                            "Key": (
-                                "data/test/DynamicRouting1_test_20260822_130000.hdf5"
-                            )
-                        },
-                    ]
-                }
+                {"path": "123/DynamicRouting1_123_20260822_120000.hdf5"},
+                {"path": "123/DynamicRouting1_123_20260822_114534.hdf5"},
+                {"path": "123/OptoTagging_123_20260822_130000.hdf5"},
+                {"path": "000000/DynamicRouting1_000000_20260822_130000.hdf5"},
+                {"path": "test/DynamicRouting1_test_20260822_130000.hdf5"},
             ]
         )
 
         self.assertEqual(
-            [TaskStim("123_20260822", f"s3://bucket/{first_path}")],
-            discover_task_stims(client, "bucket", prefix),
+            [
+                TaskData(
+                    "123",
+                    "2026-08-22",
+                    f"s3://bucket/{last_path}",
+                )
+            ],
+            discover_task_datas(client, "bucket"),
         )
 
-    def test_parses_only_dynamic_routing_task_stim_names(self) -> None:
+    def test_parses_only_dynamic_routing_task_data_names(self) -> None:
         self.assertEqual(
-            "123_20260822",
-            parse_task_stim_filename(
+            "123_2026-08-22",
+            parse_task_data_filename(
                 123,
                 "DynamicRouting1_123_20260822_114534.hdf5",
             ),
         )
         self.assertIsNone(
-            parse_task_stim_filename(123, "OptoTagging_123_20260822_114534.hdf5")
+            parse_task_data_filename(123, "OptoTagging_123_20260822_114534.hdf5")
         )
 
 
 class QueuePipelineTests(TestCase):
     def test_reads_concurrently_and_serializes_results_through_writer(self) -> None:
-        task_stims = [
-            TaskStim("1_20260822", "s3://bucket/good.hdf5"),
-            TaskStim("2_20260822", "s3://bucket/bad.hdf5"),
+        task_datas = [
+            TaskData("1", "2026-08-22", "s3://bucket/good.hdf5"),
+            TaskData("2", "2026-08-22", "s3://bucket/bad.hdf5"),
         ]
         rows: list[SessionRig] = []
 
@@ -96,12 +108,14 @@ class QueuePipelineTests(TestCase):
         ) -> tuple[int, int]:
             while (row := await queue.get()) is not None:
                 rows.append(row)
-            return len(rows), sum(row.read_error is not None for row in rows)
+            return len(rows), sum(
+                row.task_data_read_error is not None for row in rows
+            )
 
         with patch("scripts.export_session_rigs.write_results", new=writer):
             counts = asyncio.run(
                 export_session_rigs(
-                    task_stims,
+                    task_datas,
                     Path("unused.sqlite"),
                     reader_count=2,
                     queue_size=1,
@@ -111,6 +125,9 @@ class QueuePipelineTests(TestCase):
 
         self.assertEqual((2, 1), counts)
         self.assertEqual("E1", rows[0].rig_id)
-        self.assertIsNone(rows[0].read_error)
+        self.assertIsNone(rows[0].task_data_read_error)
         self.assertIsNone(rows[1].rig_id)
-        self.assertEqual("ValueError: broken fixture", rows[1].read_error)
+        self.assertEqual(
+            "ValueError: broken fixture",
+            rows[1].task_data_read_error,
+        )
