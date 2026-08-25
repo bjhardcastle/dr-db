@@ -12,8 +12,10 @@ from scripts.export_session_rigs import (
     TaskData,
     discover_task_datas,
     export_session_rigs,
+    extract_task_filename,
     parse_task_data_filename,
     read_existing_session_keys,
+    write_results,
 )
 
 
@@ -84,9 +86,41 @@ class TaskDataDiscoveryTests(TestCase):
                 "DynamicRouting1_123_20260822_114534.hdf5",
             ),
         )
-        self.assertIsNone(
-            parse_task_data_filename(123, "OptoTagging_123_20260822_114534.hdf5")
+        self.assertIsNone(parse_task_data_filename(123, "OptoTagging_123_20260822_114534.hdf5"))
+
+    def test_extracts_task_filename_from_s3_path(self) -> None:
+        self.assertEqual(
+            "DynamicRouting1_123_20260822_114534.hdf5",
+            extract_task_filename(
+                "s3://bucket/data/123/DynamicRouting1_123_20260822_114534.hdf5"
+            ),
         )
+
+
+class WriteResultsTests(TestCase):
+    def test_stores_task_filename_instead_of_s3_path(self) -> None:
+        async def write_database(database_path: Path) -> tuple[int, int]:
+            queue: asyncio.Queue[SessionRig | None] = asyncio.Queue()
+            await queue.put(
+                SessionRig(
+                    "123",
+                    "2026-08-22",
+                    "DynamicRouting1_123_20260822_114534.hdf5",
+                    "E1",
+                    None,
+                )
+            )
+            await queue.put(None)
+            return await write_results(queue, database_path)
+
+        with tempfile.TemporaryDirectory() as directory:
+            database_path = Path(directory) / "sessions.sqlite"
+            self.assertEqual((1, 0), asyncio.run(write_database(database_path)))
+            with sqlite3.connect(database_path) as database:
+                self.assertEqual(
+                    ("DynamicRouting1_123_20260822_114534.hdf5",),
+                    database.execute("SELECT task_filename FROM session").fetchone(),
+                )
 
 
 class QueuePipelineTests(TestCase):

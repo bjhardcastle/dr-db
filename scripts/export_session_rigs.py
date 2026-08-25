@@ -85,7 +85,7 @@ class TaskData:
 class SessionRig:
     subject_id: str
     date: str
-    task_data_s3_path: str
+    task_filename: str
     rig_id: str | None
     task_data_read_error: str | None
 
@@ -236,6 +236,11 @@ def extract_task_timestamp(filename: str) -> int:
     return -1
 
 
+def extract_task_filename(s3_path: str) -> str:
+    """Return the file name from an S3 URI."""
+    return PurePosixPath(urlparse(s3_path).path).name
+
+
 def parse_date_text(value: str) -> date | None:
     if len(value) != 8 or not value.isdecimal():
         return None
@@ -324,7 +329,7 @@ async def read_worker(
                 SessionRig(
                     subject_id=task_data.subject_id,
                     date=task_data.date,
-                    task_data_s3_path=task_data.task_data_s3_path,
+                    task_filename=extract_task_filename(task_data.task_data_s3_path),
                     rig_id=rig_id,
                     task_data_read_error=error,
                 )
@@ -344,12 +349,12 @@ async def write_results(
         {
             "subject_id": str,
             "date": str,
-            "task_data_s3_path": str,
+            "task_filename": str,
             "rig_id": str,
             "task_data_read_error": str,
         },
         pk=("subject_id", "date"),
-        not_null=("subject_id", "date", "task_data_s3_path"),
+        not_null=("subject_id", "date", "task_filename"),
         if_not_exists=True,
     )
     batch: list[dict[str, Any]] = []

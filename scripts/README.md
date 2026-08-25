@@ -43,7 +43,8 @@ uv run --script scripts/export_session_rigs.py
 The command reads the open S3 bucket anonymously and prints the output database
 path. Its `session` table contains one row per `(subject_id, date)`; when
 multiple task-data files exist for a day, the file with the latest filename
-timestamp is used. Rig-read failures are retained as rows with a null `rig_id`
+timestamp is used, and `task_filename` contains the selected task file name.
+Rig-read failures are retained as rows with a null `rig_id`
 and a `task_data_read_error`. An existing output database is reused, and
 sessions already in its `session` table are skipped. Use `--limit` for a small
 credential check or `--output` to choose the database path explicitly.
