@@ -21,5 +21,8 @@ Run one with locking, as cron does:
 ```
 
 The existing wrappers cover migrations and production-to-development syncing.
-Add future backup, parquet-export, or ingestion wrappers here. Do not put cron
-syntax in this directory.
+The `export-prod-to-parquet` wrapper exports every non-system table using
+`pg_parquet`; it defaults to `/var/lib/postgresql/parquet`, which is mounted at
+`.data/parquet` by the Compose configuration. Set `PARQUET_OUTPUT_URI` to an
+`s3://...` URI for an object-store export. Do not put cron syntax in this
+directory.

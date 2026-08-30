@@ -22,6 +22,15 @@ Open `http://localhost` (or one of the `MATHESAR_DOMAIN_NAME` domains), followed
 
 
 5. (optional) Run all existing migrations against the database you want to initialize. For local dev:
+The Postgres image builds `pg_parquet` 0.5.1 for PostgreSQL 17 and preloads it
+in both database services. Rebuild after changing the extension version:
+
+```bash
+docker compose build postgres postgres-dev
+docker compose up -d postgres postgres-dev
+```
+
+5. Run migrations against the database you want to initialize. For local dev:
 
 ```bash
 docker compose --profile tools run --rm dbmate-dev up
@@ -50,3 +59,14 @@ the locking wrapper:
 See [`ops/README.md`](ops/README.md) before installing the cron schedule. The
 schedule contains no credentials; production secrets belong in a host-only env
 file.
+
+To export every non-system table in the production database to local Parquet
+files under `.data/parquet`:
+
+```bash
+./scripts/tasks/export-prod-to-parquet
+```
+
+Set `PARQUET_OUTPUT_URI` to an `s3://...` URI for an object-store export. The
+Postgres service needs AWS credentials and the `parquet_object_store_write`
+role for that destination.

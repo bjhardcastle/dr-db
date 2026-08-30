@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+set -eu
+
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+REPO_ROOT=$(CDPATH= cd -- "$SCRIPT_DIR/../.." && pwd)
+OUTPUT_URI=${PARQUET_OUTPUT_URI:-/var/lib/postgresql/parquet}
+
+run_export() {
+    docker compose "$@" exec -T postgres \
+        sh -ceu 'exec psql -X -U "$POSTGRES_USER" -d "$POSTGRES_DB" \
+            -v ON_ERROR_STOP=1 -v output_uri="$1" -f -' \
+        sh "$OUTPUT_URI" < "$REPO_ROOT/db/export_all_tables.sql"
+}
+
+if [ -n "${DR_DB_ENV_FILE:-}" ]; then
+    run_export --env-file "$DR_DB_ENV_FILE"
+else
+    run_export
+fi

@@ -1,9 +1,16 @@
 name: dr-db
 
+x-postgres-image: &postgres-image
+  image: dr-db-postgres:17-pg-parquet
+  build:
+    context: .
+    dockerfile: docker/pg-parquet/Dockerfile
+
 services:
   postgres:
-    image: pgautoupgrade/pgautoupgrade:17-bookworm
+    <<: *postgres-image
     restart: unless-stopped
+    command: ["postgres", "-c", "shared_preload_libraries=pg_parquet"]
     environment:
       POSTGRES_DB: ${DR_DB_POSTGRES_DB:?Set DR_DB_POSTGRES_DB in .env}
       POSTGRES_USER: ${DR_DB_POSTGRES_USER:?Set DR_DB_POSTGRES_USER in .env}
@@ -14,6 +21,9 @@ services:
       - type: bind
         source: ${DR_DB_STORAGE_ROOT:?Set DR_DB_STORAGE_ROOT in .env}/postgres
         target: /var/lib/postgresql/data
+      - type: bind
+        source: ${DR_DB_STORAGE_ROOT:?Set DR_DB_STORAGE_ROOT in .env}/parquet
+        target: /var/lib/postgresql/parquet
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       interval: 5s
@@ -22,8 +32,9 @@ services:
       start_period: 5s
 
   postgres-dev:
-    image: pgautoupgrade/pgautoupgrade:17-bookworm
+    <<: *postgres-image
     restart: unless-stopped
+    command: ["postgres", "-c", "shared_preload_libraries=pg_parquet"]
     environment:
       POSTGRES_DB: ${DR_DB_DEV_POSTGRES_DB:?Set DR_DB_DEV_POSTGRES_DB in .env}
       POSTGRES_USER: ${DR_DB_DEV_POSTGRES_USER:?Set DR_DB_DEV_POSTGRES_USER in .env}
