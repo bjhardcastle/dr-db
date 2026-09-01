@@ -26,7 +26,8 @@ Add a simple isolated dev Postgres service and an explicit one-command prod-to-d
 - Start dev with `docker compose up -d postgres-dev` and confirm healthcheck.
 - Run `docker compose --profile tools run --rm clone-prod-to-dev`.
 - Verify dev has expected schemas/tables and representative row counts match prod.
-- Run `uv run pytest`.
+- Run `uv run pytest` for unit tests.
+- Run `./scripts/tasks/test-postgres` for the Postgres and Parquet integration checks.
 
 ## Assumptions
 

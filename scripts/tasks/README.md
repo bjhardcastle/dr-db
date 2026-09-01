@@ -26,3 +26,7 @@ The `export-prod-to-parquet` wrapper exports every non-system table using
 `.data/parquet` by the Compose configuration. Set `PARQUET_OUTPUT_URI` to an
 `s3://...` URI for an object-store export. Do not put cron syntax in this
 directory.
+
+The `test-postgres` wrapper starts or waits for `postgres-dev`, checks that
+`pg_parquet` can write a Parquet file, and verifies that the export SQL emits
+one file for every exportable dev table.

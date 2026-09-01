@@ -1,0 +1,61 @@
+#!/usr/bin/env sh
+set -eu
+
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+REPO_ROOT=$(CDPATH= cd -- "$SCRIPT_DIR/../.." && pwd)
+TEST_OUTPUT_DIR=/tmp/dr-db-postgres-test
+
+cd "$REPO_ROOT"
+
+compose() {
+    if [ -n "${DR_DB_ENV_FILE:-}" ]; then
+        docker compose --env-file "$DR_DB_ENV_FILE" "$@"
+    else
+        docker compose "$@"
+    fi
+}
+
+compose up -d --wait postgres-dev
+
+compose exec -T postgres-dev sh -ceu \
+    'exec psql -X -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+    < "$REPO_ROOT/db/tests/pg_parquet.sql"
+
+expected_tables=$(
+    compose exec -T postgres-dev sh -ceu \
+        'exec psql -X -v ON_ERROR_STOP=1 -At -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+        <<'SQL'
+SELECT count(*)
+FROM pg_catalog.pg_class AS c
+JOIN pg_catalog.pg_namespace AS n ON n.oid = c.relnamespace
+WHERE c.relkind IN ('r', 'p')
+    AND n.nspname NOT IN ('pg_catalog', 'information_schema')
+    AND n.nspname NOT LIKE 'pg_%';
+SQL
+)
+expected_tables=$(printf '%s' "$expected_tables" | tr -d '[:space:]')
+
+compose exec -T postgres-dev sh -ceu "
+    mkdir -p '$TEST_OUTPUT_DIR'
+    chown postgres:postgres '$TEST_OUTPUT_DIR'
+    find '$TEST_OUTPUT_DIR' -maxdepth 1 -type f -name '*.parquet' -delete
+"
+
+compose exec -T postgres-dev sh -ceu \
+    'exec psql -X -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB" \
+        -v output_uri=/tmp/dr-db-postgres-test -f -' \
+    < "$REPO_ROOT/db/export_all_tables.sql"
+
+exported_tables=$(
+    compose exec -T postgres-dev sh -ceu \
+        "find '$TEST_OUTPUT_DIR' -maxdepth 1 -type f -name '*.parquet' -print" \
+        | wc -l
+)
+exported_tables=$(printf '%s' "$exported_tables" | tr -d '[:space:]')
+
+if [ "$expected_tables" != "$exported_tables" ]; then
+    echo "Expected $expected_tables exported tables, found $exported_tables." >&2
+    exit 1
+fi
+
+echo "Postgres tests passed: pg_parquet and $exported_tables table exports."

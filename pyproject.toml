@@ -16,6 +16,12 @@ dependencies = [
     "lazynwb==1.0.0.dev3",
 ]
 
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "sqlite-utils>=3.39",
+]
+
 [build-system]
 requires = ["setuptools>=80"]
 build-backend = "setuptools.build_meta"

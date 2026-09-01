@@ -70,3 +70,16 @@ files under `.data/parquet`:
 Set `PARQUET_OUTPUT_URI` to an `s3://...` URI for an object-store export. The
 Postgres service needs AWS credentials and the `parquet_object_store_write`
 role for that destination.
+
+Run the unit tests with:
+
+```bash
+uv run pytest
+```
+
+Run the Postgres and Parquet integration checks against the disposable dev
+database with:
+
+```bash
+./scripts/tasks/test-postgres
+```
